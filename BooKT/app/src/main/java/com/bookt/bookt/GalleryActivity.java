@@ -3,6 +3,8 @@ package com.bookt.bookt;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class GalleryActivity extends AppCompatActivity
@@ -30,6 +33,7 @@ public class GalleryActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_gallery);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -49,6 +53,25 @@ public class GalleryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // -------------------------------------------RecyclerView setup-------------------------------------------//
+        ArrayList<GalleryActivityCard> list = new ArrayList<>();
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recycleViewAdpaterGalleryLeft);
+        // --------------------------------------------------------------------------------------------------------//
+
     }
 
     @Override
