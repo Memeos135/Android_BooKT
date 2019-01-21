@@ -64,6 +64,16 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
+        list.add(new GalleryActivityCard("hello",""));
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
