@@ -50,7 +50,7 @@
                     android:layout_marginBottom="4dp"
                     android:background="#eb2748"
                     android:gravity="center"
-                    android:text="TextView"
+                    android:text="just to test it relax"
                     android:textColor="@android:color/white" />
             </RelativeLayout>
 
