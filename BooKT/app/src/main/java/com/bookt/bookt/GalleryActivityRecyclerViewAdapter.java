@@ -15,9 +15,6 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     private Context context;
     private ArrayList<GalleryActivityCard> list;
 
-    // RecyclerView Arraylist Size
-    private int size = 0;
-
     /*
     RecyclerView Arraylist Positions
     (used onCreate to track RecyclerView index values (even/odd) to do dynamic card assignments)
@@ -27,45 +24,38 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     public GalleryActivityRecyclerViewAdapter(Context context, ArrayList<GalleryActivityCard> list) {
         this.context = context;
         this.list = list;
-        this.size = list.size();
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        // Subtract position from RecyclerView arraylist size to get current position
-        size = size - position;
-
         // If card position is ZERO or multiple of THREE (big card)
-        if(size%3 == 0 || position == 0){
-
+        if(position%3 == 0 || position == 0){
+            System.out.println(position + " %3");
             // Inflate the XML associated with FULL SCREEN-WIDTH card
             View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
             view = mInflater.inflate(R.layout.gallery_view_card_three,parent,false);
-            size = 0;
             return new MyViewHolder(view);
 
         }else{
 
             // If card position is multiple of TWO
-            if(size%2 == 0) {
-
+            if(position%2 == 0) {
+                System.out.println(position + " %2");
                 // Inflate card associated with (0.55, 0.5) split
                 View view;
                 LayoutInflater mInflater = LayoutInflater.from(context);
                 view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
-                size = 0;
                 return new MyViewHolder(view);
 
             } else{
-
+                System.out.println(position + " ELSE");
                 // Inflate card associated with (0.5, 0.55) split
                 View view;
                 LayoutInflater mInflater = LayoutInflater.from(context);
                 view = mInflater.inflate(R.layout.gallery_view_card_two, parent, false);
-                size = 0;
                 return new MyViewHolder(view);
 
             }
@@ -80,20 +70,23 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         If card is at ZERO position or multiple of THREE, set image and text for BIG IMAGE
         */
         if(position%3 == 0 || position == 0){
-
-            holder.imageViewThree.setImageResource(R.drawable.icon);
-            holder.nameThree.setText(list.get(position).getRestaurantTypeName());
+            if(holder.imageViewThree!=null) {
+                holder.imageViewThree.setImageResource(R.drawable.icon);
+                holder.nameThree.setText(list.get(position).getRestaurantTypeName());
+            }
 
         /*
         If card is NOT ZERO or multiple of THREE, set image of (0.55, 0.5) OR (0.5, 0.55) image splits
         */
         }else{
 
-            holder.imageViewTwo.setImageResource(R.drawable.icon);
-            holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
+            if(holder.imageViewOne!=null) {
+                holder.imageViewTwo.setImageResource(R.drawable.icon);
+                holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
 
-            holder.imageViewOne.setImageResource(R.drawable.icon);
-            holder.nameOne.setText(list.get(position).getRestaurantTypeName());
+                holder.imageViewOne.setImageResource(R.drawable.icon);
+                holder.nameOne.setText(list.get(position).getRestaurantTypeName());
+            }
 
             }
 
@@ -131,14 +124,20 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            imageViewOne = itemView.findViewById(R.id.imageViewLeft);
-            nameOne = itemView.findViewById(R.id.textViewLeft);
+            if(itemView.findViewById(R.id.imageViewLeft)!=null) {
 
-            imageViewTwo = itemView.findViewById(R.id.imageViewRight);
-            nameTwo = itemView.findViewById(R.id.textViewRight);
+                imageViewOne = itemView.findViewById(R.id.imageViewLeft);
+                nameOne = itemView.findViewById(R.id.textViewLeft);
 
-            imageViewThree = itemView.findViewById(R.id.imageViewBig);
-            nameThree = itemView.findViewById(R.id.textViewBig);
+                imageViewTwo = itemView.findViewById(R.id.imageViewRight);
+                nameTwo = itemView.findViewById(R.id.textViewRight);
+
+            }else if(itemView.findViewById(R.id.imageViewBig)!=null) {
+
+                imageViewThree = itemView.findViewById(R.id.imageViewBig);
+                nameThree = itemView.findViewById(R.id.textViewBig);
+
+            }
 
         }
     }
