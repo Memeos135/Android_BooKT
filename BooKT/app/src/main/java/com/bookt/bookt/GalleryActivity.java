@@ -1,14 +1,16 @@
 package com.bookt.bookt;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +27,14 @@ import java.util.concurrent.TimeUnit;
 public class GalleryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NestedScrollView nestedScrollView;
+    RecyclerView recyclerView;
+    GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft;
+    AppBarLayout appBarLayout;
+    int downScrollCounter = 0;
+    int upScrollCounter = 0;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -36,7 +46,7 @@ public class GalleryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_gallery);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -68,33 +78,43 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
-        list.add(new GalleryActivityCard("hello",""));
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        appBarLayout = findViewById(R.id.appBarLayout);
+
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setFocusable(false);
         recyclerView.setNestedScrollingEnabled(false);
 
-        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView = findViewById(R.id.nestedScrollView);
         nestedScrollView.requestFocus();
 
-        GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                toolbar.clearAnimation();
+                appBarLayout.clearAnimation();
+                if (scrollY > oldScrollY) {
+                    downScrollCounter++;
+                    if(downScrollCounter>=20){
+                        Log.i("", "Proper Scroll");
+                        toolbar.animate().translationY(-toolbar.getBottom()).setDuration(250);
+                        appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(250);
+                        downScrollCounter = 0;
+                    }
+                }
+                if (scrollY < oldScrollY) {
+                    upScrollCounter++;
+                    if(upScrollCounter>=20){
+                        Log.i("", "Proper Scroll");
+                        toolbar.animate().translationY(0).setDuration(250);
+                        appBarLayout.animate().translationY(0).setDuration(250);
+                        upScrollCounter = 0;
+                    }
+                }
+            }
+        });
+
+        recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recycleViewAdpaterGalleryLeft);
