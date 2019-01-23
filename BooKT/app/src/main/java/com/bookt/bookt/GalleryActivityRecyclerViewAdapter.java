@@ -14,16 +14,18 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
 
     private Context context;
     private ArrayList<GalleryActivityCard> list;
+    private int x;
 
     /*
     RecyclerView Arraylist Positions
     (used onCreate to track RecyclerView index values (even/odd) to do dynamic card assignments)
     */
-    private int position = 0;
 
-    public GalleryActivityRecyclerViewAdapter(Context context, ArrayList<GalleryActivityCard> list) {
+
+    public GalleryActivityRecyclerViewAdapter(Context context, ArrayList<GalleryActivityCard> list, int x) {
         this.context = context;
         this.list = list;
+        this.x = x;
     }
 
     @NonNull
@@ -31,64 +33,27 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // If card position is ZERO or multiple of THREE (big card)
-        if(position%3 == 0 || position == 0){
-            System.out.println(position + " %3");
-            // Inflate the XML associated with FULL SCREEN-WIDTH card
-            View view;
-            LayoutInflater mInflater = LayoutInflater.from(context);
-            view = mInflater.inflate(R.layout.gallery_view_card_three,parent,false);
-            return new MyViewHolder(view);
 
-        }else{
 
-            // If card position is multiple of TWO
-            if(position%2 == 0) {
-                System.out.println(position + " %2");
-                // Inflate card associated with (0.55, 0.5) split
-                View view;
-                LayoutInflater mInflater = LayoutInflater.from(context);
-                view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
-                return new MyViewHolder(view);
+        // Inflate the XML associated with FULL SCREEN-WIDTH card
+        View view;
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
+        return new MyViewHolder(view);
 
-            } else{
-                System.out.println(position + " ELSE");
-                // Inflate card associated with (0.5, 0.55) split
-                View view;
-                LayoutInflater mInflater = LayoutInflater.from(context);
-                view = mInflater.inflate(R.layout.gallery_view_card_two, parent, false);
-                return new MyViewHolder(view);
 
-            }
-        }
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        /*
-        After onCreate Inflation of specific XMLs, check position of card.
-        If card is at ZERO position or multiple of THREE, set image and text for BIG IMAGE
-        */
-        if(position%3 == 0 || position == 0){
-            if(holder.imageViewThree!=null) {
-                holder.imageViewThree.setImageResource(R.drawable.icon);
-                holder.nameThree.setText(list.get(position).getRestaurantTypeName());
-            }
 
-        /*
-        If card is NOT ZERO or multiple of THREE, set image of (0.55, 0.5) OR (0.5, 0.55) image splits
-        */
-        }else{
+        holder.imageViewOne.setImageResource(R.drawable.icon);
+        holder.imageViewOne.getLayoutParams().height = (int)(x*0.5);
+        holder.imageViewOne.getLayoutParams().width = (int)(x*0.5);
+        holder.nameOne.setText(list.get(position).getRestaurantTypeName());
 
-            if(holder.imageViewOne!=null) {
-                holder.imageViewTwo.setImageResource(R.drawable.icon);
-                holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
-
-                holder.imageViewOne.setImageResource(R.drawable.icon);
-                holder.nameOne.setText(list.get(position).getRestaurantTypeName());
-            }
-
-            }
 
     }
 
@@ -96,8 +61,6 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     public int getItemViewType(int position) {
 
         // Save position of card in RecyclerView to use in onCreate and onBindViewHolder
-        this.position = position;
-
         return super.getItemViewType(position);
     }
 
@@ -114,31 +77,20 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         // imageViewThree and nameThree are for the BIG image
 
         ImageView imageViewOne;
-        ImageView imageViewTwo;
-        ImageView imageViewThree;
+
 
         TextView nameOne;
-        TextView nameTwo;
-        TextView nameThree;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            if(itemView.findViewById(R.id.imageViewLeft)!=null) {
 
-                imageViewOne = itemView.findViewById(R.id.imageViewLeft);
-                nameOne = itemView.findViewById(R.id.textViewLeft);
+            imageViewOne = itemView.findViewById(R.id.imageViewLeft);
+            nameOne = itemView.findViewById(R.id.textViewLeft);
 
-                imageViewTwo = itemView.findViewById(R.id.imageViewRight);
-                nameTwo = itemView.findViewById(R.id.textViewRight);
-
-            }else if(itemView.findViewById(R.id.imageViewBig)!=null) {
-
-                imageViewThree = itemView.findViewById(R.id.imageViewBig);
-                nameThree = itemView.findViewById(R.id.textViewBig);
-
-            }
 
         }
     }
 }
+

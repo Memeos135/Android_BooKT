@@ -1,10 +1,14 @@
 package com.bookt.bookt;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -55,6 +59,11 @@ public class GalleryActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView setup-------------------------------------------//
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+
         ArrayList<GalleryActivityCard> list = new ArrayList<>();
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
@@ -76,9 +85,11 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list,size.x);
+        recyclerView.setFocusable(false);
+        NestedScrollView nestedScrollView = findViewById(R.id.nsv);
+        nestedScrollView.requestFocus();
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setAdapter(recycleViewAdpaterGalleryLeft);
         // --------------------------------------------------------------------------------------------------------//
 
