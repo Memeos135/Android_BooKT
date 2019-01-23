@@ -1,5 +1,6 @@
 package com.bookt.bookt;
 
+// GalleryActivity CardView Setter
 public class GalleryActivityCard {
 
     String restaurantType;

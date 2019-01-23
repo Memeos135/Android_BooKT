@@ -2,7 +2,6 @@ package com.bookt.bookt;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaCodecInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +32,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(position%2==0){
             // If card position is EVEN
-            System.out.println("@ EVEN");
+            // System.out.println("@ EVEN");
             // Inflate card associated with (0.55, 0.5) split
             View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
@@ -41,7 +40,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
             return new MyViewHolder(view);
         }else{
             // If card position is ODD
-            System.out.println("@ ODD");
+            // System.out.println("@ ODD");
             // Inflate card associated with (0.5, 0.55) split
             View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
@@ -100,7 +99,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         holder.imageViewOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Restaurants.class));
+                context.startActivity(new Intent(context, RestaurantsActivity.class));
             }
         });
 
@@ -111,7 +110,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         holder.imageViewTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, Restaurants.class));
+                context.startActivity(new Intent(context, RestaurantsActivity.class));
             }
         });
 

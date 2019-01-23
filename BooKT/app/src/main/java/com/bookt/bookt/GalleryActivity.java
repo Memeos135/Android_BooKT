@@ -9,8 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -68,7 +66,7 @@ public class GalleryActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // -------------------------------------------RecyclerView setup-------------------------------------------//
+        // -------------------------------------------RecyclerView and Toolbar setup---------------------------------//
         ArrayList<GalleryActivityCard> list = new ArrayList<>();
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
@@ -82,12 +80,16 @@ public class GalleryActivity extends AppCompatActivity
         appBarLayout = findViewById(R.id.appBarLayout);
 
         recyclerView = findViewById(R.id.recyclerView);
+        // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
         recyclerView.setFocusable(false);
+        // Disable nestedScroll because we're using NestedScrollView
         recyclerView.setNestedScrollingEnabled(false);
 
         nestedScrollView = findViewById(R.id.nestedScrollView);
+        // Point cursor focus to the start of NestedScrollView (default)
         nestedScrollView.requestFocus();
 
+        // Set scroll listener to dynamically collapse and reset Toolbar
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -96,7 +98,6 @@ public class GalleryActivity extends AppCompatActivity
                 if (scrollY > oldScrollY) {
                     downScrollCounter++;
                     if(downScrollCounter>=20){
-                        Log.i("", "Proper Scroll");
                         toolbar.animate().translationY(-toolbar.getBottom()).setDuration(150);
                         appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(150);
                         downScrollCounter = 0;
@@ -105,7 +106,6 @@ public class GalleryActivity extends AppCompatActivity
                 if (scrollY < oldScrollY) {
                     upScrollCounter++;
                     if(upScrollCounter>=20){
-                        Log.i("", "Proper Scroll");
                         toolbar.animate().translationY(0).setDuration(150);
                         appBarLayout.animate().translationY(0).setDuration(150);
                         upScrollCounter = 0;

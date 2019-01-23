@@ -19,7 +19,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class Restaurants extends AppCompatActivity
+public class RestaurantsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener
 
     {
@@ -35,7 +35,7 @@ public class Restaurants extends AppCompatActivity
         protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.restaurants_activity);
+        setContentView(R.layout.activity_restaurants);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -49,7 +49,7 @@ public class Restaurants extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // -------------------------------------------RecyclerView setup-------------------------------------------//
+        // -------------------------------------------RecyclerView and Toolbar setup-------------------------------//
         ArrayList<RestaurantsActivityCard> list = new ArrayList<>();
         list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
                 "Jeddah", 3, "10", "12"));
@@ -68,16 +68,19 @@ public class Restaurants extends AppCompatActivity
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
                     "Jeddah", 3, "10", "12"));
 
+            appBarLayout = findViewById(R.id.appBarLayout);
 
             recyclerView = findViewById(R.id.recyclerViewRestaurants);
+            // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
             recyclerView.setFocusable(false);
+            // Disable nestedScroll because we're using NestedScrollView
             recyclerView.setNestedScrollingEnabled(false);
 
             nestedScrollView = findViewById(R.id.nestedScrollView);
+            // Point cursor focus to the start of NestedScrollView (default)
             nestedScrollView.requestFocus();
 
-            appBarLayout = findViewById(R.id.appBarLayout);
-
+            // Set scroll listener to dynamically collapse and reset Toolbar
             nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

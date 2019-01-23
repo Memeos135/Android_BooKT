@@ -20,7 +20,7 @@
         android:layout_gravity="start"
         android:background="@android:color/black"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_gallery"
+        app:headerLayout="@layout/menu_nav_header"
         app:menu="@menu/activity_gallery_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

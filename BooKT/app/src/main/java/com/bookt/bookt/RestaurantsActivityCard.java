@@ -1,5 +1,6 @@
 package com.bookt.bookt;
 
+// RestaurantsActivity CardView Setter
 public class RestaurantsActivityCard {
 
     private String restaurantName;

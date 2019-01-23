@@ -24,6 +24,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Instantiate Custom Card View
         View view;
         LayoutInflater mInflater = LayoutInflater.from(context);
         view = mInflater.inflate(R.layout.restaurants_view_card, parent, false);
@@ -50,6 +51,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         return list.size();
     }
 
+    // Set views from Resource folder to their corresponding IDs
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView restaurantImage;
