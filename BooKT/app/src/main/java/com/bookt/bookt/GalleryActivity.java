@@ -97,8 +97,8 @@ public class GalleryActivity extends AppCompatActivity
                     downScrollCounter++;
                     if(downScrollCounter>=20){
                         Log.i("", "Proper Scroll");
-                        toolbar.animate().translationY(-toolbar.getBottom()).setDuration(250);
-                        appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(250);
+                        toolbar.animate().translationY(-toolbar.getBottom()).setDuration(150);
+                        appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(150);
                         downScrollCounter = 0;
                     }
                 }
@@ -106,8 +106,8 @@ public class GalleryActivity extends AppCompatActivity
                     upScrollCounter++;
                     if(upScrollCounter>=20){
                         Log.i("", "Proper Scroll");
-                        toolbar.animate().translationY(0).setDuration(250);
-                        appBarLayout.animate().translationY(0).setDuration(250);
+                        toolbar.animate().translationY(0).setDuration(150);
+                        appBarLayout.animate().translationY(0).setDuration(150);
                         upScrollCounter = 0;
                     }
                 }

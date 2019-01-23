@@ -30,6 +30,8 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         return new MyViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -37,14 +39,15 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         holder.restaurantName.setText(list.get(position).getRestaurantName());
         holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
         holder.restaurantLocation.setText(list.get(position).getRestaurantLocation());
-        holder.restaurantPriceRange.setText(list.get(position).getRestaurantPriceRange());
-        holder.restaurantCloseOpenHour.setText(list.get(position).getRestaurantCloseHour());
+        holder.restaurantPriceRange.setText(String.valueOf(list.get(position).getRestaurantPriceRange()));
+        holder.restaurantCloseOpenHour.setText(list.get(position).getRestaurantCloseHour() + " "
+                + list.get(position).getRestaurantOpenHour());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

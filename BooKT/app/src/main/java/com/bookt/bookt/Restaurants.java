@@ -1,9 +1,13 @@
 package com.bookt.bookt;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -18,13 +23,20 @@ public class Restaurants extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener
 
     {
+        RecyclerView recyclerView;
+        RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter;
+        NestedScrollView nestedScrollView;
+        AppBarLayout appBarLayout;
+        int downScrollCounter = 0;
+        int upScrollCounter = 0;
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.restaurants_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -57,13 +69,43 @@ public class Restaurants extends AppCompatActivity
                     "Jeddah", 3, "10", "12"));
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyl);
-            System.out.println(recyclerView==null);
-        RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurants = new RestaurantsActivityRecyclerViewAdapter(this, list);
+            recyclerView = findViewById(R.id.recyclerViewRestaurants);
+            recyclerView.setFocusable(false);
+            recyclerView.setNestedScrollingEnabled(false);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerViewRestaurants);
-        recyclerViewRestaurants.notifyDataSetChanged();
+            nestedScrollView = findViewById(R.id.nestedScrollView);
+            nestedScrollView.requestFocus();
+
+            appBarLayout = findViewById(R.id.appBarLayout);
+
+            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    toolbar.clearAnimation();
+                    appBarLayout.clearAnimation();
+                    if (scrollY > oldScrollY) {
+                        downScrollCounter++;
+                        if(downScrollCounter>=20){
+                            toolbar.animate().translationY(-toolbar.getBottom()).setDuration(150);
+                            appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(150);
+                            downScrollCounter = 0;
+                        }
+                    }
+                    if (scrollY < oldScrollY) {
+                        upScrollCounter++;
+                        if(upScrollCounter>=20){
+                            toolbar.animate().translationY(0).setDuration(150);
+                            appBarLayout.animate().translationY(0).setDuration(150);
+                            upScrollCounter = 0;
+                        }
+                    }
+                }
+            });
+
+            recyclerViewRestaurantsAdapter = new RestaurantsActivityRecyclerViewAdapter(this, list);
+
+            recyclerView.setAdapter(recyclerViewRestaurantsAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // --------------------------------------------------------------------------------------------------------//
 
     }
