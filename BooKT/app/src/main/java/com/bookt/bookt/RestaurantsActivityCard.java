@@ -2,13 +2,24 @@ package com.bookt.bookt;
 
 public class RestaurantsActivityCard {
 
-    String restaurantName;
-    String restaurantSubCategory;
-    String restaurantLocation;
-    int restaurantPriceRange;
-    String restaurantOpenHour;
-    String restaurantCloseHour;
-    String restaurantImage;
+    private String restaurantName;
+    private String restaurantSubCategory;
+    private String restaurantLocation;
+    private int restaurantPriceRange;
+    private String restaurantOpenHour;
+    private String restaurantCloseHour;
+    private String restaurantImage;
+
+    RestaurantsActivityCard(String restaurantName, String restaurantSubCategory, String restaurantLocation,
+                            int restaurantPriceRange, String restaurantOpenHour, String restaurantCloseHour){
+        this.restaurantName = restaurantName;
+        this.restaurantSubCategory = restaurantSubCategory;
+        this.restaurantLocation = restaurantLocation;
+        this. restaurantPriceRange = restaurantPriceRange;
+        this.restaurantOpenHour = restaurantOpenHour;
+        this.restaurantCloseHour = restaurantCloseHour;
+
+    }
 
     public void setRestaurantName(String restaurantName){
         this.restaurantName = restaurantName;

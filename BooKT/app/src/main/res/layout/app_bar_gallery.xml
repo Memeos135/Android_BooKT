@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/content_gallery" />
+        <include
+            layout="@layout/content_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
