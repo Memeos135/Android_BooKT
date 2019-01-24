@@ -5,7 +5,7 @@
     android:id="@+id/cardViewSearch"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:translationX="1000dp">
+    android:translationX="2000dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

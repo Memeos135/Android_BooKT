@@ -1,5 +1,6 @@
 package com.bookt.bookt;
 
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,6 +12,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,6 +38,8 @@ public class GalleryActivity extends AppCompatActivity
     int upScrollCounter = 0;
     CardView cardView;
     EditText editText;
+    Display mdisp;
+    Point mdispSize;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -49,11 +53,20 @@ public class GalleryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_gallery);
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("JEDDAH");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        mdisp = getWindowManager().getDefaultDisplay();
+        mdispSize = new Point();
+        mdisp.getSize(mdispSize);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,8 +116,8 @@ public class GalleryActivity extends AppCompatActivity
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(cardView.getX()==42.0){
-                    cardView.animate().translationX(1200).setDuration(500);
+                if(cardView.getX()<mdispSize.x){
+                    cardView.animate().translationX(mdispSize.x).setDuration(500);
                 }
                 toolbar.clearAnimation();
                 appBarLayout.clearAnimation();
