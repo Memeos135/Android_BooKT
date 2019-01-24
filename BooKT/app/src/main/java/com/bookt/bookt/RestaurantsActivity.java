@@ -14,9 +14,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,9 +28,7 @@ public class RestaurantsActivity extends AppCompatActivity
         RecyclerView recyclerView;
         RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter;
         NestedScrollView nestedScrollView;
-        AppBarLayout appBarLayout;
-        int downScrollCounter = 0;
-        int upScrollCounter = 0;
+        ImageView imageView;
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -38,12 +37,18 @@ public class RestaurantsActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_restaurants);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        toolbar.setTitle("JEDDAH");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
         setSupportActionBar(toolbar);
+
+        // Animating Toolbar Icon for Simple Effect
+        imageView = toolbar.findViewById(R.id.toolbarImage);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ANIMATE FILTER VIEW
+                imageView.animate().rotation(90).setDuration(1000);
+                Toast.makeText(RestaurantsActivity.this, "Click Listener Works!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,8 +78,6 @@ public class RestaurantsActivity extends AppCompatActivity
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
                     "Jeddah", 3, "10", "12"));
 
-            appBarLayout = findViewById(R.id.appBarLayout);
-
             recyclerView = findViewById(R.id.recyclerViewRestaurants);
             // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
             recyclerView.setFocusable(false);
@@ -84,31 +87,6 @@ public class RestaurantsActivity extends AppCompatActivity
             nestedScrollView = findViewById(R.id.nestedScrollView);
             // Point cursor focus to the start of NestedScrollView (default)
             nestedScrollView.requestFocus();
-
-            // Set scroll listener to dynamically collapse and reset Toolbar
-            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    toolbar.clearAnimation();
-                    appBarLayout.clearAnimation();
-                    if (scrollY > oldScrollY) {
-                        downScrollCounter++;
-                        if(downScrollCounter>=20){
-                            toolbar.animate().translationY(-toolbar.getBottom()).setDuration(150);
-                            appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(150);
-                            downScrollCounter = 0;
-                        }
-                    }
-                    if (scrollY < oldScrollY) {
-                        upScrollCounter++;
-                        if(upScrollCounter>=15){
-                            toolbar.animate().translationY(0).setDuration(150);
-                            appBarLayout.animate().translationY(0).setDuration(150);
-                            upScrollCounter = 0;
-                        }
-                    }
-                }
-            });
 
             recyclerViewRestaurantsAdapter = new RestaurantsActivityRecyclerViewAdapter(this, list);
 
@@ -128,33 +106,26 @@ public class RestaurantsActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gallery, menu);
-        return true;
-    }
-
         @Override
         public boolean onPrepareOptionsMenu(Menu menu) {
             System.out.println("HELLO WORLD");
             return true;
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            // Handle action bar item clicks here. The action bar will
+//            // automatically handle clicks on the Home/Up button, so long
+//            // as you specify a parent activity in AndroidManifest.xml.
+//            int id = item.getItemId();
+//
+//            //noinspection SimplifiableIfStatement
+//            if (id == R.id.action_settings) {
+//                return true;
+//            }
+//
+//            return super.onOptionsItemSelected(item);
+//        }
 
 
         @SuppressWarnings("StatementWithEmptyBody")

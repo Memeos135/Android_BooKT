@@ -4,10 +4,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -33,9 +29,6 @@ public class GalleryActivity extends AppCompatActivity
     NestedScrollView nestedScrollView;
     RecyclerView recyclerView;
     GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft;
-    AppBarLayout appBarLayout;
-    int downScrollCounter = 0;
-    int upScrollCounter = 0;
     CardView cardView;
     EditText editText;
     Display mdisp;
@@ -55,10 +48,6 @@ public class GalleryActivity extends AppCompatActivity
         setContentView(R.layout.activity_gallery);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("JEDDAH");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -94,11 +83,11 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
 
-        appBarLayout = findViewById(R.id.appBarLayout);
-
+        // Search View Card
         cardView = findViewById(R.id.cardViewSearch);
         cardView.setFocusable(false);
 
+        // Search View Card's EditText
         editText = findViewById(R.id.editText);
         editText.setSelected(false);
 
@@ -116,26 +105,8 @@ public class GalleryActivity extends AppCompatActivity
         nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(cardView.getX()<mdispSize.x){
+                if (scrollY > oldScrollY || scrollY < oldScrollY) {
                     cardView.animate().translationX(mdispSize.x).setDuration(500);
-                }
-                toolbar.clearAnimation();
-                appBarLayout.clearAnimation();
-                if (scrollY > oldScrollY) {
-                    downScrollCounter++;
-                    if(downScrollCounter>=20){
-                        toolbar.animate().translationY(-toolbar.getBottom()).setDuration(150);
-                        appBarLayout.animate().translationY(-toolbar.getBottom()).setDuration(150);
-                        downScrollCounter = 0;
-                    }
-                }
-                if (scrollY < oldScrollY) {
-                    upScrollCounter++;
-                    if(upScrollCounter>=15){
-                        toolbar.animate().translationY(0).setDuration(150);
-                        appBarLayout.animate().translationY(0).setDuration(150);
-                        upScrollCounter = 0;
-                    }
                 }
             }
         });
