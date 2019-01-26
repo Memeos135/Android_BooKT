@@ -28,7 +28,6 @@ public class RestaurantsActivity extends AppCompatActivity
         RecyclerView recyclerView;
         RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter;
         NestedScrollView nestedScrollView;
-        ImageView imageView;
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -38,17 +37,6 @@ public class RestaurantsActivity extends AppCompatActivity
         setContentView(R.layout.activity_restaurants);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Animating Toolbar Icon for Simple Effect
-        imageView = toolbar.findViewById(R.id.toolbarImage);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ANIMATE FILTER VIEW
-                imageView.animate().rotation(90).setDuration(1000);
-                Toast.makeText(RestaurantsActivity.this, "Click Listener Works!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,21 +50,24 @@ public class RestaurantsActivity extends AppCompatActivity
         // -------------------------------------------RecyclerView and Toolbar setup-------------------------------//
         ArrayList<RestaurantsActivityCard> list = new ArrayList<>();
         list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10", "12"));
+                "Jeddah", 3, "10:00" + "pm ", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
             list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10", "12"));
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+
 
             recyclerView = findViewById(R.id.recyclerViewRestaurants);
             // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)

@@ -40,31 +40,35 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         holder.restaurantName.setText(list.get(position).getRestaurantName());
         holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
         holder.restaurantLocation.setText(list.get(position).getRestaurantLocation());
-        holder.restaurantPriceDollarOne.setImageResource(R.drawable.common_full_open_on_phone);
-        holder.restaurantPriceDollarTwo.setImageResource(R.drawable.common_full_open_on_phone);
-        holder.restaurantPriceDollarThree.setImageResource(R.drawable.common_full_open_on_phone);
-        holder.restaurantPriceDollarFour.setImageResource(R.drawable.common_full_open_on_phone);
 
         if(list.get(position).getRestaurantPriceRange()==1){
 
-            holder.restaurantPriceDollarTwo.setVisibility(View.INVISIBLE);
-            holder.restaurantPriceDollarThree.setVisibility(View.INVISIBLE);
-            holder.restaurantPriceDollarFour.setVisibility(View.INVISIBLE);
+            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
 
         }else if(list.get(position).getRestaurantPriceRange()==2){
 
-            holder.restaurantPriceDollarThree.setVisibility(View.INVISIBLE);
-            holder.restaurantPriceDollarFour.setVisibility(View.INVISIBLE);
+            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
 
         }else if(list.get(position).getRestaurantPriceRange()==3){
 
-            holder.restaurantPriceDollarThree.setVisibility(View.INVISIBLE);
-            holder.restaurantPriceDollarFour.setVisibility(View.INVISIBLE);
+            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarThree.setTextColor(holder.restaurantPriceDollarThree.getResources().getColor(R.color.red_app));
 
+        }else if(list.get(position).getRestaurantPriceRange()==4){
+
+            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarThree.setTextColor(holder.restaurantPriceDollarThree.getResources().getColor(R.color.red_app));
+            holder.restaurantPriceDollarFour.setTextColor(holder.restaurantPriceDollarFour.getResources().getColor(R.color.red_app));
         }
 
-        holder.restaurantOpenHour.setText("Open - " + list.get(position).getRestaurantOpenHour() + " 00pm");
-        holder.restaurantCloseHour.setText("Close - " + list.get(position).getRestaurantCloseHour() + " 00pm");
+        holder.textView6.setText(list.get(position).getRestaurantOpenHour());
+        holder.textView7.setText(list.get(position).getRestaurantCloseHour());
+
+        holder.textView6.setTextColor(holder.restaurantOpenHour.getResources().getColor(R.color.red_app));
+        holder.textView7.setTextColor(holder.restaurantCloseHour.getResources().getColor(R.color.red_app));
 
     }
 
@@ -82,13 +86,15 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         TextView restaurantSubCategory;
         TextView restaurantLocation;
 
-        ImageView restaurantPriceDollarOne;
-        ImageView restaurantPriceDollarTwo;
-        ImageView restaurantPriceDollarThree;
-        ImageView restaurantPriceDollarFour;
+        TextView restaurantPriceDollarOne;
+        TextView restaurantPriceDollarTwo;
+        TextView restaurantPriceDollarThree;
+        TextView restaurantPriceDollarFour;
 
         TextView restaurantOpenHour;
         TextView restaurantCloseHour;
+        TextView textView6;
+        TextView textView7;
 
         public MyViewHolder(View itemView) {
 
@@ -99,13 +105,15 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
             restaurantSubCategory = itemView.findViewById(R.id.restaurantSubCategory);
             restaurantLocation = itemView.findViewById(R.id.restaurantLocation);
 
-            restaurantPriceDollarOne = itemView.findViewById(R.id.imageView7);
-            restaurantPriceDollarTwo = itemView.findViewById(R.id.imageView8);
-            restaurantPriceDollarThree = itemView.findViewById(R.id.imageView9);
-            restaurantPriceDollarFour = itemView.findViewById(R.id.imageView10);
+            restaurantPriceDollarOne = itemView.findViewById(R.id.textView);
+            restaurantPriceDollarTwo = itemView.findViewById(R.id.textView2);
+            restaurantPriceDollarThree = itemView.findViewById(R.id.textView4);
+            restaurantPriceDollarFour = itemView.findViewById(R.id.textView5);
 
             restaurantOpenHour = itemView.findViewById(R.id.restaurantOpenHour);
             restaurantCloseHour = itemView.findViewById(R.id.restaurantCloseHour);
+            textView6 = itemView.findViewById(R.id.textView6);
+            textView7 = itemView.findViewById(R.id.textView7);
 
         }
     }

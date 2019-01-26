@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
@@ -18,7 +19,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -29,10 +32,10 @@ public class GalleryActivity extends AppCompatActivity
     NestedScrollView nestedScrollView;
     RecyclerView recyclerView;
     GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft;
-    CardView cardView;
-    EditText editText;
+    int click = 0;
     Display mdisp;
     Point mdispSize;
+    ConstraintLayout searchView;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -52,6 +55,9 @@ public class GalleryActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        // Linking SearchView
+        searchView = findViewById(R.id.searchVew);
+
         mdisp = getWindowManager().getDefaultDisplay();
         mdispSize = new Point();
         mdisp.getSize(mdispSize);
@@ -59,7 +65,14 @@ public class GalleryActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardView.animate().translationX(0).setDuration(500);
+                click++;
+                System.out.println(click);
+                if(click%2 == 0){
+                    click = 0;
+                    searchView.animate().translationY(mdispSize.y).setDuration(500);
+                }else{
+                    searchView.animate().translationY(0).setDuration(500);
+                }
             }
         });
 
@@ -83,13 +96,9 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
 
-        // Search View Card
-        cardView = findViewById(R.id.cardViewSearch);
-        cardView.setFocusable(false);
-
         // Search View Card's EditText
-        editText = findViewById(R.id.editText);
-        editText.setSelected(false);
+  //      editText = findViewById(R.id.editText);
+//        editText.setSelected(false);
 
         recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
@@ -106,7 +115,10 @@ public class GalleryActivity extends AppCompatActivity
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > oldScrollY || scrollY < oldScrollY) {
-                    cardView.animate().translationX(mdispSize.x).setDuration(500);
+                    // RESETTING CLICKS TO AVOID ERRORS
+                    click = 0;
+                    // CHECK SCREEN RESOLUTION AND TRANSLATE ACCORDINGLY
+                    searchView.animate().translationY(mdispSize.y).setDuration(500);
                 }
             }
         });
