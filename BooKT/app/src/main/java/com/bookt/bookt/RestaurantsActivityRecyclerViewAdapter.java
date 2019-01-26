@@ -36,7 +36,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.restaurantImage.setImageResource(R.drawable.splash);
+        holder.restaurantImage.setImageResource(R.drawable.icon);
         holder.restaurantName.setText(list.get(position).getRestaurantName());
         holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
         holder.restaurantLocation.setText(list.get(position).getRestaurantLocation());

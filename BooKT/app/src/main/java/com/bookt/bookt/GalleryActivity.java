@@ -7,7 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -19,9 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -58,10 +54,12 @@ public class GalleryActivity extends AppCompatActivity
         // Linking SearchView
         searchView = findViewById(R.id.searchVew);
 
+        // Fetching screen resolution
         mdisp = getWindowManager().getDefaultDisplay();
         mdispSize = new Point();
         mdisp.getSize(mdispSize);
 
+        // Click listener for Floating Button to track number of clicks and translate search view Out or Into screen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,10 +93,6 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
-
-        // Search View Card's EditText
-  //      editText = findViewById(R.id.editText);
-//        editText.setSelected(false);
 
         recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)

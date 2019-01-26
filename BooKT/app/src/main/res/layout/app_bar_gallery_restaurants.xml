@@ -13,7 +13,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@android:color/black"
+        android:background="#161616"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -71,7 +71,7 @@
                         app:layout_constraintHorizontal_bias="0.944"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+                        app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
 
                 </android.support.constraint.ConstraintLayout>
@@ -96,6 +96,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/white"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        app:srcCompat="@drawable/ic_filter_list_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

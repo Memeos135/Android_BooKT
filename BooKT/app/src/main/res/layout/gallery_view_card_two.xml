@@ -5,8 +5,8 @@
     android:id="@+id/cardTwo"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="@color/black"
-    app:cardBackgroundColor="@color/black">
+    android:background="#161616"
+    app:cardBackgroundColor="#161616">
 
     <LinearLayout
         android:layout_width="match_parent"
