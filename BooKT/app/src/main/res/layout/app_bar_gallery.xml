@@ -17,12 +17,13 @@
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@style/collapsedAppBar"
             app:contentScrim="#eb2748"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleTextAppearance="@style/expandedAppBar"
-            app:collapsedTitleTextAppearance="@style/collapsedAppBar">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             <ImageView

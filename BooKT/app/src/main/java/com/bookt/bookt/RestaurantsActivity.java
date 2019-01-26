@@ -3,7 +3,7 @@ package com.bookt.bookt;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +28,7 @@ public class RestaurantsActivity extends AppCompatActivity
         RecyclerView recyclerView;
         RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter;
         NestedScrollView nestedScrollView;
+        ImageView locationImageView;
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -37,6 +38,26 @@ public class RestaurantsActivity extends AppCompatActivity
         setContentView(R.layout.activity_restaurants);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RestaurantsActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        locationImageView = toolbar.findViewById(R.id.imageView6);
+
+        locationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationImageView.clearAnimation();
+                locationImageView.setRotation(360);
+                locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -92,6 +113,7 @@ public class RestaurantsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            // CHECK IF FILTER VIEW IS IN-SCREEN OR NOT BEFORE RETURNING TO PREVIOUS ACTIVITY
         } else {
             super.onBackPressed();
         }

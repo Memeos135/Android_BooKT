@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +36,9 @@ public class GalleryActivity extends AppCompatActivity
     Display mdisp;
     Point mdispSize;
     ConstraintLayout searchView;
+    ImageView backImageView;
+    ImageView locationImageView;
+    ImageView filterImageView;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -54,6 +61,41 @@ public class GalleryActivity extends AppCompatActivity
         // Linking SearchView
         searchView = findViewById(R.id.searchVew);
 
+        // Linking to backImageView
+        backImageView = findViewById(R.id.backImageView);
+        // Setting listener
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.animate().translationY(mdispSize.y).setDuration(500);
+                click = 0;
+            }
+        });
+
+        // Linking filter icon of SearchView
+        filterImageView = searchView.findViewById(R.id.imageView2);
+
+        // Setting Listener for filter icon of SearchView
+        filterImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GalleryActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Linking Toolbar locationImage
+        locationImageView = toolbar.findViewById(R.id.imageView6);
+
+        // Animation Listener
+        locationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationImageView.clearAnimation();
+                locationImageView.setRotation(360);
+                locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
+            }
+        });
+
         // Fetching screen resolution
         mdisp = getWindowManager().getDefaultDisplay();
         mdispSize = new Point();
@@ -64,10 +106,10 @@ public class GalleryActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 click++;
-                System.out.println(click);
                 if(click%2 == 0){
                     click = 0;
                     searchView.animate().translationY(mdispSize.y).setDuration(500);
+
                 }else{
                     searchView.animate().translationY(0).setDuration(500);
                 }
@@ -130,6 +172,10 @@ public class GalleryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            // If android Keyboard.BACK is pressed, check if searchView is currently in-screen
+        } else if(searchView.getY() == 0){
+            click = 0;
+            searchView.animate().translationY(mdispSize.y).setDuration(500);
         } else {
             super.onBackPressed();
         }
