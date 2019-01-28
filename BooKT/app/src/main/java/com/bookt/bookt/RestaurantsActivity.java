@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,14 +40,14 @@ public class RestaurantsActivity extends AppCompatActivity
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(RestaurantsActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(RestaurantsActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         locationImageView = toolbar.findViewById(R.id.imageView6);
 
@@ -105,7 +106,6 @@ public class RestaurantsActivity extends AppCompatActivity
             recyclerView.setAdapter(recyclerViewRestaurantsAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // --------------------------------------------------------------------------------------------------------//
-
     }
 
         @Override

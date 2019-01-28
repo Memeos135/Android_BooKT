@@ -43,7 +43,6 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
                     checkBox.setTextColor(checkBox.getResources().getColor(R.color.red_app));
                 }else{
                     checkBox.setTextColor(checkBox.getResources().getColor(R.color.black));
-
                 }
             }
         });

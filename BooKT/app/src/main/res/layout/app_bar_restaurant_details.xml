@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".RestaurantsActivity">
+    tools:context=".RestaurantDetailsActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -84,7 +84,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/content_gallery_restaurant"
+        layout="@layout/content_restaurant_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

@@ -242,6 +242,7 @@ public class GalleryActivity extends AppCompatActivity
         } else if(searchView.getY() == 0){
             click = 0;
             searchView.animate().translationY(mdispSize.y).setDuration(500);
+            searchView.findViewById(R.id.cusom_filter).setVisibility(View.INVISIBLE);
         } else {
             super.onBackPressed();
         }

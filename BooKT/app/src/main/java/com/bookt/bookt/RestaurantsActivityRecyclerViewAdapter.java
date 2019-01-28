@@ -1,6 +1,7 @@
 package com.bookt.bookt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         View view;
         LayoutInflater mInflater = LayoutInflater.from(context);
         view = mInflater.inflate(R.layout.restaurants_view_card, parent, false);
+
         return new MyViewHolder(view);
     }
 
@@ -69,6 +71,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
         holder.textView6.setTextColor(holder.restaurantOpenHour.getResources().getColor(R.color.red_app));
         holder.textView7.setTextColor(holder.restaurantCloseHour.getResources().getColor(R.color.red_app));
+
 
     }
 
@@ -115,6 +118,12 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
             textView6 = itemView.findViewById(R.id.textView6);
             textView7 = itemView.findViewById(R.id.textView7);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context, RestaurantDetailsActivity.class));
+                }
+            });
         }
     }
 }
