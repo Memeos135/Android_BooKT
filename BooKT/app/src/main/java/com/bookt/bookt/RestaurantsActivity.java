@@ -121,7 +121,6 @@ public class RestaurantsActivity extends AppCompatActivity
 
         @Override
         public boolean onPrepareOptionsMenu(Menu menu) {
-            System.out.println("HELLO WORLD");
             return true;
         }
 

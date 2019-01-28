@@ -1,17 +1,18 @@
 package com.bookt.bookt;
 
+import android.app.Dialog;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +21,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,6 +44,7 @@ public class GalleryActivity extends AppCompatActivity
     ImageView backImageView;
     ImageView locationImageView;
     ImageView filterImageView;
+    ListView listview;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -56,10 +62,18 @@ public class GalleryActivity extends AppCompatActivity
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // Linking SearchView
         searchView = findViewById(R.id.searchVew);
+
+        // ListView Linking and Adapter set-up and test
+        listview = searchView.findViewById(R.id.listView);
+        ArrayList<String> x = new ArrayList<>();
+        x.add("HELLO");
+        x.add("WORLD");
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, x);
+        listview.setAdapter(ad);
 
         // Linking to backImageView
         backImageView = findViewById(R.id.backImageView);
@@ -67,19 +81,72 @@ public class GalleryActivity extends AppCompatActivity
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.animate().translationY(mdispSize.y).setDuration(500);
                 click = 0;
+                searchView.animate().translationY(mdispSize.y).setDuration(500);
             }
         });
 
         // Linking filter icon of SearchView
         filterImageView = searchView.findViewById(R.id.imageView2);
 
-        // Setting Listener for filter icon of SearchView
+        // Setting ALL LISTENERS for filter icon of SearchView
         filterImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(GalleryActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
+                listview.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        // Disable click-through if filter view is VISIBLE
+                        if(searchView.findViewById(R.id.cusom_filter).getVisibility()==View.VISIBLE) {
+                            return true;
+                            // Enable click-through if filter view is INVISIBLE
+                        }else{
+                            return false;
+                        }
+                    }
+                });
+                // Enable visibility of filter view as filter icon is pressed
+                searchView.findViewById(R.id.cusom_filter).setVisibility(View.VISIBLE);
+
+                // Filter Listview arraylist set-up for testing
+                ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
+                filterList.add(new GalleryFilterSetter("HELLO"));
+                filterList.add(new GalleryFilterSetter("WORLD"));
+
+                GalleryFilterCustomListAdapter customFilterListVewAdapter =
+                        new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
+
+                ListView listView = (ListView) searchView.findViewById(R.id.filterlistView);
+                listView.setAdapter(customFilterListVewAdapter);
+
+                final ImageView closeImage = (ImageView) searchView.findViewById(R.id.filterClose);
+
+                // Filter close image on click listener
+                closeImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Disable visibility of filter view
+                        searchView.findViewById(R.id.cusom_filter).setVisibility(View.INVISIBLE);
+                    }
+                });
+
+                // Process okButton Press
+                Button okButton = (Button) searchView.findViewById(R.id.okButton);
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(GalleryActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Process clearButton press
+                Button clearButton = (Button) searchView.findViewById(R.id.clearAllButton);
+                clearButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(GalleryActivity.this, "CLEAR PRESSED", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -146,15 +213,14 @@ public class GalleryActivity extends AppCompatActivity
         // Point cursor focus to the start of NestedScrollView (default)
         nestedScrollView.requestFocus();
 
-        // Set scroll listener to dynamically collapse and reset Toolbar
-        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        // Set touch listener to disable scroll when SearchView is expanded
+        nestedScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY || scrollY < oldScrollY) {
-                    // RESETTING CLICKS TO AVOID ERRORS
-                    click = 0;
-                    // CHECK SCREEN RESOLUTION AND TRANSLATE ACCORDINGLY
-                    searchView.animate().translationY(mdispSize.y).setDuration(500);
+            public boolean onTouch(View v, MotionEvent event) {
+                if(searchView.getY() == 0) {
+                    return true;
+                }else{
+                   return false;
                 }
             }
         });
