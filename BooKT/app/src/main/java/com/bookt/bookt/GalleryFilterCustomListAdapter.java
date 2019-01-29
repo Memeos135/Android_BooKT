@@ -34,15 +34,12 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
         final CheckBox checkBox = view.findViewById(R.id.checkBox);
 
         checkBox.setText(list.get(position).getFilterText());
-        checkBox.setTextColor(checkBox.getResources().getColor(R.color.black));
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (checkBox.isChecked()){
-                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.red_app));
-                }else{
-                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.black));
+                    // DO SOMETHING
                 }
             }
         });

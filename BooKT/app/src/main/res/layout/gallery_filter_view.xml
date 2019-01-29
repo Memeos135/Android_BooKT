@@ -59,11 +59,11 @@
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
-                android:background="@color/light_grey"
+                android:background="@color/red_app"
                 android:gravity="start|center_vertical"
                 android:paddingStart="25dp"
                 android:text="FILTER BY"
-                android:textColor="#161616"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <ListView
@@ -88,15 +88,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="clear all" />
+                android:background="@color/red_app"
+                android:text="clear all"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@color/red_app"
                 android:text="ok"
-                android:textColor="#eb2748" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

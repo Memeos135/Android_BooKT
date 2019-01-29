@@ -113,7 +113,6 @@ public class RestaurantsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            // CHECK IF FILTER VIEW IS IN-SCREEN OR NOT BEFORE RETURNING TO PREVIOUS ACTIVITY
         } else {
             super.onBackPressed();
         }

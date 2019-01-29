@@ -7,29 +7,29 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="HOME" />
+            android:title="Home" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="PROFILE" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="SIGN-UP" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="SIGN-IN" />
+            android:title="Profile" />
         <item
             android:id="@+id/nav_reservations"
             android:icon="@drawable/common_full_open_on_phone"
-            android:title="RESERVATIONS"
+            android:title="Reservations"
             />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
-            android:title="HISTORY"
+            android:title="History"
             />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Sign-up" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Sign-in" />
     </group>
 
 </menu>

@@ -107,6 +107,10 @@ public class GalleryActivity extends AppCompatActivity
                 });
                 // Enable visibility of filter view as filter icon is pressed
                 searchView.findViewById(R.id.cusom_filter).setVisibility(View.VISIBLE);
+                searchView.findViewById(R.id.search_card).setVisibility(View.INVISIBLE);
+                searchView.findViewById(R.id.listView).setVisibility(View.INVISIBLE);
+
+                searchView.findViewById(R.id.searchViewCard).setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                 // Filter Listview arraylist set-up for testing
                 ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
@@ -127,6 +131,12 @@ public class GalleryActivity extends AppCompatActivity
                     public void onClick(View v) {
                         // Disable visibility of filter view
                         searchView.findViewById(R.id.cusom_filter).setVisibility(View.INVISIBLE);
+                        searchView.findViewById(R.id.search_card).setVisibility(View.INVISIBLE);
+                        searchView.findViewById(R.id.listView).setVisibility(View.INVISIBLE);
+
+                        searchView.findViewById(R.id.search_card).setVisibility(View.VISIBLE);
+                        searchView.findViewById(R.id.listView).setVisibility(View.VISIBLE);
+                        searchView.findViewById(R.id.searchViewCard).setBackgroundColor(getResources().getColor(android.R.color.white));
                     }
                 });
 
