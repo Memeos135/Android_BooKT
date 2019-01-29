@@ -39,7 +39,9 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (checkBox.isChecked()){
-                    // DO SOMETHING
+                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.red_app));
+                }else{
+                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.black));
                 }
             }
         });

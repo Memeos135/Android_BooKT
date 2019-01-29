@@ -1,6 +1,7 @@
 package com.bookt.bookt;
 
 import android.app.Activity;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,10 +111,6 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         View view = (TextView) convertView.findViewById(R.id.expandedListHeader);
 
         ((TextView) view).setText(groupItem.get(groupPosition));
-
-        //((CheckedTextView) convertView).setText(groupItem.get(groupPosition));
-        //ViewGroup.LayoutParams params = convertView.getLayoutParams();
-        //((CheckedTextView) convertView).setChecked(isExpanded);
 
         return convertView;
     }

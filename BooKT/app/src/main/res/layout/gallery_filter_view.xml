@@ -88,18 +88,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/red_app"
+                android:background="#E2E2E2"
                 android:text="clear all"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/dark_gray"
+                android:textSize="22sp" />
 
             <Button
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/red_app"
+                android:background="#E2E2E2"
                 android:text="ok"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/red_app"
+                android:textSize="22sp" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
