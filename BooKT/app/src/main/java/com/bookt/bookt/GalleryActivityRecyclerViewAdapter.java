@@ -99,7 +99,8 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         holder.imageViewOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, RestaurantsActivity.class));
+                context.startActivity(new Intent(context,
+                        RestaurantsActivity.class));
             }
         });
 
@@ -110,7 +111,8 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         holder.imageViewTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, RestaurantsActivity.class));
+                context.startActivity(new Intent(context,
+                        RestaurantsActivity.class));
             }
         });
 

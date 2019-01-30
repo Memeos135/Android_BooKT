@@ -6,6 +6,9 @@ public class GalleryActivityCard {
     String restaurantType;
     String restaurantTypeImage;
 
+    public GalleryActivityCard() {
+    }
+
     public String getRestaurantTypeName() {
         return restaurantType;
     }
@@ -20,9 +23,6 @@ public class GalleryActivityCard {
 
     public void setRestaurantTypeImage(String image) {
         this.restaurantTypeImage = image;
-    }
-
-    public GalleryActivityCard() {
     }
 
     public GalleryActivityCard(String name, String image) {

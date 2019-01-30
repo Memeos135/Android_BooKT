@@ -13,15 +13,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -46,6 +48,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     MapView mapView;
     GoogleMap mMap;
     Context context;
+    Button reserveButton;
+    int expandableListViewBaseHeight = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,12 +61,25 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         setGroupData();
         setChildGroupData();
 
+        // gallery images listener
+        setGalleryImageListener();
+
+        // Listener for RESERVE button
+        reserveButton = findViewById(R.id.reserveButton);
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "RESERVE PRESSED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // mapview setup
         mapView = findViewById(R.id.mapView2);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //galleryImagesSizeText = findViewById(R.id.textView15);
 
         // expandablelistview setup and adapter linking
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
@@ -73,54 +90,55 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
         expandableListView.setAdapter(mNewAdapter);
 
-        // Converting Pixels to Dp (regarding the expandedlistview indicator - switched it to right side)
-        ViewTreeObserver viewTreeObserver = expandableListView.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                expandableListView.setIndicatorBounds(expandableListView.getRight()-
-                        (int)(550/getApplicationContext().getResources().getDisplayMetrics().density)
-                        , expandableListView.getWidth());
-            }
-        });
-
-        // dynamically stretch the expandablelistview based on GROUP arraylist size
-        if (groupItem.size() > 4) {
-            ListAdapter listadp = expandableListView.getAdapter();
-            if (listadp != null) {
-                int totalHeight = 0;
-                for (int i = 0; i < listadp.getCount(); i++) {
-                    View listItem = listadp.getView(i, null, expandableListView);
-                    listItem.measure(0, 0);
-                    totalHeight += listItem.getMeasuredHeight();
-                }
-                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
-                expandableListView.setLayoutParams(params);
-                expandableListView.requestLayout();
-            }
-        }
+        // check expandable listview height
+        checkExpandableListViewHeight();
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int i) {
-                Toast.makeText(getApplicationContext(), "Clicked On Group Expanded",
-                        Toast.LENGTH_SHORT).show();
+                // Used when group collapses and group items are BIGGER than 5
+                if(expandableListViewBaseHeight == 0 && groupItem.size() > 5){
+                    expandableListViewBaseHeight = expandableListView.getLayoutParams().height;
+                }
+                ListAdapter listadp = expandableListView.getAdapter();
+                if (listadp != null) {
+                    int totalHeight = 0;
+                    for (int j = 0; j < listadp.getCount(); j++) {
+                        View listItem = listadp.getView(j, null, expandableListView);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                    params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
+                    expandableListView.setLayoutParams(params);
+                    expandableListView.requestLayout();
+                }
             }
         });
         expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
             public void onGroupCollapse(int i) {
-                Toast.makeText(getApplicationContext(), "Clicked On Group Collapsed",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                Toast.makeText(getApplicationContext(), "Clicked On Child",
-                        Toast.LENGTH_SHORT).show();
-                return false;
+                // check if group items are BIGGER than 5, if so return to base size
+                if(groupItem.size() > 5){
+                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                    params.height = expandableListViewBaseHeight;
+                    expandableListView.setLayoutParams(params);
+                    expandableListView.requestLayout();
+                }else{
+                    ListAdapter listadp = expandableListView.getAdapter();
+                    if (listadp != null) {
+                        int totalHeight = 0;
+                        for (int j = 0; j < listadp.getCount(); j++) {
+                            View listItem = listadp.getView(j, null, expandableListView);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                        params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
+                        expandableListView.setLayoutParams(params);
+                        expandableListView.requestLayout();
+                    }
+                }
             }
         });
 
@@ -132,11 +150,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Listener for Reserve Button within toolbar
-        toolbar.findViewById(R.id.angry_btn).setOnClickListener(new View.OnClickListener() {
+        // Listener for CALL icon within toolbar
+        toolbar.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Reserve Pressed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "CALL PRESSED", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,6 +177,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
                 locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
             }
         });
+
     }
 
 
@@ -174,17 +193,21 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected (MenuItem item){
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.Home) {
+            context.startActivity(new Intent(context, GalleryActivity.class));
+        } else if (id == R.id.Profile) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.Reservations) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.History) {
+
+        } else if (id == R.id.Signup) {
+
+        } else if (id == R.id.Signin) {
 
         }
 
@@ -318,7 +341,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
                                 // start the google maps activity
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                                getApplicationContext().startActivity(intent);
+                                context.startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -326,5 +349,43 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
             }
         });
 
+    }
+
+    public void checkExpandableListViewHeight(){
+        // if GROUP items are less than 5, edit the height to wrap its size
+        if(groupItem.size() < 5){
+            ListAdapter listadp = expandableListView.getAdapter();
+            if (listadp != null) {
+                int totalHeight = 0;
+                for (int j = 0; j < listadp.getCount(); j++) {
+                    View listItem = listadp.getView(j, null, expandableListView);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight();
+                }
+                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+                params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
+                expandableListView.setLayoutParams(params);
+                expandableListView.requestLayout();
+            }
+        }
+    }
+
+    public void setGalleryImageListener(){
+        LinearLayout linearLayout = findViewById(R.id.linearLayout1);
+        LinearLayout linearLayout1 = findViewById(R.id.linearLayout2);
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Image Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        linearLayout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Image Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -3,106 +3,107 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/customFilterCard"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardBackgroundColor="#161616">
+    android:layout_width="350dp"
+    android:layout_height="500dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="0.5dp"
-        android:background="@android:color/white">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="15dp"
-                android:layout_weight="0.1"
-                android:gravity="start|center_vertical"
-                android:text="Cuisines"
-                android:textColor="#161616" />
-
-            <ImageView
-                android:id="@+id/filterClose"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.9"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_close_black_24dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearTwo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="60dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:background="@color/red_app"
-                android:gravity="start|center_vertical"
-                android:paddingStart="25dp"
-                android:text="FILTER BY"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-            <ListView
-                android:id="@+id/filterlistView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal"
+            android:layout_weight="0.1"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"
+            android:text="Cuisines"
+            android:textColor="#161616"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ListView
+            android:id="@+id/filterlistView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="60dp"
+            android:paddingTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearTwo">
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="60dp"
+            android:background="#F7F7F7"
+            android:gravity="start|center_vertical"
+            android:paddingStart="25dp"
+            android:text="FILTER BY"
+            android:textColor="#161616"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/filterlistView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <Button
                 android:id="@+id/clearAllButton"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#E2E2E2"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#F7F7F7"
                 android:text="clear all"
                 android:textColor="@color/dark_gray"
-                android:textSize="22sp" />
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#E2E2E2"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="#F7F7F7"
                 android:text="ok"
                 android:textColor="@color/red_app"
-                android:textSize="22sp" />
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
+
 </android.support.v7.widget.CardView>

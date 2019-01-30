@@ -1,8 +1,6 @@
 package com.bookt.bookt;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -28,12 +26,18 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if(view == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.gallery_custom_filter_listview, parent, false);
+            view = LayoutInflater.from(getContext())
+                    .inflate(R.layout.gallery_custom_filter_listview, parent, false);
         }
 
         final CheckBox checkBox = view.findViewById(R.id.checkBox);
 
         checkBox.setText(list.get(position).getFilterText());
+
+        // check if CLEAR ALL button has been pressed or if the adapter has been called on DataChangedNotify
+        if(!list.get(position).getChecked()){
+            checkBox.setChecked(false);
+        }
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -41,7 +45,7 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
                 if (checkBox.isChecked()){
                     checkBox.setTextColor(checkBox.getResources().getColor(R.color.red_app));
                 }else{
-                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.black));
+                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.gray));
                 }
             }
         });

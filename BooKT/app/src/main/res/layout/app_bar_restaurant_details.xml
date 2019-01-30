@@ -74,22 +74,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
-                    <Button
-                        android:id="@+id/angry_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:background="@android:color/transparent"
-
-                        android:shadowColor="@color/white"
-                        android:text="Reserve"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="12dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.972"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="0.904"
+                        app:layout_constraintStart_toEndOf="@+id/textView3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_call_black_24dp" />
 
 
                 </android.support.constraint.ConstraintLayout>

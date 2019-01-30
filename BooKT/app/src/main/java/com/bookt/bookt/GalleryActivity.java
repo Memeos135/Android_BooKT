@@ -1,14 +1,17 @@
 package com.bookt.bookt;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -21,10 +24,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,19 +48,28 @@ public class GalleryActivity extends AppCompatActivity
     ImageView locationImageView;
     ImageView filterImageView;
     ListView listview;
+    Context context;
+    ArrayList<GalleryFilterSetter> filterList;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        setTheme(R.style.AppTheme);
+//        try {
+//            TimeUnit.SECONDS.sleep(2);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_gallery);
+
+        context = this;
+
+        // Fetching screen resolution
+        mdisp = getWindowManager().getDefaultDisplay();
+        mdispSize = new Point();
+        mdisp.getSize(mdispSize);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,11 +81,11 @@ public class GalleryActivity extends AppCompatActivity
 
         // ListView Linking and Adapter set-up and test
         listview = searchView.findViewById(R.id.listView);
-        ArrayList<String> x = new ArrayList<>();
-        x.add("HELLO");
-        x.add("WORLD");
-        ArrayAdapter<String> ad = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, x);
-        listview.setAdapter(ad);
+        ArrayList<SearchViewResultsSetter> x = new ArrayList<>();
+        x.add(new SearchViewResultsSetter("Burger King", "Northern Obhur"));
+        x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+        SearchViewResultsListAdapter searchViewResultsListAdapter = new SearchViewResultsListAdapter(context, x);
+        listview.setAdapter(searchViewResultsListAdapter);
 
         // Linking to backImageView
         backImageView = findViewById(R.id.backImageView);
@@ -93,55 +105,28 @@ public class GalleryActivity extends AppCompatActivity
         filterImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listview.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        // Disable click-through if filter view is VISIBLE
-                        if(searchView.findViewById(R.id.cusom_filter).getVisibility()==View.VISIBLE) {
-                            return true;
-                            // Enable click-through if filter view is INVISIBLE
-                        }else{
-                            return false;
-                        }
-                    }
-                });
-                // Enable visibility of filter view as filter icon is pressed
-                searchView.findViewById(R.id.cusom_filter).setVisibility(View.VISIBLE);
-                searchView.findViewById(R.id.search_card).setVisibility(View.INVISIBLE);
-                searchView.findViewById(R.id.listView).setVisibility(View.INVISIBLE);
 
-                searchView.findViewById(R.id.searchViewCard).setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                final Dialog dialog = new Dialog(GalleryActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(false);
+                dialog.setContentView(R.layout.gallery_filter_view);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.setCancelable(true);
+                dialog.show();
 
                 // Filter Listview arraylist set-up for testing
-                ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
-                filterList.add(new GalleryFilterSetter("HELLO"));
-                filterList.add(new GalleryFilterSetter("WORLD"));
+                filterList  = new ArrayList<>();
+                filterList.add(new GalleryFilterSetter("HELLO", false));
+                filterList.add(new GalleryFilterSetter("WORLD", false));
 
-                GalleryFilterCustomListAdapter customFilterListVewAdapter =
+                final GalleryFilterCustomListAdapter customFilterListVewAdapter =
                         new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
 
-                ListView listView = (ListView) searchView.findViewById(R.id.filterlistView);
+                final ListView listView = (ListView) dialog.findViewById(R.id.filterlistView);
                 listView.setAdapter(customFilterListVewAdapter);
 
-                final ImageView closeImage = (ImageView) searchView.findViewById(R.id.filterClose);
-
-                // Filter close image on click listener
-                closeImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Disable visibility of filter view
-                        searchView.findViewById(R.id.cusom_filter).setVisibility(View.INVISIBLE);
-                        searchView.findViewById(R.id.search_card).setVisibility(View.INVISIBLE);
-                        searchView.findViewById(R.id.listView).setVisibility(View.INVISIBLE);
-
-                        searchView.findViewById(R.id.search_card).setVisibility(View.VISIBLE);
-                        searchView.findViewById(R.id.listView).setVisibility(View.VISIBLE);
-                        searchView.findViewById(R.id.searchViewCard).setBackgroundColor(getResources().getColor(android.R.color.white));
-                    }
-                });
-
                 // Process okButton Press
-                Button okButton = (Button) searchView.findViewById(R.id.okButton);
+                Button okButton = (Button) dialog.findViewById(R.id.okButton);
                 okButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -150,15 +135,18 @@ public class GalleryActivity extends AppCompatActivity
                 });
 
                 // Process clearButton press
-                Button clearButton = (Button) searchView.findViewById(R.id.clearAllButton);
+                Button clearButton = (Button) dialog.findViewById(R.id.clearAllButton);
                 clearButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(GalleryActivity.this, "CLEAR PRESSED", Toast.LENGTH_SHORT).show();
+                        for(int i = 0; i < filterList.size(); i++){
+                            filterList.get(i).setChecked(false);
+                        }
+                        customFilterListVewAdapter.notifyDataSetChanged();
                     }
                 });
             }
-        });
+            });
 
         // Linking Toolbar locationImage
         locationImageView = toolbar.findViewById(R.id.imageView6);
@@ -172,11 +160,6 @@ public class GalleryActivity extends AppCompatActivity
                 locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
             }
         });
-
-        // Fetching screen resolution
-        mdisp = getWindowManager().getDefaultDisplay();
-        mdispSize = new Point();
-        mdisp.getSize(mdispSize);
 
         // Click listener for Floating Button to track number of clicks and translate search view Out or Into screen
         fab.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +235,6 @@ public class GalleryActivity extends AppCompatActivity
         } else if(searchView.getY() == 0){
             click = 0;
             searchView.animate().translationY(mdispSize.y).setDuration(500);
-            searchView.findViewById(R.id.cusom_filter).setVisibility(View.INVISIBLE);
         } else {
             super.onBackPressed();
         }
@@ -264,13 +246,17 @@ public class GalleryActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.Home) {
+            context.startActivity(new Intent(context, GalleryActivity.class));
+        } else if (id == R.id.Profile) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.Reservations) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.History) {
+
+        } else if (id == R.id.Signup) {
+
+        } else if (id == R.id.Signin) {
 
         }
 
