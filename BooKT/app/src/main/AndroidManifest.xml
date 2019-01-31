@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bookt.bookt"
     >
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
+
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
@@ -39,6 +40,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".RestaurantDetailsActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".RestaurantDetailsActivityGallery"/>
+        <activity android:name=".RestaurantReservationActivity"/>
     </application>
 
 </manifest>

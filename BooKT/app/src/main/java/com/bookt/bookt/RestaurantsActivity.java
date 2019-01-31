@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -79,22 +77,12 @@ public class RestaurantsActivity extends AppCompatActivity
         ArrayList<RestaurantsActivityCard> list = new ArrayList<>();
         list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
                 "Jeddah", 3, "10:00" + "pm ", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-            list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                    "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
 
 
             recyclerView = findViewById(R.id.recyclerViewRestaurants);
@@ -128,21 +116,6 @@ public class RestaurantsActivity extends AppCompatActivity
         public boolean onPrepareOptionsMenu(Menu menu) {
             return true;
         }
-
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            // Handle action bar item clicks here. The action bar will
-//            // automatically handle clicks on the Home/Up button, so long
-//            // as you specify a parent activity in AndroidManifest.xml.
-//            int id = item.getItemId();
-//
-//            //noinspection SimplifiableIfStatement
-//            if (id == R.id.action_settings) {
-//                return true;
-//            }
-//
-//            return super.onOptionsItemSelected(item);
-//        }
 
 
         @SuppressWarnings("StatementWithEmptyBody")

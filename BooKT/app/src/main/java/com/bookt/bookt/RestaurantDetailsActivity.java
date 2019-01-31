@@ -1,19 +1,22 @@
 package com.bookt.bookt;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -41,14 +43,11 @@ import java.util.Locale;
 
 public class RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    ImageView locationImageView;
     ExpandableListView expandableListView;
     ArrayList<String> groupItem = new ArrayList<String>();
     ArrayList<Object> childItem = new ArrayList<Object>();
-    MapView mapView;
     GoogleMap mMap;
     Context context;
-    Button reserveButton;
     int expandableListViewBaseHeight = 0;
 
     @Override
@@ -58,6 +57,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         context = this;
 
+        // expandable listview data setup
         setGroupData();
         setChildGroupData();
 
@@ -65,32 +65,33 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         setGalleryImageListener();
 
         // Listener for RESERVE button
-        reserveButton = findViewById(R.id.reserveButton);
+        final Button reserveButton = findViewById(R.id.reserveButton);
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "RESERVE PRESSED", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, RestaurantReservationActivity.class));
             }
         });
 
-        // mapview setup
-        mapView = findViewById(R.id.mapView2);
+        // google maps setup
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //galleryImagesSizeText = findViewById(R.id.textView15);
-
         // expandablelistview setup and adapter linking
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-
         expandableListView.setFocusable(false);
 
         ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(groupItem, childItem);
         mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
         expandableListView.setAdapter(mNewAdapter);
 
-        // check expandable listview height
+        // ENABLE NESTED SCROLLING OF EXPANDABLE LISTVIEW
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            expandableListView.setNestedScrollingEnabled(true);
+        }
+
+        // check expandable listview height before proceeding
         checkExpandableListViewHeight();
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -142,11 +143,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
             }
         });
 
-        // ENABLE NESTED SCROLLING OF EXPANDED LIST VIEW
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            expandableListView.setNestedScrollingEnabled(true);
-        }
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -154,7 +150,25 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         toolbar.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "CALL PRESSED", Toast.LENGTH_SHORT).show();
+                final AlertDialog.Builder builder =
+                        new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+
+                builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(isPermissionGranted()) {
+                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0547171060"));
+                                    context.startActivity(intent);
+                                }else{
+                                    Toast.makeText(context,
+                                            "Please enable phone permission through settings > apps & notifications",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_menu_call).show();
             }
         });
 
@@ -167,7 +181,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        locationImageView = toolbar.findViewById(R.id.imageView6);
+        final ImageView locationImageView = toolbar.findViewById(R.id.imageView6);
 
         locationImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,9 +236,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         groupItem.add("Mobile");
         groupItem.add("Manufacturer");
         groupItem.add("Extras");
-        groupItem.add("Science");
-        groupItem.add("Business");
-        groupItem.add("Medicine");
     }
 
     // fill in the childen of expandablelistview GROUP
@@ -266,34 +277,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         child.add("Location");
         child.add("Root Cause");
         childItem.add(child);
-        /**
-         * Add Data For Science
-         */
-        child = new ArrayList<String>();
-        child.add("Contact Us");
-        child.add("About Us");
-        child.add("Location");
-        child.add("Root Cause");
-        childItem.add(child);
-        /**
-         * Add Data For Business
-         */
-        child = new ArrayList<String>();
-        child.add("Contact Us");
-        child.add("About Us");
-        child.add("Location");
-        child.add("Root Cause");
-        childItem.add(child);
-        /**
-         * Add Data For Medicine
-         */
-        child = new ArrayList<String>();
-        child.add("Contact Us");
-        child.add("About Us");
-        child.add("Location");
-        child.add("Root Cause");
-        childItem.add(child);
-
     }
 
     // when map is setup, and view is opened, pin this location, zoom, and add marker
@@ -318,13 +301,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         mMap.addMarker(markerOptions);
 
         // Click listener for mapview to open Google Maps and pin marker
+        final MapView mapView = findViewById(R.id.mapView2);
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Load alert dialog
-                final AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
 
                 builder.setTitle("Google Maps").setMessage("Would you like to open Google Maps?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -371,21 +352,21 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     }
 
     public void setGalleryImageListener(){
-        LinearLayout linearLayout = findViewById(R.id.linearLayout1);
-        LinearLayout linearLayout1 = findViewById(R.id.linearLayout2);
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        final ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutGallery);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Image Clicked", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, RestaurantDetailsActivityGallery.class));
             }
         });
+    }
 
-        linearLayout1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Image Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+    public boolean isPermissionGranted(){
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+        if(result == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

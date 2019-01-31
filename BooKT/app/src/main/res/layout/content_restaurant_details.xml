@@ -46,7 +46,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="3dp"
                         android:text="$"
-                        android:textColor="@android:color/white"
+                        android:textColor="#E5E5E5"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toStartOf="@+id/dollarFour"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:text="$"
-                        android:textColor="@android:color/white"
+                        android:textColor="#E5E5E5"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +112,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="3dp"
                         android:text="$"
-                        android:textColor="@android:color/white"
+                        android:textColor="#E5E5E5"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toStartOf="@+id/dollarTwo"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -142,7 +142,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/cuisineText"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/restaurantName"
-                        app:srcCompat="@drawable/ic_location_on_black_24dp" />
+                        app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
 
                     <TextView
                         android:id="@+id/dollarTwo"
@@ -152,7 +152,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="3dp"
                         android:text="$"
-                        android:textColor="@android:color/white"
+                        android:textColor="#E5E5E5"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toStartOf="@+id/dollarThree"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -332,23 +332,25 @@
             android:layout_marginBottom="25dp"
             app:cardBackgroundColor="#161616">
 
-            <android.support.constraint.ConstraintLayout
+            <TextView
+                android:id="@+id/textView16"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:paddingStart="16dp"
+                android:text="Gallery"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:paddingStart="16dp"
-                    android:text="Gallery"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayoutGallery"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="24dp">
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -361,7 +363,8 @@
                     android:weightSum="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView16">
+                    app:layout_constraintTop_toBottomOf="@id/textView16"
+                    tools:ignore="NotSibling">
 
                     <ImageView
                         android:id="@+id/imageView15"

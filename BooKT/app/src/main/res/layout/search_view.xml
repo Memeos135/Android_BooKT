@@ -5,7 +5,6 @@
     android:id="@+id/searchVew"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:translationY="2600dp"
     android:background="@drawable/search_view_gradient_background">
 
     <ImageView
@@ -19,22 +18,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/backImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu_black_24dp" />
-
-    <ImageView
         android:id="@+id/backImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
