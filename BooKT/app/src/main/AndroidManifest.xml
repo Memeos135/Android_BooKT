@@ -40,7 +40,6 @@
             android:launchMode="singleTask"/>
         <activity android:name=".RestaurantDetailsActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".RestaurantDetailsActivityGallery"/>
         <activity android:name=".RestaurantReservationActivity"/>
     </application>
 

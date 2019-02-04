@@ -1,15 +1,17 @@
 package com.bookt.bookt;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -23,10 +25,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,6 +53,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     GoogleMap mMap;
     Context context;
     int expandableListViewBaseHeight = 0;
+    ArrayList<Integer> imageViewArrayList;
+    int currentImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,11 +67,26 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         setGroupData();
         setChildGroupData();
 
-        // gallery images listener
-        setGalleryImageListener();
+
+        // Setting up Gallery Images
+        imageViewArrayList = new ArrayList<Integer>();
+        imageViewArrayList.add(R.drawable.splash);
+        imageViewArrayList.add(R.drawable.main_header);
+        imageViewArrayList.add(R.drawable.main_header_two);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_focused);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal_background);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_disabled);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light_focused);
+        setGalleryImages(imageViewArrayList);
 
         // Listener for RESERVE button
         final Button reserveButton = findViewById(R.id.reserveButton);
+        // animate reserve button to grab attention
+        animateReserveButton(reserveButton);
+
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -351,16 +372,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }
     }
 
-    public void setGalleryImageListener(){
-        final ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutGallery);
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, RestaurantDetailsActivityGallery.class));
-            }
-        });
-    }
-
     public boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         if(result == PackageManager.PERMISSION_GRANTED){
@@ -368,5 +379,105 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }else{
             return false;
         }
+    }
+
+    // Gallery Images Handler
+    public void clickHandler(View v){
+
+        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.restaurant_details_gallery_activity);
+
+        final ImageView imageView = dialog.findViewById(R.id.imageView4);
+        final SeekBar seekBar = dialog.findViewById(R.id.seekBar);
+        seekBar.setEnabled(false);
+
+        if(v.getTag().equals("imageOne")){
+
+            imageView.setImageResource(imageViewArrayList.get(0));
+            seekBar.setProgress(0);
+            currentImage = 0;
+
+        }else if(v.getTag().equals("imageTwo")){
+
+            imageView.setImageResource(imageViewArrayList.get(1));
+            seekBar.setProgress(1);
+            currentImage = 1;
+
+        }else if(v.getTag().equals("imageThree")){
+
+            imageView.setImageResource(imageViewArrayList.get(2));
+            seekBar.setProgress(2);
+            currentImage = 2;
+
+        }else {
+
+            imageView.setImageResource(imageViewArrayList.get(3));
+            seekBar.setProgress(3);
+            currentImage = 3;
+
+        }
+        dialog.show();
+
+        ImageView rightArrow = dialog.findViewById(R.id.imageView10);
+        ImageView leftArrow = dialog.findViewById(R.id.imageView11);
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentImage != imageViewArrayList.size()) {
+                    imageView.setImageResource(imageViewArrayList.get(currentImage++));
+                    seekBar.setProgress(currentImage);
+                }else{
+                    currentImage = 0;
+                    imageView.setImageResource(imageViewArrayList.get(currentImage));
+                    seekBar.setProgress(currentImage);
+                }
+            }
+        });
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentImage >= 0) {
+                    imageView.setImageResource(imageViewArrayList.get(currentImage));
+                    seekBar.setProgress(currentImage);
+                    currentImage--;
+                }else{
+                    imageView.setImageResource(imageViewArrayList.get(imageViewArrayList.size()-1));
+                    seekBar.setProgress(10);
+                    currentImage = imageViewArrayList.size()-1;
+                }
+            }
+        });
+
+    }
+
+    // Set 4 displayed images
+    public void setGalleryImages(ArrayList<Integer> imagesList){
+        ImageView imageView1 = findViewById(R.id.imageView15);
+        ImageView imageView2 = findViewById(R.id.imageView14);
+        ImageView imageView3 = findViewById(R.id.imageView17);
+        ImageView imageView4 = findViewById(R.id.imageView16);
+
+        imageView1.setImageResource(imagesList.get(0));
+        imageView2.setImageResource(imagesList.get(1));
+        imageView3.setImageResource(imagesList.get(2));
+        imageView4.setImageResource(imagesList.get(3));
+    }
+
+    // animate Reserve Button
+    public void animateReserveButton(final Button reserveButton){
+        reserveButton.animate().scaleXBy(0.2f).scaleYBy(0.2f).alpha(0.3f).setDuration(600);
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reserveButton.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).alpha(1).setDuration(400);
+            }
+        }, 700);
     }
 }

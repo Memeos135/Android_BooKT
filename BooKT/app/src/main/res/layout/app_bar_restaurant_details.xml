@@ -79,6 +79,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="12dp"
+                        android:alpha="0.5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.904"
                         app:layout_constraintStart_toEndOf="@+id/textView3"
