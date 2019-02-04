@@ -52,7 +52,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     ArrayList<Object> childItem = new ArrayList<Object>();
     GoogleMap mMap;
     Context context;
-    int expandableListViewBaseHeight = 0;
+    //int expandableListViewBaseHeight = 0;
     ArrayList<Integer> imageViewArrayList;
     int currentImage;
 
@@ -119,9 +119,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
             @Override
             public void onGroupExpand(int i) {
                 // Used when group collapses and group items are BIGGER than 5
-                if(expandableListViewBaseHeight == 0 && groupItem.size() > 5){
-                    expandableListViewBaseHeight = expandableListView.getLayoutParams().height;
-                }
+//                if(expandableListViewBaseHeight == 0 && groupItem.size() > 5){
+//                    expandableListViewBaseHeight = expandableListView.getLayoutParams().height;
+//                }
+
                 ListAdapter listadp = expandableListView.getAdapter();
                 if (listadp != null) {
                     int totalHeight = 0;
@@ -141,12 +142,13 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
             @Override
             public void onGroupCollapse(int i) {
                 // check if group items are BIGGER than 5, if so return to base size
-                if(groupItem.size() > 5){
-                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                    params.height = expandableListViewBaseHeight;
-                    expandableListView.setLayoutParams(params);
-                    expandableListView.requestLayout();
-                }else{
+//                if(groupItem.size() > 5){
+//                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+//                    params.height = expandableListViewBaseHeight;
+//                    expandableListView.setLayoutParams(params);
+//                    expandableListView.requestLayout();
+//                }else{
+
                     ListAdapter listadp = expandableListView.getAdapter();
                     if (listadp != null) {
                         int totalHeight = 0;
@@ -161,7 +163,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
                         expandableListView.requestLayout();
                     }
                 }
-            }
+            //}
         });
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -355,7 +357,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
     public void checkExpandableListViewHeight(){
         // if GROUP items are less than 5, edit the height to wrap its size
-        if(groupItem.size() < 5){
+//        if(groupItem.size() < 5){
             ListAdapter listadp = expandableListView.getAdapter();
             if (listadp != null) {
                 int totalHeight = 0;
@@ -370,7 +372,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
                 expandableListView.requestLayout();
             }
         }
-    }
+    //}
 
     public boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
@@ -427,13 +429,16 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentImage != imageViewArrayList.size()) {
-                    imageView.setImageResource(imageViewArrayList.get(currentImage++));
+                if(currentImage < imageViewArrayList.size()-1){
+                    currentImage++;
+                    imageView.setImageResource(imageViewArrayList.get(currentImage));
                     seekBar.setProgress(currentImage);
+                    System.out.println(currentImage);
                 }else{
                     currentImage = 0;
                     imageView.setImageResource(imageViewArrayList.get(currentImage));
                     seekBar.setProgress(currentImage);
+                    System.out.println(currentImage);
                 }
             }
         });
@@ -441,14 +446,14 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentImage >= 0) {
+                if(currentImage > 0){
+                    currentImage--;
                     imageView.setImageResource(imageViewArrayList.get(currentImage));
                     seekBar.setProgress(currentImage);
-                    currentImage--;
                 }else{
-                    imageView.setImageResource(imageViewArrayList.get(imageViewArrayList.size()-1));
-                    seekBar.setProgress(10);
                     currentImage = imageViewArrayList.size()-1;
+                    imageView.setImageResource(imageViewArrayList.get(currentImage));
+                    seekBar.setProgress(currentImage);
                 }
             }
         });

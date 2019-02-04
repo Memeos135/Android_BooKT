@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".RestaurantDetailsActivity"
-    tools:showIn="@layout/app_bar_restaurant_details">
-
     <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,171 +11,175 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".RestaurantDetailsActivity"
+        tools:showIn="@layout/app_bar_restaurant_details">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#161616"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#161616"
-            android:orientation="vertical">
+            android:layout_height="200dp"
+            app:cardBackgroundColor="#161616">
 
-            <android.support.v7.widget.CardView
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:cardBackgroundColor="#161616">
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/dollarThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="3dp"
+                    android:text="$"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/dollarFour"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/dollarFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="$"
+                    android:textColor="#E5E5E5"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/cuisineText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="136dp"
+                    android:text="Cuisine"
+                    android:textColor="#E5E5E5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/openCloseText"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/dollarThree"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="3dp"
-                        android:text="$"
-                        android:textColor="@color/red"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/dollarFour"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/closeHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:text="1:00 pm"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
 
-                    <TextView
-                        android:id="@+id/dollarFour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="$"
-                        android:textColor="#E5E5E5"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/openHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:text="2:00pm"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/closeHour"
+                    app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
 
-                    <TextView
-                        android:id="@+id/cuisineText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginEnd="136dp"
-                        android:text="Cuisine"
-                        android:textColor="#E5E5E5"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/openCloseText"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/dollarOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="3dp"
+                    android:text="$"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/dollarTwo"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/closeHour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="4dp"
-                        android:text="1:00 pm"
-                        android:textColor="@color/light_grey"
-                        android:textSize="13sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
+                <TextView
+                    android:id="@+id/restaurantLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Al Nahda, The Market Place Gungahlim Place, Gungahlin ACT 2912"
+                    android:textColor="@color/light_grey"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
 
-                    <TextView
-                        android:id="@+id/openHour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="4dp"
-                        android:text="2:00pm"
-                        android:textColor="@color/light_grey"
-                        android:textSize="13sp"
-                        app:layout_constraintStart_toEndOf="@+id/closeHour"
-                        app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
 
-                    <TextView
-                        android:id="@+id/dollarOne"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="3dp"
-                        android:text="$"
-                        android:textColor="@color/red"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/dollarTwo"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/cuisineText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/restaurantName"
+                    app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
 
-                    <TextView
-                        android:id="@+id/restaurantLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="18dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="Al Nahda, The Market Place Gungahlim Place, Gungahlin ACT 2912"
-                        android:textColor="@color/light_grey"
-                        android:textSize="13sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/imageView7"
-                        app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
+                <TextView
+                    android:id="@+id/dollarTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="3dp"
+                    android:text="$"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/dollarThree"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="16dp"
+                <TextView
+                    android:id="@+id/openCloseText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="100dp"
+                    android:text="Open Hour"
+                    android:textColor="#E5E5E5"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/cuisineText"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/restaurantName"
-                        app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
-
-                    <TextView
-                        android:id="@+id/dollarTwo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="3dp"
-                        android:text="$"
-                        android:textColor="@color/red"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toStartOf="@+id/dollarThree"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/openCloseText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="100dp"
-                        android:text="Open Hour"
-                        android:textColor="#E5E5E5"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/reserveButton"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="70dp"
-                        android:background="@color/red_app"
-                        android:text="RESERVE"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.836"
-                        app:layout_constraintStart_toEndOf="@+id/restaurantSubCategory"
-                        app:layout_constraintTop_toBottomOf="@+id/dollarTwo" />
+                <Button
+                    android:id="@+id/reserveButton"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="70dp"
+                    android:background="@color/red_app"
+                    android:text="RESERVE"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.836"
+                    app:layout_constraintStart_toEndOf="@+id/restaurantSubCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/dollarTwo" />
 
                 <TextView
                     android:id="@+id/restaurantSubCategory"
@@ -237,7 +234,7 @@
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
-            android:layout_height="420dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="20dp"
@@ -367,32 +364,32 @@
                     tools:ignore="NotSibling">
 
                     <ImageView
-                        android:tag="imageOne"
                         android:id="@+id/imageView15"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_weight="0.5"
+                        android:onClick="clickHandler"
                         android:scaleType="fitXY"
+                        android:tag="imageOne"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView16"
-                        app:srcCompat="@drawable/icon"
-                        android:onClick="clickHandler"/>
+                        app:srcCompat="@drawable/icon" />
 
                     <ImageView
-                        android:tag="imageTwo"
                         android:id="@+id/imageView14"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_weight="0.5"
+                        android:onClick="clickHandler"
                         android:scaleType="fitXY"
+                        android:tag="imageTwo"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView16"
-                        app:srcCompat="@drawable/icon"
-                        android:onClick="clickHandler"/>
+                        app:srcCompat="@drawable/icon" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -408,34 +405,34 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                     <ImageView
-                        android:tag="imageThree"
                         android:id="@+id/imageView17"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_weight="0.5"
+                        android:onClick="clickHandler"
                         android:scaleType="fitXY"
+                        android:tag="imageThree"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView15"
-                        app:srcCompat="@drawable/icon"
-                        android:onClick="clickHandler"/>
+                        app:srcCompat="@drawable/icon" />
 
                     <ImageView
-                        android:tag="imageFour"
                         android:id="@+id/imageView16"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
                         android:layout_weight="0.5"
+                        android:onClick="clickHandler"
                         android:scaleType="fitXY"
+                        android:tag="imageFour"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView14"
-                        app:srcCompat="@drawable/icon"
-                        android:onClick="clickHandler"/>
+                        app:srcCompat="@drawable/icon" />
                 </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
@@ -443,5 +440,3 @@
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
-
-</android.support.constraint.ConstraintLayout>
