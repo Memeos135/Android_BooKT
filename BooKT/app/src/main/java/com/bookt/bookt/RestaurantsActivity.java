@@ -23,18 +23,12 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class RestaurantsActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener
+    implements NavigationView.OnNavigationItemSelectedListener {
+    Context context;
 
-    {
-        RecyclerView recyclerView;
-        RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter;
-        NestedScrollView nestedScrollView;
-        ImageView locationImageView;
-        Context context;
-
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @Override
-        protected void onCreate (Bundle savedInstanceState){
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_restaurants);
@@ -52,17 +46,6 @@ public class RestaurantsActivity extends AppCompatActivity
 //                Toast.makeText(RestaurantsActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
-        locationImageView = toolbar.findViewById(R.id.imageView6);
-
-        locationImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationImageView.clearAnimation();
-                locationImageView.setRotation(360);
-                locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -85,25 +68,25 @@ public class RestaurantsActivity extends AppCompatActivity
                 "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
 
 
-            recyclerView = findViewById(R.id.recyclerViewRestaurants);
-            // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
-            recyclerView.setFocusable(false);
-            // Disable nestedScroll because we're using NestedScrollView
-            recyclerView.setNestedScrollingEnabled(false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
+        // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
+        recyclerView.setFocusable(false);
+        // Disable nestedScroll because we're using NestedScrollView
+        recyclerView.setNestedScrollingEnabled(false);
 
-            nestedScrollView = findViewById(R.id.nestedScrollView);
-            // Point cursor focus to the start of NestedScrollView (default)
-            nestedScrollView.requestFocus();
+        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
+        // Point cursor focus to the start of NestedScrollView (default)
+        nestedScrollView.requestFocus();
 
-            recyclerViewRestaurantsAdapter = new RestaurantsActivityRecyclerViewAdapter(this, list);
+        RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter = new RestaurantsActivityRecyclerViewAdapter(this, list);
 
-            recyclerView.setAdapter(recyclerViewRestaurantsAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recyclerViewRestaurantsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // --------------------------------------------------------------------------------------------------------//
     }
 
-        @Override
-        public void onBackPressed () {
+    @Override
+    public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -112,34 +95,41 @@ public class RestaurantsActivity extends AppCompatActivity
         }
     }
 
-        @Override
-        public boolean onPrepareOptionsMenu(Menu menu) {
-            return true;
-        }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return true;
+    }
 
 
-        @SuppressWarnings("StatementWithEmptyBody")
-        @Override
-        public boolean onNavigationItemSelected (MenuItem item){
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-            if (id == R.id.Home) {
-                context.startActivity(new Intent(context, GalleryActivity.class));
-            } else if (id == R.id.Profile) {
+        if (id == R.id.Home) {
+            context.startActivity(new Intent(context, GalleryActivity.class));
+        } else if (id == R.id.Profile) {
 
-            } else if (id == R.id.Reservations) {
+        } else if (id == R.id.Reservations) {
 
-            } else if (id == R.id.History) {
+        } else if (id == R.id.History) {
 
-            } else if (id == R.id.Signup) {
+        } else if (id == R.id.Signup) {
 
-            } else if (id == R.id.Signin) {
+        } else if (id == R.id.Signin) {
 
-            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void locationAnimation(View view) {
+        ImageView locationImageView = findViewById(R.id.locationImage);
+        locationImageView.clearAnimation();
+        locationImageView.setRotation(360);
+        locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
     }
+}

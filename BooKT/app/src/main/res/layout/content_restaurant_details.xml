@@ -62,7 +62,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/cuisineText"
+                    android:id="@+id/resCuisineTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/openCloseText"
+                    app:layout_constraintStart_toEndOf="@+id/ressTimeTitle"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:textColor="@color/light_grey"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
+                    app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle" />
 
                 <TextView
                     android:id="@+id/openHour"
@@ -99,7 +99,7 @@
                     android:textColor="@color/light_grey"
                     android:textSize="13sp"
                     app:layout_constraintStart_toEndOf="@+id/closeHour"
-                    app:layout_constraintTop_toBottomOf="@+id/openCloseText" />
+                    app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle" />
 
                 <TextView
                     android:id="@+id/dollarOne"
@@ -126,17 +126,17 @@
                     android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintStart_toEndOf="@+id/locationImage"
                     app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
 
                 <ImageView
-                    android:id="@+id/imageView7"
+                    android:id="@+id/locationImage"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="16dp"
 
                     android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cuisineText"
+                    app:layout_constraintBottom_toTopOf="@+id/resCuisineTitle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/restaurantName"
                     app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
@@ -155,7 +155,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/openCloseText"
+                    android:id="@+id/ressTimeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -178,11 +178,12 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.836"
-                    app:layout_constraintStart_toEndOf="@+id/restaurantSubCategory"
-                    app:layout_constraintTop_toBottomOf="@+id/dollarTwo" />
+                    app:layout_constraintStart_toEndOf="@+id/resCuisine"
+                    app:layout_constraintTop_toBottomOf="@+id/dollarTwo"
+                    android:onClick="processReservationButton"/>
 
                 <TextView
-                    android:id="@+id/restaurantSubCategory"
+                    android:id="@+id/resCuisine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -192,8 +193,8 @@
                     android:textColor="@color/light_grey"
                     android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView21"
-                    app:layout_constraintTop_toBottomOf="@+id/cuisineText"
+                    app:layout_constraintEnd_toEndOf="@+id/fillerText"
+                    app:layout_constraintTop_toBottomOf="@+id/resCuisineTitle"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
@@ -214,7 +215,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView21"
+                    android:id="@+id/fillerText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -261,7 +262,7 @@
                 android:layout_marginEnd="16dp">
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/locationTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -269,12 +270,12 @@
                     android:text="Location"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/white"
-                    app:layout_constraintEnd_toStartOf="@id/textView14"
+                    app:layout_constraintEnd_toStartOf="@id/locationText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/locationText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -282,7 +283,7 @@
                     android:text="Al Nahda"
                     android:textAlignment="viewStart"
                     android:textColor="@color/light_grey"
-                    app:layout_constraintStart_toEndOf="@id/textView13"
+                    app:layout_constraintStart_toEndOf="@id/locationTitle"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -302,12 +303,13 @@
                     tools:context="app.com.example.android.googlemapsdemo.MapsActivity">
 
                     <com.google.android.gms.maps.MapView
-                        android:id="@+id/mapView2"
+                        android:id="@+id/mapView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginEnd="16dp"
+                        android:onClick="mapViewProcess"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -330,7 +332,7 @@
             app:cardBackgroundColor="#161616">
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/galleryTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -360,11 +362,11 @@
                     android:weightSum="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView16"
+                    app:layout_constraintTop_toBottomOf="@id/galleryTitle"
                     tools:ignore="NotSibling">
 
                     <ImageView
-                        android:id="@+id/imageView15"
+                        android:id="@+id/galleryImageLeft"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -375,11 +377,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView16"
+                        app:layout_constraintTop_toBottomOf="@+id/galleryTitle"
                         app:srcCompat="@drawable/icon" />
 
                     <ImageView
-                        android:id="@+id/imageView14"
+                        android:id="@+id/galleryImageRight"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -388,7 +390,7 @@
                         android:scaleType="fitXY"
                         android:tag="imageTwo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView16"
+                        app:layout_constraintTop_toBottomOf="@+id/galleryTitle"
                         app:srcCompat="@drawable/icon" />
                 </LinearLayout>
 
@@ -405,7 +407,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                     <ImageView
-                        android:id="@+id/imageView17"
+                        android:id="@+id/galleryImageBottomLeft"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -416,11 +418,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView15"
+                        app:layout_constraintTop_toBottomOf="@+id/galleryImageLeft"
                         app:srcCompat="@drawable/icon" />
 
                     <ImageView
-                        android:id="@+id/imageView16"
+                        android:id="@+id/galleryImageBottomRight"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"
@@ -431,7 +433,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView14"
+                        app:layout_constraintTop_toBottomOf="@+id/galleryImageRight"
                         app:srcCompat="@drawable/icon" />
                 </LinearLayout>
 

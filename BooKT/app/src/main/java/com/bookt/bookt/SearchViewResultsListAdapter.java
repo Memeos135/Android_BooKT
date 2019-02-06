@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +32,8 @@ public class SearchViewResultsListAdapter extends ArrayAdapter<SearchViewResults
                     .inflate(R.layout.search_view_custom_listview, parent, false);
         }
 
-        TextView restaurantName = view.findViewById(R.id.textView12);
-        TextView restaurantDistrict = view.findViewById(R.id.textView15);
+        TextView restaurantName = view.findViewById(R.id.searchRestName);
+        TextView restaurantDistrict = view.findViewById(R.id.searchDistName);
 
         restaurantName.setText(list.get(position).getRestaurantName());
         restaurantDistrict.setText(list.get(position).getDistrict());

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,14 +17,16 @@ import java.util.ArrayList;
 @SuppressWarnings("unchecked")
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
-    public ArrayList<String> groupItem, tempChild;
-    public ArrayList<Object> Childtem = new ArrayList<Object>();
-    public LayoutInflater minflater;
-    public Activity activity;
+    private ArrayList<String> groupItem, tempChild;
+    private ArrayList<Object> Childtem = new ArrayList<Object>();
+    private LayoutInflater minflater;
+    private Activity activity;
+    private ExpandableListView expandableListView;
 
-    public ExpandableListViewAdapter(ArrayList<String> grList, ArrayList<Object> childItem) {
+    public ExpandableListViewAdapter(ArrayList<String> grList, ArrayList<Object> childItem, ExpandableListView expandableListView) {
         groupItem = grList;
         this.Childtem = childItem;
+        this.expandableListView = expandableListView;
     }
 
     public void setInflater(LayoutInflater mInflater, Activity act) {
@@ -52,9 +56,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         }
 
         // SET EXPANDED CHILD INFO
-        foodName = (TextView) convertView.findViewById(R.id.textView1);
-        foodDescription = (TextView) convertView.findViewById(R.id.textView8);
-        foodPrice = (TextView) convertView.findViewById(R.id.textView11);
+        foodName = (TextView) convertView.findViewById(R.id.foodTitle);
+        foodDescription = (TextView) convertView.findViewById(R.id.foodDescription);
+        foodPrice = (TextView) convertView.findViewById(R.id.foodPrice);
 
         foodName.setText(tempChild.get(childPosition));
         foodDescription.setText(tempChild.get(childPosition));
@@ -89,12 +93,36 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
+        ListAdapter listadp = expandableListView.getAdapter();
+        if (listadp != null) {
+            int totalHeight = 0;
+            for (int j = 0; j < listadp.getCount(); j++) {
+                View listItem = listadp.getView(j, null, expandableListView);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+            params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
+            expandableListView.setLayoutParams(params);
+            expandableListView.requestLayout();
+        }
     }
 
     @Override
     public void onGroupExpanded(int groupPosition) {
-        super.onGroupExpanded(groupPosition);
+        ListAdapter listadp = expandableListView.getAdapter();
+        if (listadp != null) {
+            int totalHeight = 0;
+            for (int j = 0; j < listadp.getCount(); j++) {
+                View listItem = listadp.getView(j, null, expandableListView);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+            params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
+            expandableListView.setLayoutParams(params);
+            expandableListView.requestLayout();
+        }
     }
 
     @Override

@@ -66,11 +66,11 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
             holder.restaurantPriceDollarFour.setTextColor(holder.restaurantPriceDollarFour.getResources().getColor(R.color.red_app));
         }
 
-        holder.textView6.setText(list.get(position).getRestaurantOpenHour());
-        holder.textView7.setText(list.get(position).getRestaurantCloseHour());
+        holder.openHour.setText(list.get(position).getRestaurantOpenHour());
+        holder.closeHour.setText(list.get(position).getRestaurantCloseHour());
 
-        holder.textView6.setTextColor(holder.restaurantOpenHour.getResources().getColor(R.color.red_app));
-        holder.textView7.setTextColor(holder.restaurantCloseHour.getResources().getColor(R.color.red_app));
+        holder.openHour.setTextColor(holder.restaurantOpenHour.getResources().getColor(R.color.red_app));
+        holder.closeHour.setTextColor(holder.restaurantCloseHour.getResources().getColor(R.color.red_app));
 
 
     }
@@ -96,8 +96,8 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
         TextView restaurantOpenHour;
         TextView restaurantCloseHour;
-        TextView textView6;
-        TextView textView7;
+        TextView openHour;
+        TextView closeHour;
 
         public MyViewHolder(View itemView) {
 
@@ -105,18 +105,18 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
             restaurantImage = itemView.findViewById(R.id.restaurantImage);
             restaurantName = itemView.findViewById(R.id.restaurantName);
-            restaurantSubCategory = itemView.findViewById(R.id.restaurantSubCategory);
+            restaurantSubCategory = itemView.findViewById(R.id.resCuisine);
             restaurantLocation = itemView.findViewById(R.id.restaurantLocation);
 
-            restaurantPriceDollarOne = itemView.findViewById(R.id.textView);
-            restaurantPriceDollarTwo = itemView.findViewById(R.id.textView2);
-            restaurantPriceDollarThree = itemView.findViewById(R.id.textView4);
-            restaurantPriceDollarFour = itemView.findViewById(R.id.textView5);
+            restaurantPriceDollarOne = itemView.findViewById(R.id.dollarOne);
+            restaurantPriceDollarTwo = itemView.findViewById(R.id.dollarTwo);
+            restaurantPriceDollarThree = itemView.findViewById(R.id.dollarThree);
+            restaurantPriceDollarFour = itemView.findViewById(R.id.dollarFour);
 
             restaurantOpenHour = itemView.findViewById(R.id.restaurantOpenHour);
             restaurantCloseHour = itemView.findViewById(R.id.restaurantCloseHour);
-            textView6 = itemView.findViewById(R.id.textView6);
-            textView7 = itemView.findViewById(R.id.textView7);
+            openHour = itemView.findViewById(R.id.openHour);
+            closeHour = itemView.findViewById(R.id.closeHour);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

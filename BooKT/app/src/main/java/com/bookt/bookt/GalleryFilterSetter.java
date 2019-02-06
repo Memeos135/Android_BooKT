@@ -2,8 +2,8 @@ package com.bookt.bookt;
 
 class GalleryFilterSetter {
 
-    String filterText;
-    boolean checked;
+    private String filterText;
+    private boolean checked;
 
     GalleryFilterSetter(String filterText, boolean checked){
         this.filterText = filterText;

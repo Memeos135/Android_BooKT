@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -50,9 +49,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     ExpandableListView expandableListView;
     ArrayList<String> groupItem = new ArrayList<String>();
     ArrayList<Object> childItem = new ArrayList<Object>();
-    GoogleMap mMap;
+    LatLng latLng;
     Context context;
-    //int expandableListViewBaseHeight = 0;
     ArrayList<Integer> imageViewArrayList;
     int currentImage;
 
@@ -66,7 +64,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         // expandable listview data setup
         setGroupData();
         setChildGroupData();
-
 
         // Setting up Gallery Images
         imageViewArrayList = new ArrayList<Integer>();
@@ -82,118 +79,19 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light_focused);
         setGalleryImages(imageViewArrayList);
 
-        // Listener for RESERVE button
-        final Button reserveButton = findViewById(R.id.reserveButton);
         // animate reserve button to grab attention
-        animateReserveButton(reserveButton);
-
-        reserveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, RestaurantReservationActivity.class));
-            }
-        });
+        animateReserveButton();
 
         // google maps setup
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // expandablelistview setup and adapter linking
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView.setFocusable(false);
-
-        ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(groupItem, childItem);
-        mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
-        expandableListView.setAdapter(mNewAdapter);
-
-        // ENABLE NESTED SCROLLING OF EXPANDABLE LISTVIEW
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            expandableListView.setNestedScrollingEnabled(true);
-        }
-
-        // check expandable listview height before proceeding
-        checkExpandableListViewHeight();
-
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int i) {
-                // Used when group collapses and group items are BIGGER than 5
-//                if(expandableListViewBaseHeight == 0 && groupItem.size() > 5){
-//                    expandableListViewBaseHeight = expandableListView.getLayoutParams().height;
-//                }
-
-                ListAdapter listadp = expandableListView.getAdapter();
-                if (listadp != null) {
-                    int totalHeight = 0;
-                    for (int j = 0; j < listadp.getCount(); j++) {
-                        View listItem = listadp.getView(j, null, expandableListView);
-                        listItem.measure(0, 0);
-                        totalHeight += listItem.getMeasuredHeight();
-                    }
-                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                    params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
-                    expandableListView.setLayoutParams(params);
-                    expandableListView.requestLayout();
-                }
-            }
-        });
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int i) {
-                // check if group items are BIGGER than 5, if so return to base size
-//                if(groupItem.size() > 5){
-//                    ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-//                    params.height = expandableListViewBaseHeight;
-//                    expandableListView.setLayoutParams(params);
-//                    expandableListView.requestLayout();
-//                }else{
-
-                    ListAdapter listadp = expandableListView.getAdapter();
-                    if (listadp != null) {
-                        int totalHeight = 0;
-                        for (int j = 0; j < listadp.getCount(); j++) {
-                            View listItem = listadp.getView(j, null, expandableListView);
-                            listItem.measure(0, 0);
-                            totalHeight += listItem.getMeasuredHeight();
-                        }
-                        ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                        params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
-                        expandableListView.setLayoutParams(params);
-                        expandableListView.requestLayout();
-                    }
-                }
-            //}
-        });
+        // set up the expandableListView
+        setupExpandableListView();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Listener for CALL icon within toolbar
-        toolbar.findViewById(R.id.imageView3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder =
-                        new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-
-                builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?")
-                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(isPermissionGranted()) {
-                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0547171060"));
-                                    context.startActivity(intent);
-                                }else{
-                                    Toast.makeText(context,
-                                            "Please enable phone permission through settings > apps & notifications",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_menu_call).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -203,17 +101,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        final ImageView locationImageView = toolbar.findViewById(R.id.imageView6);
-
-        locationImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationImageView.clearAnimation();
-                locationImageView.setRotation(360);
-                locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
-            }
-        });
 
     }
 
@@ -305,9 +192,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     // when map is setup, and view is opened, pin this location, zoom, and add marker
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
-        final LatLng latLng = new LatLng(21.802820, 39.132578);
+        latLng = new LatLng(21.802820, 39.132578);
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)      // Sets the center of the map to Mountain View
@@ -322,42 +209,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(cameraPosition.target);
         mMap.addMarker(markerOptions);
-
-        // Click listener for mapview to open Google Maps and pin marker
-        final MapView mapView = findViewById(R.id.mapView2);
-        mapView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-
-                builder.setTitle("Google Maps").setMessage("Would you like to open Google Maps?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                // pass required parameters to google maps for pin marker
-                                String uri = String.format(Locale.ENGLISH, "geo:<" +
-                                                String.valueOf(latLng.latitude) + ">,<" +
-                                                String.valueOf(latLng.longitude) + ">?q=<" +
-                                                String.valueOf(latLng.latitude) + ">,<" +
-                                                String.valueOf(latLng.longitude) + ">",
-                                        latLng.latitude, latLng.longitude);
-
-                                // start the google maps activity
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                                context.startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_dialog_map).show();
-            }
-        });
-
     }
 
+    // initiator of expandable listview height
     public void checkExpandableListViewHeight(){
-        // if GROUP items are less than 5, edit the height to wrap its size
-//        if(groupItem.size() < 5){
+
             ListAdapter listadp = expandableListView.getAdapter();
             if (listadp != null) {
                 int totalHeight = 0;
@@ -374,6 +230,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }
     //}
 
+    // check permission for phone calls
     public boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         if(result == PackageManager.PERMISSION_GRANTED){
@@ -392,7 +249,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.restaurant_details_gallery_activity);
 
-        final ImageView imageView = dialog.findViewById(R.id.imageView4);
+        final ImageView imageView = dialog.findViewById(R.id.galleryImage);
         final SeekBar seekBar = dialog.findViewById(R.id.seekBar);
         seekBar.setEnabled(false);
 
@@ -423,8 +280,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }
         dialog.show();
 
-        ImageView rightArrow = dialog.findViewById(R.id.imageView10);
-        ImageView leftArrow = dialog.findViewById(R.id.imageView11);
+        ImageView rightArrow = dialog.findViewById(R.id.rightArrowImage);
+        ImageView leftArrow = dialog.findViewById(R.id.leftArrowImage);
 
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,10 +319,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
     // Set 4 displayed images
     public void setGalleryImages(ArrayList<Integer> imagesList){
-        ImageView imageView1 = findViewById(R.id.imageView15);
-        ImageView imageView2 = findViewById(R.id.imageView14);
-        ImageView imageView3 = findViewById(R.id.imageView17);
-        ImageView imageView4 = findViewById(R.id.imageView16);
+        ImageView imageView1 = findViewById(R.id.galleryImageLeft);
+        ImageView imageView2 = findViewById(R.id.galleryImageRight);
+        ImageView imageView3 = findViewById(R.id.galleryImageBottomLeft);
+        ImageView imageView4 = findViewById(R.id.galleryImageBottomRight);
 
         imageView1.setImageResource(imagesList.get(0));
         imageView2.setImageResource(imagesList.get(1));
@@ -474,7 +331,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     }
 
     // animate Reserve Button
-    public void animateReserveButton(final Button reserveButton){
+    public void animateReserveButton(){
+        final Button reserveButton = findViewById(R.id.reserveButton);
         reserveButton.animate().scaleXBy(0.2f).scaleYBy(0.2f).alpha(0.3f).setDuration(600);
 
         final Handler handler = new Handler();
@@ -484,5 +342,86 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
                 reserveButton.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).alpha(1).setDuration(400);
             }
         }, 700);
+    }
+
+    // reservation button processing function
+    public void processReservationButton(View v){
+        context.startActivity(new Intent(context, RestaurantReservationActivity.class));
+    }
+
+    // expandable listview setup function
+    public void setupExpandableListView(){
+        // expandablelistview setup and adapter linking
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView.setFocusable(false);
+
+        ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(groupItem, childItem, expandableListView);
+        mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        expandableListView.setAdapter(mNewAdapter);
+
+        // ENABLE NESTED SCROLLING OF EXPANDABLE LISTVIEW
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            expandableListView.setNestedScrollingEnabled(true);
+        }
+
+        // check expandable listview height before proceeding
+        checkExpandableListViewHeight();
+    }
+
+    // call icon OnClick
+    public void callIconProcess(View v){
+        final AlertDialog.Builder builder =
+                new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+
+        builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?")
+                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(isPermissionGranted()) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "0547171060"));
+                            context.startActivity(intent);
+                        }else{
+                            Toast.makeText(context,
+                                    "Please enable phone permission through settings > apps & notifications",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_menu_call).show();
+    }
+
+    // location icon animation
+    public void locationAnimation(View v){
+        final ImageView locationImageView = findViewById(R.id.locationImage);
+        locationImageView.clearAnimation();
+        locationImageView.setRotation(360);
+        locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
+    }
+
+    // mapview on click processing function
+    public void mapViewProcess(View v){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+
+        builder.setTitle("Google Maps").setMessage("Would you like to open Google Maps?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // pass required parameters to google maps for pin marker
+                        String uri = String.format(Locale.ENGLISH, "geo:<" +
+                                        String.valueOf(latLng.latitude) + ">,<" +
+                                        String.valueOf(latLng.longitude) + ">?q=<" +
+                                        String.valueOf(latLng.latitude) + ">,<" +
+                                        String.valueOf(latLng.longitude) + ">",
+                                latLng.latitude, latLng.longitude);
+
+                        // start the google maps activity
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        context.startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_map).show();
     }
 }

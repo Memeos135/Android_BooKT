@@ -3,8 +3,8 @@ package com.bookt.bookt;
 // GalleryActivity CardView Setter
 public class GalleryActivityCard {
 
-    String restaurantType;
-    String restaurantTypeImage;
+    private String restaurantType;
+    private String restaurantTypeImage;
 
     public GalleryActivityCard() {
     }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSetter> {
 
-    ArrayList<GalleryFilterSetter> list;
+    private ArrayList<GalleryFilterSetter> list;
 
     public GalleryFilterCustomListAdapter(@NonNull Context context, @NonNull ArrayList<GalleryFilterSetter> objects) {
         super(context, 0,  objects);

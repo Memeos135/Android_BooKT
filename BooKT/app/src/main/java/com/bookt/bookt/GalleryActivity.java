@@ -3,7 +3,6 @@ package com.bookt.bookt;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,14 +31,8 @@ import java.util.ArrayList;
 public class GalleryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    NestedScrollView nestedScrollView;
-    RecyclerView recyclerView;
-    GalleryActivityRecyclerViewAdapter recycleViewAdpaterGalleryLeft;
-    Display mdisp;
-    Point mdispSize;
-    ImageView locationImageView;
+
     Context context;
-    ArrayList<GalleryFilterSetter> filterList;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -51,28 +43,10 @@ public class GalleryActivity extends AppCompatActivity
 
         context = this;
 
-        // Fetching screen resolution
-        mdisp = getWindowManager().getDefaultDisplay();
-        mdispSize = new Point();
-        mdisp.getSize(mdispSize);
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        // Linking Toolbar locationImage
-        locationImageView = toolbar.findViewById(R.id.imageView6);
-
-        // Animation Listener
-        locationImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationImageView.clearAnimation();
-                locationImageView.setRotation(360);
-                locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
-            }
-        });
 
         //-----------------------------------------Floating Button Functions-------------------------------------------//
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +64,7 @@ public class GalleryActivity extends AppCompatActivity
                 final ListView listview = dialog.findViewById(R.id.listView);
 
                 // Linking filter icon of SearchView
-                final ImageView filterImageView = dialog.findViewById(R.id.imageView2);
+                final ImageView filterImageView = dialog.findViewById(R.id.filterImage);
 
                 // Linking to backImageView
                 final ImageView backImageView = dialog.findViewById(R.id.backImageView);
@@ -125,7 +99,7 @@ public class GalleryActivity extends AppCompatActivity
                         dialog.show();
 
                         // Filter Listview arraylist set-up for testing
-                        filterList = new ArrayList<>();
+                        final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
                         filterList.add(new GalleryFilterSetter("HELLO", false));
                         filterList.add(new GalleryFilterSetter("WORLD", false));
 
@@ -177,20 +151,20 @@ public class GalleryActivity extends AppCompatActivity
         list.add(new GalleryActivityCard("hello",""));
         list.add(new GalleryActivityCard("hello",""));
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
         recyclerView.setFocusable(false);
         // Disable nestedScroll because we're using NestedScrollView
         recyclerView.setNestedScrollingEnabled(false);
 
-        nestedScrollView = findViewById(R.id.nestedScrollView);
+        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
         // Point cursor focus to the start of NestedScrollView (default)
         nestedScrollView.requestFocus();
 
-        recycleViewAdpaterGalleryLeft = new GalleryActivityRecyclerViewAdapter(this,list);
+        GalleryActivityRecyclerViewAdapter recycleViewAdpaterGallery = new GalleryActivityRecyclerViewAdapter(this,list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recycleViewAdpaterGalleryLeft);
+        recyclerView.setAdapter(recycleViewAdpaterGallery);
         // --------------------------------------------------------------------------------------------------------//
 
     }
@@ -200,6 +174,8 @@ public class GalleryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            super.onBackPressed();
+        } else {
             super.onBackPressed();
         }
     }
@@ -227,5 +203,15 @@ public class GalleryActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // location image animation
+    public void locationAnimation(View v){
+        ImageView locationImageView;
+        locationImageView = findViewById(R.id.locationIcon);
+
+        locationImageView.clearAnimation();
+        locationImageView.setRotation(360);
+        locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
     }
 }

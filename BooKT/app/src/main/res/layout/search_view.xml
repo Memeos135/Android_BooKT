@@ -8,7 +8,7 @@
     android:background="@drawable/search_view_gradient_background">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/headerImage"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:scaleType="fitXY"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/filterImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -58,7 +58,7 @@
             app:srcCompat="@drawable/ic_filter_list_black_24dp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/searchText"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginEnd="50dp"
@@ -71,7 +71,7 @@
             android:textColor="#161616"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/filterImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

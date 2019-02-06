@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bookt.bookt"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bookt.bookt">
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
 
@@ -23,6 +24,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDVpbPzKS-kzXCEJDk__YbWAJEPyhUHFLM" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id"
+            tools:replace="android:value"/>
 
         <activity
             android:name=".GalleryActivity"
@@ -40,6 +44,7 @@
             android:launchMode="singleTask"/>
         <activity android:name=".RestaurantDetailsActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ReservationConfirmationActivity"/>
         <activity android:name=".RestaurantReservationActivity"/>
     </application>
 
