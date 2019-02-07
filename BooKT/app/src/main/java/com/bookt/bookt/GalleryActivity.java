@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +34,7 @@ public class GalleryActivity extends AppCompatActivity
 
 
     Context context;
+    Menu menu;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -53,11 +55,19 @@ public class GalleryActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // SearchView Custom Dialog
-                final Dialog dialog = new Dialog(context);
+//                final Dialog dialog = new Dialog(context);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setContentView(R.layout.search_view);
+//                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//                dialog.setCancelable(true);
+//                dialog.create();
+//                dialog.show();
+
+                final Dialog dialog = new Dialog(GalleryActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.search_view);
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dialog.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.setCancelable(true);
                 dialog.show();
 
                 // ListView Linking and Adapter set-up and test
@@ -67,22 +77,27 @@ public class GalleryActivity extends AppCompatActivity
                 final ImageView filterImageView = dialog.findViewById(R.id.filterImage);
 
                 // Linking to backImageView
-                final ImageView backImageView = dialog.findViewById(R.id.backImageView);
+                //final ImageView backImageView = dialog.findViewById(R.id.backImageView);
 
                 // Fill Up Dialog ListView Array
                 ArrayList<SearchViewResultsSetter> x = new ArrayList<>();
                 x.add(new SearchViewResultsSetter("Burger King", "Northern Obhur"));
                 x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+                x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+                x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+                x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+                x.add(new SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+
                 SearchViewResultsListAdapter searchViewResultsListAdapter = new SearchViewResultsListAdapter(context, x);
                 listview.setAdapter(searchViewResultsListAdapter);
 
                 // Setting listener
-                backImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
+//                backImageView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.cancel();
+//                    }
+//                });
 
                 // Setting ALL LISTENERS for filter icon of SearchView
                 filterImageView.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +107,6 @@ public class GalleryActivity extends AppCompatActivity
                         // Filter View Custom Dialog
                         final Dialog dialog = new Dialog(GalleryActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setCancelable(false);
                         dialog.setContentView(R.layout.gallery_filter_view);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                         dialog.setCancelable(true);

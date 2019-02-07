@@ -4,45 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/searchVew"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/search_view_gradient_background">
-
-    <ImageView
-        android:id="@+id/headerImage"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/red_app_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/backImageView"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+    android:layout_height="wrap_content"
+    android:background="@color/fui_transparent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/searchViewCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="90dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/filterImage"
@@ -64,6 +39,7 @@
             android:layout_marginEnd="50dp"
             android:background="@android:color/white"
             android:ems="10"
+            android:gravity="center_vertical"
             android:hint="Lookup restaurants!"
             android:inputType="textPersonName"
             android:paddingStart="16dp"
@@ -80,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="59dp"
-            android:layout_marginBottom="10dp"
             android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
