@@ -28,7 +28,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         // Instantiate Custom Card View
         View view;
         LayoutInflater mInflater = LayoutInflater.from(context);
-        view = mInflater.inflate(R.layout.restaurants_view_card, parent, false);
+        view = mInflater.inflate(R.layout.restaurant_view_cards, parent, false);
 
         return new MyViewHolder(view);
     }

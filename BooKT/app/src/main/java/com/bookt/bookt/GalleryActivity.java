@@ -55,19 +55,13 @@ public class GalleryActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // SearchView Custom Dialog
-//                final Dialog dialog = new Dialog(context);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setContentView(R.layout.search_view);
-//                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//                dialog.setCancelable(true);
-//                dialog.create();
-//                dialog.show();
-
-                final Dialog dialog = new Dialog(GalleryActivity.this);
+                final Dialog dialog = new Dialog(context);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.search_view);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.setCancelable(true);
+                dialog.create();
                 dialog.show();
 
                 // ListView Linking and Adapter set-up and test
