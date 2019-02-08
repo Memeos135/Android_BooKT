@@ -1,0 +1,151 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/resCuisineTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="140dp"
+        android:text="Cuisine"
+        android:textColor="#E5E5E5"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ressTimeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/locationImage" />
+
+    <TextView
+        android:id="@+id/dollars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="$$$$"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/restaurantLocation"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="16dp"
+        android:text="Al Nahda, The Market Place Gungahlim Place, Gungahlin ACT 2912"
+        android:textColor="@color/light_grey"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/locationImage"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
+
+    <ImageView
+        android:id="@+id/locationImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantName"
+        app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
+
+    <TextView
+        android:id="@+id/ressTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Open Hour"
+        android:textColor="#E5E5E5"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationImage" />
+
+    <TextView
+        android:id="@+id/openCloseHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="12:00 PM - 1:00 AM"
+        android:textColor="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ressTimeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/reserveButton"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:background="@color/red_app"
+        android:onClick="processReservationButton"
+        android:text="RESERVE"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/resCuisine"
+        app:layout_constraintEnd_toEndOf="@+id/dollars"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/resCuisineTitle"
+        app:layout_constraintTop_toTopOf="@+id/resCuisineTitle"
+        app:layout_constraintVertical_bias="0.421" />
+
+    <TextView
+        android:id="@+id/resCuisine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Pizza"
+        android:textColor="@color/light_grey"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/resCuisineTitle"
+        app:layout_constraintTop_toBottomOf="@+id/resCuisineTitle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/restaurantName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="90dp"
+        android:gravity="center_vertical"
+        android:text="Crust Gourmet Pizza Bar"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/dollars"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fillerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="- Order now for later when restaurant opens."
+        android:textColor="@color/light_grey"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/openCloseHour" />
+
+</android.support.constraint.ConstraintLayout>

@@ -79,32 +79,6 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/dollarThree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:text="$"
-                    android:textColor="@color/red"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/dollarFour"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/dollarFour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="$"
-                    android:textColor="#E5E5E5"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/resCuisineTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,35 +98,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:text="1:00 pm"
+                    android:text="1:00 PM - 12:00 AM"
                     android:textColor="@color/light_grey"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/resvaTimeTitle" />
 
                 <TextView
-                    android:id="@+id/openHour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="4dp"
-                    android:text="2:00pm"
-                    android:textColor="@color/light_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toEndOf="@+id/closeHour"
-                    app:layout_constraintTop_toBottomOf="@+id/resvaTimeTitle" />
-
-                <TextView
-                    android:id="@+id/dollarOne"
+                    android:id="@+id/dollars"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:text="$"
+                    android:layout_marginEnd="16dp"
+                    android:text="$$$$"
                     android:textColor="@color/red"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/dollarTwo"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -181,19 +143,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/restaurantName"
                     app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
-
-                <TextView
-                    android:id="@+id/dollarTwo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:text="$"
-                    android:textColor="@color/red"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/dollarThree"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/resvaTimeTitle"
@@ -233,7 +182,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/dollarOne"
+                    app:layout_constraintEnd_toStartOf="@+id/dollars"
                     app:layout_constraintHorizontal_bias="0.062"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -242,8 +191,8 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="190dp"
+                android:layout_height="230dp"
+                android:layout_marginTop="185dp"
                 android:background="#161616"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -281,161 +230,108 @@
                     android:id="@+id/resDateTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="Date:"
                     android:textColor="@android:color/white"
-                    app:layout_constraintStart_toStartOf="@id/cardView2"
-                    app:layout_constraintTop_toBottomOf="@+id/resTitle"
-                    tools:layout_editor_absoluteX="143dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/resDate"
+                    app:layout_constraintTop_toTopOf="@+id/resSeatsTitle" />
 
                 <TextView
                     android:id="@+id/ressTimeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="Time:"
                     android:textColor="@android:color/white"
-                    app:layout_constraintStart_toStartOf="@+id/cardView3"
-                    app:layout_constraintTop_toBottomOf="@+id/resTitle" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/resTime"
+                    app:layout_constraintTop_toTopOf="@+id/resDateTitle" />
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/cardView2"
-                    android:layout_width="95dp"
+                <TextView
+                    android:id="@+id/resDate"
+                    android:layout_width="90dp"
                     android:layout_height="50dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="2dp"
-                    app:cardBackgroundColor="@color/red_app"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/cardView3"
-                    app:layout_constraintStart_toEndOf="@+id/cardView"
-                    app:layout_constraintTop_toBottomOf="@id/resDateTitle"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="#2E2E2E">
-
-                        <TextView
-                            android:id="@+id/resDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:hint="00/00/0000"
-                            android:onClick="dateHandler"
-                            android:textColor="@color/red_app"
-                            android:textColorHint="@color/light_grey"
-                            android:textSize="14sp" />
-                    </android.support.v7.widget.CardView>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="95dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="@color/red_app"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/resSeatsTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/resSeatsTitle"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="2dp"
-                        android:background="#2E2E2E">
-
-                        <TextView
-                            android:id="@+id/minus"
-                            android:layout_width="30dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:onClick="seatsClickHandler"
-                            android:tag="minus"
-                            android:text="-"
-                            android:textColor="@color/light_grey"
-                            android:textSize="30sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.111" />
-
-                        <TextView
-                            android:id="@+id/resSeats"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:text="x0"
-                            android:textColor="@color/light_grey"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/plus"
-                            android:layout_width="30dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:onClick="seatsClickHandler"
-                            android:tag="plus"
-                            android:text="+"
-                            android:textColor="@color/light_grey"
-                            android:textSize="30sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.111" />
-                    </android.support.constraint.ConstraintLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="95dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="24dp"
-                    app:cardBackgroundColor="@color/red_app"
+                    android:background="#2E2E2E"
+                    android:ems="10"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="00/00/0000"
+                    android:onClick="dateHandler"
+                    android:textColor="@color/red_app"
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/plus"
+                    app:layout_constraintVertical_bias="0.0" />
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="#2E2E2E">
+                <TextView
+                    android:id="@+id/minus"
+                    android:layout_width="22.5dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#2E2E2E"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:onClick="seatsClickHandler"
+                    android:tag="minus"
+                    android:text="-"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/resSeatsTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/resSeatsTitle" />
 
-                        <TextView
-                            android:id="@+id/resTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:hint="00:00"
-                            android:onClick="timeHandler"
-                            android:textColor="@color/red_app"
-                            android:textColorHint="@color/light_grey"
-                            android:textSize="14sp" />
-                    </android.support.v7.widget.CardView>
-                </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/resSeats"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#2E2E2E"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="x0"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/plus"
+                    app:layout_constraintStart_toEndOf="@+id/minus" />
+
+                <TextView
+                    android:id="@+id/plus"
+                    android:layout_width="22.5dp"
+                    android:layout_height="50dp"
+                    android:background="#2E2E2E"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:onClick="seatsClickHandler"
+                    android:tag="plus"
+                    android:text="+"
+                    android:textColor="@color/light_grey"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/minus"
+                    app:layout_constraintEnd_toStartOf="@+id/resDate"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/resSeats" />
+
+                <TextView
+                    android:id="@+id/resTime"
+                    android:layout_width="95dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="#2E2E2E"
+                    android:ems="10"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="00:00"
+                    android:onClick="timeHandler"
+                    android:textColor="@color/red_app"
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/plus"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -443,7 +339,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView2">
+                    app:layout_constraintTop_toBottomOf="@+id/resDate">
 
                     <RadioButton
                         android:id="@+id/singleSection"
@@ -478,7 +374,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="410dp"
+                android:layout_marginTop="412dp"
                 android:background="#161616"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

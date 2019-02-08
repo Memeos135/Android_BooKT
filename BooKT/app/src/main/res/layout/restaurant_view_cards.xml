@@ -110,12 +110,12 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/dollarOne"
+            android:id="@+id/dollars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="$"
+            android:text="$$$$"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,110 +125,21 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/dollarTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:text="$"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/dollarOne"
-            app:layout_constraintTop_toBottomOf="@+id/locationImage"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/dollarThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:text="$"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/dollarTwo"
-            app:layout_constraintTop_toBottomOf="@+id/locationImage"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/dollarFour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:text="$"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/dollarThree"
-            app:layout_constraintTop_toBottomOf="@+id/locationImage"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/restaurantOpenHour"
+            android:id="@+id/restaurantOpenCloseHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Open "
+            android:text="Open 12:00 PM        Close 10:00 PM"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/restaurantImage"
-            app:layout_constraintTop_toBottomOf="@+id/dollarOne"
+            app:layout_constraintTop_toBottomOf="@+id/dollars"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/openHour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="12:31 PM"
-            android:textColor="@color/red_app"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/restaurantOpenHour"
-            app:layout_constraintTop_toBottomOf="@+id/dollarFour"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/restaurantCloseHour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Close "
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/openHour"
-            app:layout_constraintTop_toBottomOf="@+id/dollarFour"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/closeHour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="12:31 PM"
-            android:textColor="@color/red_app"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/restaurantCloseHour"
-            app:layout_constraintTop_toBottomOf="@+id/dollarFour"
-            app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

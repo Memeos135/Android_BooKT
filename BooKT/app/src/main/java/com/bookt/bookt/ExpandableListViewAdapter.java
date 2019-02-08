@@ -1,37 +1,29 @@
 package com.bookt.bookt;
 
-import android.app.Activity;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 @SuppressWarnings("unchecked")
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<String> groupItem, tempChild;
-    private ArrayList<Object> Childtem = new ArrayList<Object>();
+    private ArrayList<ExpandableGroupItem> expandableGroupItem;
     private LayoutInflater minflater;
-    private Activity activity;
     private ExpandableListView expandableListView;
 
-    public ExpandableListViewAdapter(ArrayList<String> grList, ArrayList<Object> childItem, ExpandableListView expandableListView) {
-        groupItem = grList;
-        this.Childtem = childItem;
+    public ExpandableListViewAdapter(ArrayList<ExpandableGroupItem> expandableGroupItem, ExpandableListView expandableListView) {
+        this.expandableGroupItem = expandableGroupItem;
         this.expandableListView = expandableListView;
     }
 
-    public void setInflater(LayoutInflater mInflater, Activity act) {
+    public void setInflater(LayoutInflater mInflater) {
         this.minflater = mInflater;
-        activity = act;
     }
 
     @Override
@@ -47,38 +39,26 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        tempChild = (ArrayList<String>) Childtem.get(groupPosition);
+
+        ExpandableChildItem tempChild = expandableGroupItem.get(groupPosition).expandableChildItemArrayList.get(childPosition);
+
         TextView foodName = null;
         TextView foodDescription = null;
         TextView foodPrice = null;
         if (convertView == null) {
             convertView = minflater.inflate(R.layout.expandable_listview_child, null);
         }
-
         // SET EXPANDED CHILD INFO
         foodName = (TextView) convertView.findViewById(R.id.foodTitle);
         foodDescription = (TextView) convertView.findViewById(R.id.foodDescription);
         foodPrice = (TextView) convertView.findViewById(R.id.foodPrice);
 
-        foodName.setText(tempChild.get(childPosition));
-        foodDescription.setText(tempChild.get(childPosition));
-        foodPrice.setText(tempChild.get(childPosition));
+        foodName.setText(tempChild.getFoodTitle());
+        foodDescription.setText(tempChild.getFoodDescription());
+        foodPrice.setText(tempChild.getFoodPrice());
         // END OF EXPANDED CHILD INFO
 
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, tempChild.get(childPosition),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
         return convertView;
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) Childtem.get(groupPosition)).size();
     }
 
     @Override
@@ -88,11 +68,17 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return groupItem.size();
+        return expandableGroupItem.size();
+    }
+
+    @Override
+    public int getChildrenCount(int i) {
+        return expandableGroupItem.get(i).expandableChildItemArrayList.size();
     }
 
     @Override
     public void onGroupCollapsed(int groupPosition) {
+        super.onGroupCollapsed(groupPosition);
         ListAdapter listadp = expandableListView.getAdapter();
         if (listadp != null) {
             int totalHeight = 0;
@@ -110,6 +96,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public void onGroupExpanded(int groupPosition) {
+        super.onGroupExpanded(groupPosition);
         ListAdapter listadp = expandableListView.getAdapter();
         if (listadp != null) {
             int totalHeight = 0;
@@ -135,11 +122,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = minflater.inflate(R.layout.expandable_listview_group, null);
         }
-
         View view = (TextView) convertView.findViewById(R.id.expandedListHeader);
 
-        ((TextView) view).setText(groupItem.get(groupPosition));
-
+        ((TextView) view).setText(expandableGroupItem.get(groupPosition).getMenuCategory());
         return convertView;
     }
 

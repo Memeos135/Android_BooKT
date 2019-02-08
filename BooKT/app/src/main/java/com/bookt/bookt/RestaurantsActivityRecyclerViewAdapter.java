@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,32 +48,43 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
         if(list.get(position).getRestaurantPriceRange()==1){
 
-            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
+            Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
+            wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                    0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.restaurantPriceDollar.setText(wordtoSpan);
 
         }else if(list.get(position).getRestaurantPriceRange()==2){
 
-            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
+            Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
+            wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                    0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.restaurantPriceDollar.setText(wordtoSpan);
 
         }else if(list.get(position).getRestaurantPriceRange()==3){
 
-            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarThree.setTextColor(holder.restaurantPriceDollarThree.getResources().getColor(R.color.red_app));
+            Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
+            wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                    0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurantPriceRange()==4){
+        }else{
 
-            holder.restaurantPriceDollarOne.setTextColor(holder.restaurantPriceDollarOne.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarTwo.setTextColor(holder.restaurantPriceDollarTwo.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarThree.setTextColor(holder.restaurantPriceDollarThree.getResources().getColor(R.color.red_app));
-            holder.restaurantPriceDollarFour.setTextColor(holder.restaurantPriceDollarFour.getResources().getColor(R.color.red_app));
+            Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
+            wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                    0, holder.restaurantPriceDollar.getText().toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.restaurantPriceDollar.setText(wordtoSpan);
+
         }
 
-        holder.openHour.setText(list.get(position).getRestaurantOpenHour());
-        holder.closeHour.setText(list.get(position).getRestaurantCloseHour());
+        Spannable wordtoSpan = new SpannableString(holder.restaurantOpenCloseHour.getText().toString());
 
-        holder.openHour.setTextColor(holder.restaurantOpenHour.getResources().getColor(R.color.red_app));
-        holder.closeHour.setTextColor(holder.restaurantCloseHour.getResources().getColor(R.color.red_app));
+        wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantOpenCloseHour.getResources().getColor(R.color.red_app)), 4, 13,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantOpenCloseHour.getResources().getColor(R.color.red_app)), 26,
+                holder.restaurantOpenCloseHour.getText().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        holder.restaurantOpenCloseHour.setText(wordtoSpan);
 
 
     }
@@ -89,15 +103,9 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
         TextView restaurantSubCategory;
         TextView restaurantLocation;
 
-        TextView restaurantPriceDollarOne;
-        TextView restaurantPriceDollarTwo;
-        TextView restaurantPriceDollarThree;
-        TextView restaurantPriceDollarFour;
+        TextView restaurantPriceDollar;
 
-        TextView restaurantOpenHour;
-        TextView restaurantCloseHour;
-        TextView openHour;
-        TextView closeHour;
+        TextView restaurantOpenCloseHour;
 
         public MyViewHolder(View itemView) {
 
@@ -108,15 +116,10 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
             restaurantSubCategory = itemView.findViewById(R.id.resCuisine);
             restaurantLocation = itemView.findViewById(R.id.restaurantLocation);
 
-            restaurantPriceDollarOne = itemView.findViewById(R.id.dollarOne);
-            restaurantPriceDollarTwo = itemView.findViewById(R.id.dollarTwo);
-            restaurantPriceDollarThree = itemView.findViewById(R.id.dollarThree);
-            restaurantPriceDollarFour = itemView.findViewById(R.id.dollarFour);
+            restaurantPriceDollar = itemView.findViewById(R.id.dollars);
 
-            restaurantOpenHour = itemView.findViewById(R.id.restaurantOpenHour);
-            restaurantCloseHour = itemView.findViewById(R.id.restaurantCloseHour);
-            openHour = itemView.findViewById(R.id.openHour);
-            closeHour = itemView.findViewById(R.id.closeHour);
+            restaurantOpenCloseHour = itemView.findViewById(R.id.restaurantOpenCloseHour);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

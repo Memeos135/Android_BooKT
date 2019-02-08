@@ -70,9 +70,6 @@ public class GalleryActivity extends AppCompatActivity
                 // Linking filter icon of SearchView
                 final ImageView filterImageView = dialog.findViewById(R.id.filterImage);
 
-                // Linking to backImageView
-                //final ImageView backImageView = dialog.findViewById(R.id.backImageView);
-
                 // Fill Up Dialog ListView Array
                 ArrayList<SearchViewResultsSetter> x = new ArrayList<>();
                 x.add(new SearchViewResultsSetter("Burger King", "Northern Obhur"));
@@ -84,14 +81,6 @@ public class GalleryActivity extends AppCompatActivity
 
                 SearchViewResultsListAdapter searchViewResultsListAdapter = new SearchViewResultsListAdapter(context, x);
                 listview.setAdapter(searchViewResultsListAdapter);
-
-                // Setting listener
-//                backImageView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.cancel();
-//                    }
-//                });
 
                 // Setting ALL LISTENERS for filter icon of SearchView
                 filterImageView.setOnClickListener(new View.OnClickListener() {

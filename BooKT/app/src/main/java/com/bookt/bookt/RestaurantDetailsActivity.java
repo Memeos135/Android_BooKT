@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -33,22 +32,13 @@ import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+public class RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ExpandableListView expandableListView;
-    ArrayList<String> groupItem = new ArrayList<String>();
-    ArrayList<Object> childItem = new ArrayList<Object>();
     LatLng latLng;
     Context context;
     ArrayList<Integer> imageViewArrayList;
@@ -61,9 +51,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         context = this;
 
-        // expandable listview data setup
-        setGroupData();
-        setChildGroupData();
+        // Setup ExpandableListView
+        setupExpandableListView();
+
+        new MapFragment();
 
         // Setting up Gallery Images
         imageViewArrayList = new ArrayList<Integer>();
@@ -81,14 +72,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         // animate reserve button to grab attention
         animateReserveButton();
-
-        // google maps setup
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        // set up the expandableListView
-        setupExpandableListView();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,80 +123,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         return true;
     }
 
-    // fill the GROUP of expandablelistview
-    public void setGroupData() {
-        groupItem.add("TechNology");
-        groupItem.add("Mobile");
-        groupItem.add("Manufacturer");
-        groupItem.add("Extras");
-    }
-
-    // fill in the childen of expandablelistview GROUP
-    public void setChildGroupData() {
-        /**
-         * Add Data For TecthNology
-         */
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("Java");
-        child.add("Drupal");
-        child.add(".Net Framework");
-        child.add("PHP");
-        childItem.add(child);
-
-        /**
-         * Add Data For Mobile
-         */
-        child = new ArrayList<String>();
-        child.add("Android");
-        child.add("Window Mobile");
-        child.add("iPHone");
-        child.add("Blackberry");
-        childItem.add(child);
-        /**
-         * Add Data For Manufacture
-         */
-        child = new ArrayList<String>();
-        child.add("HTC");
-        child.add("Apple");
-        child.add("Samsung");
-        child.add("Nokia");
-        childItem.add(child);
-        /**
-         * Add Data For Extras
-         */
-        child = new ArrayList<String>();
-        child.add("Contact Us");
-        child.add("About Us");
-        child.add("Location");
-        child.add("Root Cause");
-        childItem.add(child);
-    }
-
-    // when map is setup, and view is opened, pin this location, zoom, and add marker
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
-
-        latLng = new LatLng(21.802820, 39.132578);
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to Mountain View
-                .zoom(15)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                .build();                   // Creates a CameraPosition from the builder
-
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-        // Used to add Marker to Google Maps
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(cameraPosition.target);
-        mMap.addMarker(markerOptions);
-    }
-
     // initiator of expandable listview height
     public void checkExpandableListViewHeight(){
-
             ListAdapter listadp = expandableListView.getAdapter();
             if (listadp != null) {
                 int totalHeight = 0;
@@ -228,7 +139,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
                 expandableListView.requestLayout();
             }
         }
-    //}
 
     // check permission for phone calls
     public boolean isPermissionGranted(){
@@ -247,7 +157,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.restaurant_details_gallery_activity);
+        dialog.setContentView(R.layout.restaurant_details_gallery_popup);
 
         final ImageView imageView = dialog.findViewById(R.id.galleryImage);
         final SeekBar seekBar = dialog.findViewById(R.id.seekBar);
@@ -349,25 +259,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         context.startActivity(new Intent(context, RestaurantReservationActivity.class));
     }
 
-    // expandable listview setup function
-    public void setupExpandableListView(){
-        // expandablelistview setup and adapter linking
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView.setFocusable(false);
-
-        ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(groupItem, childItem, expandableListView);
-        mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
-        expandableListView.setAdapter(mNewAdapter);
-
-        // ENABLE NESTED SCROLLING OF EXPANDABLE LISTVIEW
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            expandableListView.setNestedScrollingEnabled(true);
-        }
-
-        // check expandable listview height before proceeding
-        checkExpandableListViewHeight();
-    }
-
     // call icon OnClick
     public void callIconProcess(View v){
         final AlertDialog.Builder builder =
@@ -399,29 +290,32 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
     }
 
-    // mapview on click processing function
-    public void mapViewProcess(View v){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+    // Expandable ListView Setup Function
+    public void setupExpandableListView(){
 
-        builder.setTitle("Google Maps").setMessage("Would you like to open Google Maps?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        ArrayList<ExpandableGroupItem> expandableGroupItem = new ArrayList<ExpandableGroupItem>();
+        ArrayList<ExpandableChildItem> expandableChildItem = new ArrayList<ExpandableChildItem>();
 
-                        // pass required parameters to google maps for pin marker
-                        String uri = String.format(Locale.ENGLISH, "geo:<" +
-                                        String.valueOf(latLng.latitude) + ">,<" +
-                                        String.valueOf(latLng.longitude) + ">?q=<" +
-                                        String.valueOf(latLng.latitude) + ">,<" +
-                                        String.valueOf(latLng.longitude) + ">",
-                                latLng.latitude, latLng.longitude);
+        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
+        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
+        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
 
-                        // start the google maps activity
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        context.startActivity(intent);
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_map).show();
+        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+
+        // expandablelistview setup and adapter linking
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView.setFocusable(false);
+
+        ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(expandableGroupItem, expandableListView);
+
+        mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+
+        expandableListView.setAdapter(mNewAdapter);
+
+        checkExpandableListViewHeight();
     }
 }
