@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
 public class ReservationConfirmationActivity extends AppCompatActivity{
-    Context context;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,23 +39,23 @@ public class ReservationConfirmationActivity extends AppCompatActivity{
         Button facebookLogin = findViewById(R.id.facebookLogin);
         TextView textView = findViewById(R.id.textLogin);
 
-        loginButton.animate().alpha(1).setDuration(700);
-        googleLogin.animate().alpha(1).setDuration(700);
-        facebookLogin.animate().alpha(1).setDuration(700);
-        textView.animate().alpha(1).setDuration(700);
+        loginButton.animate().alpha(1.0F).setDuration(700L);
+        googleLogin.animate().alpha(1.0F).setDuration(700L);
+        facebookLogin.animate().alpha(1.0F).setDuration(700L);
+        textView.animate().alpha(1.0F).setDuration(700L);
     }
 
     // Sign in Method
     public void signinMethod(View v){
         // app signin & signup
-        if(v.getTag().equals("loginSignupButton")){
+        if("loginSignupButton".equals(v.getTag())){
             Button button = (Button) v;
 
             // google signin
-        }else if(v.getTag().equals("googleLogin")){
+        }else if("googleLogin".equals(v.getTag())){
             Button button = (Button) v;
 
-            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build());
+            List<AuthUI.IdpConfig> providers = Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());
 
             startActivityForResult(
                     AuthUI.getInstance()
@@ -65,10 +65,10 @@ public class ReservationConfirmationActivity extends AppCompatActivity{
                     100);
 
             // facebook signin
-        }else if(v.getTag().equals("facebookLogin")){
+        }else if("facebookLogin".equals(v.getTag())){
             Button button = (Button) v;
 
-            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.FacebookBuilder().build());
+            List<AuthUI.IdpConfig> providers = Collections.singletonList(new AuthUI.IdpConfig.FacebookBuilder().build());
 
             startActivityForResult(
                     AuthUI.getInstance()

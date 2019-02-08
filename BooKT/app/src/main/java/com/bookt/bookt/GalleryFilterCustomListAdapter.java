@@ -11,14 +11,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSetter> {
 
-    private ArrayList<GalleryFilterSetter> list;
+    private List<GalleryFilterSetter> list;
 
     public GalleryFilterCustomListAdapter(@NonNull Context context, @NonNull ArrayList<GalleryFilterSetter> objects) {
         super(context, 0,  objects);
-        this.list = objects;
+        list = objects;
     }
 
     @NonNull

@@ -1,12 +1,12 @@
 package com.bookt.bookt;
 
 // GalleryActivity CardView Setter
-public class GalleryActivityCard {
+class GalleryActivityCard {
 
     private String restaurantType;
     private String restaurantTypeImage;
 
-    public GalleryActivityCard() {
+    GalleryActivityCard() {
     }
 
     public String getRestaurantTypeName() {
@@ -14,7 +14,7 @@ public class GalleryActivityCard {
     }
 
     public void setRestaurantTypeName(String name) {
-        this.restaurantType = name;
+        restaurantType = name;
     }
 
     public String getRestaurantTypeImage() {
@@ -22,11 +22,11 @@ public class GalleryActivityCard {
     }
 
     public void setRestaurantTypeImage(String image) {
-        this.restaurantTypeImage = image;
+        restaurantTypeImage = image;
     }
 
-    public GalleryActivityCard(String name, String image) {
-        this.restaurantType = name;
-        this.restaurantTypeImage = image;
+    GalleryActivityCard(String name, String image) {
+        restaurantType = name;
+        restaurantTypeImage = image;
     }
 }

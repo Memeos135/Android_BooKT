@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -10,7 +9,6 @@
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/red_app"
@@ -26,7 +24,6 @@
                 android:layout_height="?attr/actionBarSize">
 
                 <ImageView
-                    android:id="@+id/backImage"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:onClick="backHandler"
@@ -36,10 +33,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.615"
-                    app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp" />
+                    app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp"
+                    android:contentDescription="TODO" />
 
                 <ImageView
-                    android:id="@+id/headerIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -48,7 +45,8 @@
                     app:layout_constraintHorizontal_bias="0.484"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_history_black_24dp" />
+                    app:srcCompat="@drawable/ic_history_black_24dp"
+                    android:contentDescription="TODO" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -93,7 +91,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/closeHour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -142,7 +139,8 @@
                     app:layout_constraintBottom_toTopOf="@+id/resCuisineTitle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/restaurantName"
-                    app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
+                    app:srcCompat="@drawable/ic_location_on_light_grey_24dp"
+                    android:contentDescription="TODO" />
 
                 <TextView
                     android:id="@+id/resvaTimeTitle"
@@ -331,7 +329,6 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -342,7 +339,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/resDate">
 
                     <RadioButton
-                        android:id="@+id/singleSection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -356,7 +352,6 @@
                         app:layout_constraintTop_toBottomOf="parent" />
 
                     <RadioButton
-                        android:id="@+id/familySection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -494,7 +489,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/emailText">
 
                     <Button
-                        android:id="@+id/cancelButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
@@ -509,7 +503,6 @@
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <Button
-                        android:id="@+id/confirmButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"

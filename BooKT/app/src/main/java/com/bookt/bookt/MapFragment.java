@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-    MapView mapView;
+    private MapView mapView;
 
 
     @Override
@@ -28,19 +28,19 @@ public class MapFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.map_fragment, container, false);
 
-        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView = v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
 
         // Gets to GoogleMap from the MapView and does initialization stuff
-        MapsInitializer.initialize(this.getActivity());
+        MapsInitializer.initialize(getActivity());
 
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 LatLng latLng = new LatLng(21.802820, 39.132578);
                 googleMap.getUiSettings().setAllGesturesEnabled(false);
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.0F);
                 googleMap.addMarker(new MarkerOptions().position(latLng)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                         .draggable(false).visible(true));

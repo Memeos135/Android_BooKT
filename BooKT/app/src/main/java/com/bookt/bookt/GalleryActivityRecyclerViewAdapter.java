@@ -10,17 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<GalleryActivityRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<GalleryActivityCard> list;
+    private List<GalleryActivityCard> list;
 
     /*
     RecyclerView Arraylist Positions
     (used onCreate to track RecyclerView index values (even/odd) to do dynamic card assignments)
     */
-    private int position = 0;
+    private int position;
 
     public GalleryActivityRecyclerViewAdapter(Context context, ArrayList<GalleryActivityCard> list) {
         this.context = context;
@@ -29,15 +30,15 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(position%2==0){
+    public GalleryActivityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if((position % 2) == 0){
             // If card position is EVEN
             // System.out.println("@ EVEN");
             // Inflate card associated with (0.55, 0.5) split
             View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
             view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
-            return new MyViewHolder(view);
+            return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
         }else{
             // If card position is ODD
             // System.out.println("@ ODD");
@@ -45,7 +46,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
             View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
             view = mInflater.inflate(R.layout.gallery_view_card_two, parent, false);
-            return new MyViewHolder(view);
+            return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
         }
         /*
         // If card position is at FIRST
@@ -90,7 +91,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GalleryActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
 
         holder.imageViewTwo.setImageResource(R.drawable.test_cat);
         holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
@@ -160,7 +161,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     }
 
     // Set views from Resource folder to their corresponding IDs
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         // imageViewOne and nameOne are the LEFT side image and text of dynamic splits
         // imageViewTwo and nameTwo are the RIGHT side image and text of dynamic splits
@@ -177,7 +178,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            if(itemView.findViewById(R.id.imageViewLeft)!=null) {
+            if(itemView.findViewById(R.id.imageViewLeft) != null) {
 
                 imageViewOne = itemView.findViewById(R.id.imageViewLeft);
                 nameOne = itemView.findViewById(R.id.textViewLeft);

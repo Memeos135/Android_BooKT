@@ -5,7 +5,7 @@ class GalleryFilterSetter {
     private String filterText;
     private boolean checked;
 
-    GalleryFilterSetter(String filterText, boolean checked){
+    GalleryFilterSetter(String filterText, boolean checked) {
         this.filterText = filterText;
         this.checked = checked;
     }
@@ -19,10 +19,10 @@ class GalleryFilterSetter {
     }
 
     public boolean getChecked(){
-        return this.checked;
+        return checked;
     }
 
-    public String getFilterText (){
+    public String getFilterText(){
         return filterText;
     }
 

@@ -2,11 +2,11 @@ package com.bookt.bookt;
 
 import java.util.ArrayList;
 
-public class ExpandableGroupItem {
+class ExpandableGroupItem {
     String menuCategory;
     ArrayList<ExpandableChildItem> expandableChildItemArrayList;
 
-    ExpandableGroupItem(String menuCategory, ArrayList<ExpandableChildItem> expandableChildItemArrayList){
+    ExpandableGroupItem(String menuCategory, ArrayList<ExpandableChildItem> expandableChildItemArrayList) {
         this.expandableChildItemArrayList = expandableChildItemArrayList;
         this.menuCategory = menuCategory;
     }

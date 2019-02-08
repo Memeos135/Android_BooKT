@@ -12,11 +12,11 @@ public class RestaurantsActivityCard {
     private String restaurantImage;
 
     RestaurantsActivityCard(String restaurantName, String restaurantSubCategory, String restaurantLocation,
-                            int restaurantPriceRange, String restaurantOpenHour, String restaurantCloseHour){
+                            int restaurantPriceRange, String restaurantOpenHour, String restaurantCloseHour) {
         this.restaurantName = restaurantName;
         this.restaurantSubCategory = restaurantSubCategory;
         this.restaurantLocation = restaurantLocation;
-        this. restaurantPriceRange = restaurantPriceRange;
+        this.restaurantPriceRange = restaurantPriceRange;
         this.restaurantOpenHour = restaurantOpenHour;
         this.restaurantCloseHour = restaurantCloseHour;
 
@@ -51,26 +51,26 @@ public class RestaurantsActivityCard {
     }
 
     public String getRestaurantName(){
-        return this.restaurantName;
+        return restaurantName;
     }
 
     public String getRestaurantSubCategory(){
-        return this.restaurantSubCategory;
+        return restaurantSubCategory;
     }
 
     public String getRestaurantLocation(){
-        return this.restaurantLocation;
+        return restaurantLocation;
     }
 
     public int getRestaurantPriceRange() {
-        return this.restaurantPriceRange;
+        return restaurantPriceRange;
     }
 
     public String getRestaurantOpenHour(){
-        return this.restaurantOpenHour;
+        return restaurantOpenHour;
     }
 
     public String getRestaurantCloseHour(){
-        return this.restaurantCloseHour;
+        return restaurantCloseHour;
     }
 }

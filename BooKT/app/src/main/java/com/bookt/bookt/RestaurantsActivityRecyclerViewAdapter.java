@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter<RestaurantsActivityRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<RestaurantsActivityCard> list;
+    private List<RestaurantsActivityCard> list;
 
     public RestaurantsActivityRecyclerViewAdapter(Context context, ArrayList<RestaurantsActivityCard> list) {
         this.context = context;
@@ -27,40 +28,40 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RestaurantsActivityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Instantiate Custom Card View
         View view;
         LayoutInflater mInflater = LayoutInflater.from(context);
         view = mInflater.inflate(R.layout.restaurant_view_cards, parent, false);
 
-        return new MyViewHolder(view);
+        return new RestaurantsActivityRecyclerViewAdapter.MyViewHolder(view);
     }
 
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RestaurantsActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
 
         holder.restaurantImage.setImageResource(R.drawable.icon);
         holder.restaurantName.setText(list.get(position).getRestaurantName());
         holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
         holder.restaurantLocation.setText(list.get(position).getRestaurantLocation());
 
-        if(list.get(position).getRestaurantPriceRange()==1){
+        if(list.get(position).getRestaurantPriceRange() == 1){
 
             Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurantPriceRange()==2){
+        }else if(list.get(position).getRestaurantPriceRange() == 2){
 
             Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurantPriceRange()==3){
+        }else if(list.get(position).getRestaurantPriceRange() == 3){
 
             Spannable wordtoSpan = new SpannableString(holder.restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantPriceDollar.getResources().getColor(R.color.red_app)),

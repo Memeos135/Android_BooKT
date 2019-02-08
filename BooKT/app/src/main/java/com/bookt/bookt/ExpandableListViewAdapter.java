@@ -9,11 +9,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-@SuppressWarnings("unchecked")
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<ExpandableGroupItem> expandableGroupItem;
+    private List<ExpandableGroupItem> expandableGroupItem;
     private LayoutInflater minflater;
     private ExpandableListView expandableListView;
 
@@ -23,7 +23,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     }
 
     public void setInflater(LayoutInflater mInflater) {
-        this.minflater = mInflater;
+        minflater = mInflater;
     }
 
     @Override
@@ -33,30 +33,30 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return 0L;
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         ExpandableChildItem tempChild = expandableGroupItem.get(groupPosition).expandableChildItemArrayList.get(childPosition);
 
-        TextView foodName = null;
-        TextView foodDescription = null;
-        TextView foodPrice = null;
+        TextView foodName;
+        TextView foodDescription;
+        TextView foodPrice;
         if (convertView == null) {
             convertView = minflater.inflate(R.layout.expandable_listview_child, null);
         }
-        // SET EXPANDED CHILD INFO
-        foodName = (TextView) convertView.findViewById(R.id.foodTitle);
-        foodDescription = (TextView) convertView.findViewById(R.id.foodDescription);
-        foodPrice = (TextView) convertView.findViewById(R.id.foodPrice);
+
+        foodName = convertView.findViewById(R.id.foodTitle);
+        foodDescription = convertView.findViewById(R.id.foodDescription);
+        foodPrice = convertView.findViewById(R.id.foodPrice);
 
         foodName.setText(tempChild.getFoodTitle());
         foodDescription.setText(tempChild.getFoodDescription());
         foodPrice.setText(tempChild.getFoodPrice());
-        // END OF EXPANDED CHILD INFO
+
 
         return convertView;
     }
@@ -114,7 +114,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return 0L;
     }
 
     @Override
@@ -122,9 +122,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = minflater.inflate(R.layout.expandable_listview_group, null);
         }
-        View view = (TextView) convertView.findViewById(R.id.expandedListHeader);
+        TextView view = convertView.findViewById(R.id.expandedListHeader);
 
-        ((TextView) view).setText(expandableGroupItem.get(groupPosition).getMenuCategory());
+        view.setText(expandableGroupItem.get(groupPosition).getMenuCategory());
         return convertView;
     }
 

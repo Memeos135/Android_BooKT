@@ -8,7 +8,6 @@
     android:background="@android:color/transparent">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:layout_marginBottom="50dp"
@@ -30,7 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@tools:sample/backgrounds/scenic[15]" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic[15]"
+            android:contentDescription="TODO" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
@@ -43,7 +43,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.972"
-        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/leftArrowImage"
@@ -55,7 +56,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.972"
-        app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+        app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
+        android:contentDescription="TODO" />
 
     <SeekBar
         android:id="@+id/seekBar"

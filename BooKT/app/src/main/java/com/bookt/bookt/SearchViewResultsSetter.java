@@ -5,7 +5,7 @@ public class SearchViewResultsSetter {
     private String restaurantName;
     private String district;
 
-    SearchViewResultsSetter(String restaurantName, String district){
+    SearchViewResultsSetter(String restaurantName, String district) {
         this.restaurantName = restaurantName;
         this.district = district;
     }

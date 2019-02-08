@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,8 +32,7 @@ public class GalleryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    Context context;
-    Menu menu;
+    private Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -45,17 +43,17 @@ public class GalleryActivity extends AppCompatActivity
 
         context = this;
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         //-----------------------------------------Floating Button Functions-------------------------------------------//
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // SearchView Custom Dialog
-                final Dialog dialog = new Dialog(context);
+                Dialog dialog = new Dialog(context);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.search_view);
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -65,10 +63,10 @@ public class GalleryActivity extends AppCompatActivity
                 dialog.show();
 
                 // ListView Linking and Adapter set-up and test
-                final ListView listview = dialog.findViewById(R.id.listView);
+                ListView listview = dialog.findViewById(R.id.listView);
 
                 // Linking filter icon of SearchView
-                final ImageView filterImageView = dialog.findViewById(R.id.filterImage);
+                ImageView filterImageView = dialog.findViewById(R.id.filterImage);
 
                 // Fill Up Dialog ListView Array
                 ArrayList<SearchViewResultsSetter> x = new ArrayList<>();
@@ -88,7 +86,7 @@ public class GalleryActivity extends AppCompatActivity
                     public void onClick(View v) {
 
                         // Filter View Custom Dialog
-                        final Dialog dialog = new Dialog(GalleryActivity.this);
+                        Dialog dialog = new Dialog(GalleryActivity.this);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.gallery_filter_view);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -103,11 +101,11 @@ public class GalleryActivity extends AppCompatActivity
                         final GalleryFilterCustomListAdapter customFilterListVewAdapter =
                                 new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
 
-                        final ListView listView = (ListView) dialog.findViewById(R.id.filterlistView);
+                        ListView listView = dialog.findViewById(R.id.filterlistView);
                         listView.setAdapter(customFilterListVewAdapter);
 
                         // Process okButton Press
-                        Button okButton = (Button) dialog.findViewById(R.id.okButton);
+                        Button okButton = dialog.findViewById(R.id.okButton);
                         okButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -116,7 +114,7 @@ public class GalleryActivity extends AppCompatActivity
                         });
 
                         // Process clearButton press
-                        Button clearButton = (Button) dialog.findViewById(R.id.clearAllButton);
+                        Button clearButton = dialog.findViewById(R.id.clearAllButton);
                         clearButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -132,13 +130,13 @@ public class GalleryActivity extends AppCompatActivity
         });
         //------------------------------------------------------------------------------------------------------------//
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView setup--------------------------------------------//
@@ -168,7 +166,7 @@ public class GalleryActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             super.onBackPressed();
@@ -177,7 +175,6 @@ public class GalleryActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -197,7 +194,7 @@ public class GalleryActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -208,7 +205,7 @@ public class GalleryActivity extends AppCompatActivity
         locationImageView = findViewById(R.id.locationIcon);
 
         locationImageView.clearAnimation();
-        locationImageView.setRotation(360);
-        locationImageView.animate().rotation(locationImageView.getRotation()+360).setDuration(500);
+        locationImageView.setRotation(360.0F);
+        locationImageView.animate().rotation(locationImageView.getRotation()+ 360.0F).setDuration(500L);
     }
 }

@@ -1,12 +1,12 @@
 package com.bookt.bookt;
 
-public class ExpandableChildItem {
-    String foodImage;
-    String foodTitle;
-    String foodDescription;
-    String foodPrice;
+class ExpandableChildItem {
+    private String foodImage;
+    private String foodTitle;
+    private String foodDescription;
+    private String foodPrice;
 
-    ExpandableChildItem(String foodTitle, String foodDescription, String foodImage, String foodPrice){
+    ExpandableChildItem(String foodTitle, String foodDescription, String foodImage, String foodPrice) {
         this.foodTitle = foodTitle;
         this.foodDescription = foodDescription;
         this.foodImage = foodImage;

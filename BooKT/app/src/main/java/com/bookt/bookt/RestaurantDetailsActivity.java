@@ -32,17 +32,14 @@ import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 public class RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ExpandableListView expandableListView;
-    LatLng latLng;
-    Context context;
-    ArrayList<Integer> imageViewArrayList;
-    int currentImage;
+    private ExpandableListView expandableListView;
+    private Context context;
+    private ArrayList<Integer> imageViewArrayList;
+    private int currentImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,32 +70,26 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         // animate reserve button to grab attention
         animateReserveButton();
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
 
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return true;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -118,13 +109,13 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     // initiator of expandable listview height
-    public void checkExpandableListViewHeight(){
+    private void checkExpandableListViewHeight(){
             ListAdapter listadp = expandableListView.getAdapter();
             if (listadp != null) {
                 int totalHeight = 0;
@@ -141,7 +132,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }
 
     // check permission for phone calls
-    public boolean isPermissionGranted(){
+    private boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         if(result == PackageManager.PERMISSION_GRANTED){
             return true;
@@ -153,7 +144,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     // Gallery Images Handler
     public void clickHandler(View v){
 
-        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
+        Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
@@ -163,19 +154,19 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         final SeekBar seekBar = dialog.findViewById(R.id.seekBar);
         seekBar.setEnabled(false);
 
-        if(v.getTag().equals("imageOne")){
+        if("imageOne".equals(v.getTag())){
 
             imageView.setImageResource(imageViewArrayList.get(0));
             seekBar.setProgress(0);
             currentImage = 0;
 
-        }else if(v.getTag().equals("imageTwo")){
+        }else if("imageTwo".equals(v.getTag())){
 
             imageView.setImageResource(imageViewArrayList.get(1));
             seekBar.setProgress(1);
             currentImage = 1;
 
-        }else if(v.getTag().equals("imageThree")){
+        }else if("imageThree".equals(v.getTag())){
 
             imageView.setImageResource(imageViewArrayList.get(2));
             seekBar.setProgress(2);
@@ -196,7 +187,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentImage < imageViewArrayList.size()-1){
+                if(currentImage < (imageViewArrayList.size() - 1)){
                     currentImage++;
                     imageView.setImageResource(imageViewArrayList.get(currentImage));
                     seekBar.setProgress(currentImage);
@@ -228,7 +219,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     }
 
     // Set 4 displayed images
-    public void setGalleryImages(ArrayList<Integer> imagesList){
+    private void setGalleryImages(ArrayList<Integer> imagesList){
         ImageView imageView1 = findViewById(R.id.galleryImageLeft);
         ImageView imageView2 = findViewById(R.id.galleryImageRight);
         ImageView imageView3 = findViewById(R.id.galleryImageBottomLeft);
@@ -241,17 +232,17 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     }
 
     // animate Reserve Button
-    public void animateReserveButton(){
+    private void animateReserveButton(){
         final Button reserveButton = findViewById(R.id.reserveButton);
-        reserveButton.animate().scaleXBy(0.2f).scaleYBy(0.2f).alpha(0.3f).setDuration(600);
+        reserveButton.animate().scaleXBy(0.2f).scaleYBy(0.2f).alpha(0.3f).setDuration(600L);
 
-        final Handler handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                reserveButton.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).alpha(1).setDuration(400);
+                reserveButton.animate().scaleXBy(-0.2f).scaleYBy(-0.2f).alpha(1.0F).setDuration(400L);
             }
-        }, 700);
+        }, 700L);
     }
 
     // reservation button processing function
@@ -261,7 +252,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
     // call icon OnClick
     public void callIconProcess(View v){
-        final AlertDialog.Builder builder =
+        AlertDialog.Builder builder =
                 new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
 
         builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?")
@@ -284,14 +275,14 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
     // location icon animation
     public void locationAnimation(View v){
-        final ImageView locationImageView = findViewById(R.id.locationImage);
+        ImageView locationImageView = findViewById(R.id.locationImage);
         locationImageView.clearAnimation();
-        locationImageView.setRotation(360);
-        locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
+        locationImageView.setRotation(360.0F);
+        locationImageView.animate().rotation(locationImageView.getRotation() + 360.0F).setDuration(500L);
     }
 
     // Expandable ListView Setup Function
-    public void setupExpandableListView(){
+    private void setupExpandableListView(){
 
         ArrayList<ExpandableGroupItem> expandableGroupItem = new ArrayList<ExpandableGroupItem>();
         ArrayList<ExpandableChildItem> expandableChildItem = new ArrayList<ExpandableChildItem>();
@@ -307,7 +298,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
 
         // expandablelistview setup and adapter linking
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView = findViewById(R.id.expandableListView);
         expandableListView.setFocusable(false);
 
         ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(expandableGroupItem, expandableListView);

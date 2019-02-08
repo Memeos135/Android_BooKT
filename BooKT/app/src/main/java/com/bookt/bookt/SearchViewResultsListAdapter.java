@@ -11,16 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchViewResultsListAdapter extends ArrayAdapter<SearchViewResultsSetter> {
 
-    ArrayList<SearchViewResultsSetter> list;
-    Context context;
+    private List<SearchViewResultsSetter> list;
+    private Context context;
 
     public SearchViewResultsListAdapter(@NonNull Context context, @NonNull ArrayList<SearchViewResultsSetter> objects) {
         super(context,  0, objects);
         this.context = context;
-        this.list = objects;
+        list = objects;
     }
 
     @NonNull

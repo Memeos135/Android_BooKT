@@ -2,7 +2,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardOne"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:background="#161616"
@@ -11,10 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
-            android:id="@+id/relativeLayoutLeft"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5">
@@ -32,7 +31,8 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/backgrounds/scenic[0]" />
+                tools:srcCompat="@tools:sample/backgrounds/scenic[0]"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/textViewLeft"
@@ -51,7 +51,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/relativeLayoutRight"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.55">
@@ -69,7 +68,8 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@tools:sample/backgrounds/scenic[1]" />
+                tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/textViewRight"

@@ -19,8 +19,8 @@ import java.util.Calendar;
 
 public class RestaurantReservationActivity extends AppCompatActivity {
 
-    int seatCounter = 0;
-    Context context;
+    private int seatCounter;
+    private Context context;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +33,18 @@ public class RestaurantReservationActivity extends AppCompatActivity {
     // Seats Click Logic
     public void seatsClickHandler(View v){
         TextView textView = findViewById(R.id.resSeats);
-        if(v.getTag().equals("minus")){
+        if("minus".equals(v.getTag())){
             if(seatCounter == 0){
                 Toast.makeText(this, "Cannot reduce further", Toast.LENGTH_SHORT).show();
                 textView.setTextColor(textView.getResources().getColor(R.color.white));
             }else{
                 seatCounter--;
-                textView.setText(String.valueOf("x"+seatCounter));
+                textView.setText("x" + seatCounter);
                 textView.setTextColor(textView.getResources().getColor(R.color.red_app));
             }
         }else{
             seatCounter++;
-            textView.setText(String.valueOf("x"+seatCounter));
+            textView.setText("x" + seatCounter);
             textView.setTextColor(textView.getResources().getColor(R.color.red_app));
         }
     }
@@ -56,7 +56,7 @@ public class RestaurantReservationActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        final DatePickerDialog datePickerDialog;
+        DatePickerDialog datePickerDialog;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
@@ -66,8 +66,8 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                    textView.setText(String.valueOf(month) + "/" +
-                            String.valueOf(dayOfMonth) + "/" + String.valueOf(year));
+                    textView.setText(month + (int) '/' +
+                            dayOfMonth + (int) '/' + year);
 
                 }
             }, year, month, dayOfMonth);
@@ -90,8 +90,8 @@ public class RestaurantReservationActivity extends AppCompatActivity {
     public void timeHandler(View v){
 
         final TextView textView = findViewById(R.id.resTime);
-        final Calendar calendar = Calendar.getInstance();
-        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         new TimePickerDialog(context, R.style.MyDatePickerDialogTheme, new TimePickerDialog.OnTimeSetListener() {
 
@@ -102,11 +102,11 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                 if(hourOfDay > 11){
 
                     status = "PM";
-                    hourOfDay = hourOfDay-12;
+                    hourOfDay -= 12;
 
                 }
 
-                textView.setText(String.valueOf(hourOfDay) + ":" + String.valueOf(minute) + " " + status);
+                textView.setText(hourOfDay + ':' + minute + ' ' + status);
 
             }
         }, hour, minute, false).show();
@@ -114,7 +114,7 @@ public class RestaurantReservationActivity extends AppCompatActivity {
 
     public void buttonHandler(View v){
         Button button = (Button) v;
-        if(button.getTag().equals("cancelButton")){
+        if("cancelButton".equals(button.getTag())){
             onBackPressed();
         }else{
             context.startActivity(new Intent(context, ReservationConfirmationActivity.class));

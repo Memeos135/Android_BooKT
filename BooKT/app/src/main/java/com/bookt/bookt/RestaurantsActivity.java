@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 
 public class RestaurantsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
-    Context context;
+    private Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -35,7 +34,7 @@ public class RestaurantsActivity extends AppCompatActivity
 
         context = this;
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -47,13 +46,13 @@ public class RestaurantsActivity extends AppCompatActivity
 //            }
 //        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView and Toolbar setup-------------------------------//
@@ -87,7 +86,7 @@ public class RestaurantsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -101,7 +100,6 @@ public class RestaurantsActivity extends AppCompatActivity
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -121,7 +119,7 @@ public class RestaurantsActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -129,7 +127,7 @@ public class RestaurantsActivity extends AppCompatActivity
     public void locationAnimation(View view) {
         ImageView locationImageView = findViewById(R.id.locationImage);
         locationImageView.clearAnimation();
-        locationImageView.setRotation(360);
-        locationImageView.animate().rotation(locationImageView.getRotation() + 360).setDuration(500);
+        locationImageView.setRotation(360.0F);
+        locationImageView.animate().rotation(locationImageView.getRotation() + 360.0F).setDuration(500L);
     }
 }
