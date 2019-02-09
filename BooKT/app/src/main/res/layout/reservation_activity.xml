@@ -67,132 +67,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <include
+                layout="@layout/restaurant_info"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
-                android:background="#161616"
-                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/resCuisineTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Cuisine"
-                    android:textColor="#E5E5E5"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/resvaTimeTitle"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:text="1:00 PM - 12:00 AM"
-                    android:textColor="@color/light_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/resvaTimeTitle" />
-
-                <TextView
-                    android:id="@+id/dollars"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="$$$$"
-                    android:textColor="@color/red"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/restaurantLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Al Nahda, The Market Place Gungahlim Place, Gungahlin ACT 2912"
-                    android:textColor="@color/light_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/locationImage"
-                    app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
-
-                <ImageView
-                    android:id="@+id/locationImage"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="16dp"
-
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/resCuisineTitle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/restaurantName"
-                    app:srcCompat="@drawable/ic_location_on_light_grey_24dp"
-                    android:contentDescription="TODO" />
-
-                <TextView
-                    android:id="@+id/resvaTimeTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="100dp"
-                    android:text="Open Hour"
-                    android:textColor="#E5E5E5"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/resCuisine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Pizza"
-                    android:textColor="@color/light_grey"
-                    android:textSize="13sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/resCuisineTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/resCuisineTitle"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/restaurantName"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="90dp"
-                    android:gravity="center_vertical"
-                    android:text="Crust Gourmet Pizza Bar"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/dollars"
-                    app:layout_constraintHorizontal_bias="0.062"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_marginTop="185dp"
                 android:background="#161616"
-                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -380,7 +267,8 @@
                     android:id="@+id/additionalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
                     android:gravity="center_vertical"
                     android:text="Additional Information"
                     android:textColor="@color/light_grey"
@@ -394,8 +282,8 @@
                     android:id="@+id/addInfoText"
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
                     android:background="#2E2E2E"
                     android:ems="10"
                     android:gravity="start|top"
@@ -416,9 +304,9 @@
                     android:id="@+id/fNameText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="24dp"
                     android:background="#2E2E2E"
                     android:ems="10"
                     android:hint="Full Name"
@@ -437,9 +325,9 @@
                     android:id="@+id/numText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="24dp"
                     android:background="#2E2E2E"
                     android:ems="10"
                     android:hint="+966 00 000 0000"
@@ -457,9 +345,9 @@
                     android:id="@+id/emailText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="24dp"
                     android:background="#2E2E2E"
                     android:ems="10"
                     android:hint="Email Address"

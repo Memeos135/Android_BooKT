@@ -48,15 +48,15 @@
         </ExpandableListView>
 
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/mapFragment"
             android:name="com.bookt.bookt.MapFragment"
-            layout="@layout/map_fragment"
+            layout="@layout/map_view"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginStart="26dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="26dp"
-            tools:layout="@layout/map_fragment" />
+            tools:layout="@layout/map_view" />
 
         <include
             layout="@layout/restaurant_details_gallery"

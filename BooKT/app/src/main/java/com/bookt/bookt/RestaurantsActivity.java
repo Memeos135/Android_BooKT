@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,7 +38,8 @@ public class RestaurantsActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 //
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -67,7 +69,7 @@ public class RestaurantsActivity extends AppCompatActivity
                 "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewRestaurants);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
         recyclerView.setFocusable(false);
         // Disable nestedScroll because we're using NestedScrollView

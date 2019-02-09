@@ -202,7 +202,7 @@ public class GalleryActivity extends AppCompatActivity
     // location image animation
     public void locationAnimation(View v){
         ImageView locationImageView;
-        locationImageView = findViewById(R.id.locationIcon);
+        locationImageView = findViewById(R.id.locationImage);
 
         locationImageView.clearAnimation();
         locationImageView.setRotation(360.0F);

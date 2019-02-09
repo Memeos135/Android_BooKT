@@ -28,6 +28,10 @@ public class RestaurantReservationActivity extends AppCompatActivity {
 
         context = this;
 
+        Button reserveButton = findViewById(R.id.reserveButton);
+        reserveButton.setVisibility(View.INVISIBLE);
+        reserveButton.setEnabled(false);
+
     }
 
     // Seats Click Logic

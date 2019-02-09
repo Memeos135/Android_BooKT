@@ -26,7 +26,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.map_fragment, container, false);
+        View v = inflater.inflate(R.layout.map_view, container, false);
 
         mapView = v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
