@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="190dp"
-    app:cardBackgroundColor="#2E2E2E"
+    app:cardBackgroundColor="@color/card_black"
     app:cardCornerRadius="5dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
@@ -18,14 +18,14 @@
             android:layout_height="130dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
+            android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.019"
-            app:srcCompat="@drawable/icon"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/icon" />
 
         <TextView
             android:id="@+id/restaurantName"
@@ -51,6 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:contentDescription="TODO"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,8 +59,7 @@
             app:layout_constraintStart_toEndOf="@+id/restaurantImage"
             app:layout_constraintTop_toBottomOf="@+id/restaurantName"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_restaurant_menu_black_24dp"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
 
         <TextView
             android:id="@+id/resCuisine"
@@ -85,6 +85,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:contentDescription="TODO"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,8 +93,7 @@
             app:layout_constraintStart_toEndOf="@+id/restaurantImage"
             app:layout_constraintTop_toBottomOf="@+id/forkImage"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_location_on_black_24dp"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
         <TextView
             android:id="@+id/restaurantLocation"

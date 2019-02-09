@@ -18,10 +18,9 @@
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#161616"
-        android:fitsSystemWindows="true"
+        android:background="@color/app_black"
         app:headerLayout="@layout/menu_nav_header"
-        app:menu="@menu/activity_gallery_drawer"
-        app:itemTextColor="@color/white" />
+        app:itemTextColor="@color/white"
+        app:menu="@menu/activity_gallery_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

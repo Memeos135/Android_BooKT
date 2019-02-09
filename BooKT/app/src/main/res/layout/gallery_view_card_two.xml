@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:layout_weight="1"
-    android:background="#161616"
     android:orientation="horizontal">
 
     <android.support.constraint.ConstraintLayout
@@ -38,7 +37,7 @@
             android:background="@color/white"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="#eb2748"
+            android:textColor="@color/red_app"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#eb2748"
+            android:background="@color/red_app"
             android:gravity="center"
             android:text="TextView"
             android:textColor="@android:color/white"

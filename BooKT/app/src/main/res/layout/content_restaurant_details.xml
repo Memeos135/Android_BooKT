@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#161616"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fitsSystemWindows="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".RestaurantDetailsActivity"
-        tools:showIn="@layout/app_bar_restaurant_details">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_black"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".RestaurantDetailsActivity"
+    tools:showIn="@layout/app_bar_restaurant_details">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#161616"
         android:orientation="vertical">
 
         <include
@@ -36,7 +34,6 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="24dp"
-            android:background="#161616"
             android:fadeScrollbars="false"
             android:focusable="false"
             android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
@@ -61,7 +58,7 @@
         <include
             layout="@layout/restaurant_details_gallery"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp" />
 
     </LinearLayout>

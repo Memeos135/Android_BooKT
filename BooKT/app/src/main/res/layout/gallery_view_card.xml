@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="#161616"
     android:baselineAligned="false"
     android:orientation="horizontal">
 
@@ -35,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#eb2748"
+            android:background="@color/red_app"
             android:gravity="center"
             android:text="textView"
             android:textColor="@android:color/white"
@@ -75,7 +74,7 @@
             android:background="@color/white"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="#eb2748"
+            android:textColor="@color/red_app"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

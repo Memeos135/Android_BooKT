@@ -5,7 +5,6 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
-    android:background="#161616"
     android:padding="10dp">
 
     <TextView
@@ -16,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="140dp"
         android:text="Cuisine"
-        android:textColor="#E5E5E5"
+        android:textColor="@color/title_grey"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Open Hour"
-        android:textColor="#E5E5E5"
+        android:textColor="@color/title_grey"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

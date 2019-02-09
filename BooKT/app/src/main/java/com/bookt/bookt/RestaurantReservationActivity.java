@@ -70,8 +70,8 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                    textView.setText(month + (int) '/' +
-                            dayOfMonth + (int) '/' + year);
+                    textView.setText(month + "/" +
+                            dayOfMonth + "/" + year);
 
                 }
             }, year, month, dayOfMonth);

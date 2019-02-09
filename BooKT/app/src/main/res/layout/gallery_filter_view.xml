@@ -34,21 +34,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/filterText"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="60dp"
-            android:background="#F7F7F7"
-            android:gravity="start|center_vertical"
-            android:paddingStart="25dp"
-            android:text="FILTER BY"
-            android:textColor="#161616"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/filterlistView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/filterText"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/filter_grey"
+        android:gravity="start|center_vertical"
+        android:paddingStart="25dp"
+        android:text="FILTER BY"
+        android:textColor="@color/app_black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/filterlistView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:background="#F7F7F7"
+                android:background="@color/filter_grey"
                 android:text="clear all"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:background="#F7F7F7"
+                android:background="@color/filter_grey"
                 android:text="ok"
                 android:textColor="@color/red_app"
                 android:textSize="14sp"
