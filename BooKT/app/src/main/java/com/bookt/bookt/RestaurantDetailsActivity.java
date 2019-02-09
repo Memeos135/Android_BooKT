@@ -223,7 +223,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         ImageView imageView1 = findViewById(R.id.galleryImageLeft);
         ImageView imageView2 = findViewById(R.id.galleryImageRight);
         ImageView imageView3 = findViewById(R.id.galleryImageBottomLeft);
-        ImageView imageView4 = findViewById(R.id.galleryImageBottomRight);
+        ImageView imageView4 = findViewById(R.id.galleryImageBottomRIght);
 
         imageView1.setImageResource(imagesList.get(0));
         imageView2.setImageResource(imagesList.get(1));

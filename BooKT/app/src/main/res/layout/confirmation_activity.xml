@@ -7,46 +7,15 @@
     android:focusableInTouchMode="true"
     tools:context=".ReservationConfirmationActivity">
 
-
-    <android.support.design.widget.AppBarLayout
+    <include
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/red_app"
-        android:fitsSystemWindows="true">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:onClick="backHandler"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp"
-                    android:contentDescription="TODO" />
-
-
-            </android.support.constraint.ConstraintLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="wrap_content"
+        layout="@layout/header_reservation_confirmation_activities"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="55dp"
         android:background="#161616"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -183,10 +152,10 @@
 
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:contentDescription="TODO"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restaurantName"
-            app:srcCompat="@drawable/ic_location_on_light_grey_24dp"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/ic_location_on_light_grey_24dp" />
 
         <TextView
             android:id="@+id/dollarTwo"
@@ -287,7 +256,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="335dp"
         android:background="#161616"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -316,8 +285,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.031" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
@@ -331,16 +300,19 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="0.5"
                 android:background="#9A9A9A"
+                app:layout_constraintBottom_toBottomOf="@+id/textOR"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textOR"
-                app:layout_constraintTop_toBottomOf="@+id/loginSignupButton" />
+                app:layout_constraintTop_toTopOf="@+id/textOR" />
 
             <TextView
                 android:id="@+id/textOR"
@@ -349,25 +321,30 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="OR"
                 android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginSignupButton" />
+                app:layout_constraintTop_toBottomOf="@+id/loginSignupButton"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="0.5"
                 android:background="#9A9A9A"
+                app:layout_constraintBottom_toBottomOf="@+id/textOR"
                 app:layout_constraintEnd_toStartOf="@+id/textOR"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginSignupButton" />
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="@+id/textOR" />
+        </android.support.constraint.ConstraintLayout>
 
         <Button
             android:id="@+id/googleLogin"
@@ -385,7 +362,7 @@
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <Button
             android:id="@+id/facebookLogin"
