@@ -1,7 +1,5 @@
 package com.bookt.myapplication;
 
-import android.os.Parcel;
-
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;

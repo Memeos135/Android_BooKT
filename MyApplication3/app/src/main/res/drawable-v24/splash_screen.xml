@@ -12,6 +12,7 @@
         android:gravity="center">
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
-            android:src="@drawable/header" />
+            android:src="@drawable/header"
+            />
     </item>
 </layer-list>

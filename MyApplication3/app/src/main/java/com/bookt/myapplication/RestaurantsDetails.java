@@ -1,29 +1,21 @@
 package com.bookt.myapplication;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
-import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener;
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
-
 import java.util.ArrayList;
 
-public class RestaurantsDetails extends AppCompatActivity {
+public class RestaurantsDetails extends AppCompatActivity implements ReserveFragment.OnFragmentInteractionListener , MenuFragment.OnFragmentInteractionListener {
 
-    RecyclerView recyclerView;
-    MenuAdapter menuAdapter;
-    ArrayList<Type> typeArrayList;
-    ArrayList<Item> itemArrayList;
+
 
 
     @Override
@@ -35,66 +27,41 @@ public class RestaurantsDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        typeArrayList = new ArrayList<>();
-        itemArrayList = new ArrayList<>();
 
 
-        itemArrayList.add(new Item());
-        itemArrayList.add(new Item());
-        itemArrayList.add(new Item());
-        itemArrayList.add(new Item());
-        itemArrayList.add(new Item());
-        itemArrayList.add(new Item());
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
+        tabLayout.addTab(tabLayout.newTab().setText("Reserve"));
+        tabLayout.addTab(tabLayout.newTab().setText("Menu"));
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
+        final ViewPager viewPager = findViewById(R.id.viewPagerTab);
+        PagesAdapter pagesAdapter = new PagesAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(pagesAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
+            }
 
-        typeArrayList.add(new Type("test1",itemArrayList));
-        typeArrayList.add(new Type("test2",itemArrayList));
-        typeArrayList.add(new Type("test3",itemArrayList));
-        typeArrayList.add(new Type("test4",itemArrayList));
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
 
 
 
 
-
-        recyclerView = findViewById(R.id.details_recycler);
-        menuAdapter = new MenuAdapter(typeArrayList,this,typeArrayList,itemArrayList);
-
-
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(menuAdapter);
-
-
-        recyclerView.setFocusable(false);
-
-        final MapFragment mapFragment = new MapFragment();
 
 
 
@@ -109,4 +76,8 @@ public class RestaurantsDetails extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

@@ -35,13 +35,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_location_on_black_24dp"
-                    />
+                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Jeddah"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>

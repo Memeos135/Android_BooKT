@@ -2,14 +2,12 @@ package com.bookt.myapplication;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
-import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
@@ -22,7 +20,7 @@ public class MenuAdapter extends ExpandableRecyclerViewAdapter<MenuAdapter.TypeH
     private Context context;
     private ArrayList<Type> typeArrayList;
     private ArrayList<Item> itemArrayList;
-    int counter = 0;
+
 
 
     public MenuAdapter(List<? extends ExpandableGroup> groups, Context context, ArrayList<Type> typeArrayList, ArrayList<Item> itemArrayList) {

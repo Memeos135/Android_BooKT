@@ -13,5 +13,6 @@
         android:id="@+id/galleryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        tools:listitem="@layout/restaurants_informations_cardview" />
 </android.support.v4.widget.NestedScrollView>

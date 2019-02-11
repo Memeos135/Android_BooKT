@@ -84,6 +84,8 @@ public class RestaurantsActivity extends AppCompatActivity implements Navigation
 
     }
 
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         return false;
