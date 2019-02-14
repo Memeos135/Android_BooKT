@@ -1,6 +1,9 @@
 package com.bookt.bookt;
 
-class ExpandableChildItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+class ExpandableChildItem implements Parcelable {
     private String foodImage;
     private String foodTitle;
     private String foodDescription;
@@ -12,6 +15,25 @@ class ExpandableChildItem {
         this.foodImage = foodImage;
         this.foodPrice = foodPrice;
     }
+
+    protected ExpandableChildItem(Parcel in) {
+        foodImage = in.readString();
+        foodTitle = in.readString();
+        foodDescription = in.readString();
+        foodPrice = in.readString();
+    }
+
+    public static final Creator<ExpandableChildItem> CREATOR = new Creator<ExpandableChildItem>() {
+        @Override
+        public ExpandableChildItem createFromParcel(Parcel in) {
+            return new ExpandableChildItem(in);
+        }
+
+        @Override
+        public ExpandableChildItem[] newArray(int size) {
+            return new ExpandableChildItem[size];
+        }
+    };
 
     public void setFoodTitle(String foodTitle){
         this.foodTitle = foodTitle;
@@ -43,5 +65,18 @@ class ExpandableChildItem {
 
     public String getFoodPrice(){
         return foodPrice;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(foodImage);
+        parcel.writeString(foodTitle);
+        parcel.writeString(foodDescription);
+        parcel.writeString(foodPrice);
     }
 }

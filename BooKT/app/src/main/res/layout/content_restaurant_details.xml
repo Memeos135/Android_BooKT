@@ -5,7 +5,6 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_black"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -26,24 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ExpandableListView
-            android:id="@+id/expandableListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
-            android:fadeScrollbars="false"
-            android:focusable="false"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/expandable_listview_group">
-
-        </ExpandableListView>
-
         <fragment
             android:id="@+id/mapFragment"
             android:name="com.bookt.bookt.MapFragment"
@@ -55,11 +36,21 @@
             android:layout_marginEnd="26dp"
             tools:layout="@layout/map_view" />
 
-        <include
-            layout="@layout/restaurant_details_gallery"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/expandableRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
+            android:layout_gravity="top"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:focusable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/expandable_listview_group">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

@@ -1,34 +1,33 @@
 package com.bookt.bookt;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -36,7 +35,7 @@ import java.util.ArrayList;
 
 public class RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ExpandableListView expandableListView;
+    private RecyclerView expandableRecyclerView;
     private Context context;
     private ArrayList<Integer> imageViewArrayList;
     private int currentImage;
@@ -48,24 +47,20 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         context = this;
 
-        // Setup ExpandableListView
-        setupExpandableListView();
+//        // Setup ExpandableListView
+//        setupExpandableListView();
 
         new MapFragment();
 
         // Setting up Gallery Images
-        imageViewArrayList = new ArrayList<Integer>();
-        imageViewArrayList.add(R.drawable.splash);
-        imageViewArrayList.add(R.drawable.main_header);
-        imageViewArrayList.add(R.drawable.main_header_two);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_focused);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal_background);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_disabled);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light_focused);
-        setGalleryImages(imageViewArrayList);
+        setupImageViewArrayList();
+        //setGalleryImages(imageViewArrayList);
+
+        // Setting up Header ViewPager
+        setupImagesViewPager();
+
+        // Setting up Expandable Recycler View
+        setupExpandableRecyclerView();
 
         // animate reserve button to grab attention
         animateReserveButton();
@@ -114,23 +109,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         return true;
     }
 
-    // initiator of expandable listview height
-    private void checkExpandableListViewHeight(){
-            ListAdapter listadp = expandableListView.getAdapter();
-            if (listadp != null) {
-                int totalHeight = 0;
-                for (int j = 0; j < listadp.getCount(); j++) {
-                    View listItem = listadp.getView(j, null, expandableListView);
-                    listItem.measure(0, 0);
-                    totalHeight += listItem.getMeasuredHeight();
-                }
-                ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-                params.height = totalHeight + (expandableListView.getDividerHeight() * (listadp.getCount() - 1));
-                expandableListView.setLayoutParams(params);
-                expandableListView.requestLayout();
-            }
-        }
-
     // check permission for phone calls
     private boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
@@ -139,96 +117,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         }else{
             return false;
         }
-    }
-
-    // Gallery Images Handler
-    public void clickHandler(View v){
-
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.restaurant_details_gallery_popup);
-
-        final ImageView imageView = dialog.findViewById(R.id.galleryImage);
-        final SeekBar seekBar = dialog.findViewById(R.id.seekBar);
-        seekBar.setEnabled(false);
-
-        if("imageOne".equals(v.getTag())){
-
-            imageView.setImageResource(imageViewArrayList.get(0));
-            seekBar.setProgress(0);
-            currentImage = 0;
-
-        }else if("imageTwo".equals(v.getTag())){
-
-            imageView.setImageResource(imageViewArrayList.get(1));
-            seekBar.setProgress(1);
-            currentImage = 1;
-
-        }else if("imageThree".equals(v.getTag())){
-
-            imageView.setImageResource(imageViewArrayList.get(2));
-            seekBar.setProgress(2);
-            currentImage = 2;
-
-        }else {
-
-            imageView.setImageResource(imageViewArrayList.get(3));
-            seekBar.setProgress(3);
-            currentImage = 3;
-
-        }
-        dialog.show();
-
-        ImageView rightArrow = dialog.findViewById(R.id.rightArrowImage);
-        ImageView leftArrow = dialog.findViewById(R.id.leftArrowImage);
-
-        rightArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentImage < (imageViewArrayList.size() - 1)){
-                    currentImage++;
-                    imageView.setImageResource(imageViewArrayList.get(currentImage));
-                    seekBar.setProgress(currentImage);
-                    System.out.println(currentImage);
-                }else{
-                    currentImage = 0;
-                    imageView.setImageResource(imageViewArrayList.get(currentImage));
-                    seekBar.setProgress(currentImage);
-                    System.out.println(currentImage);
-                }
-            }
-        });
-
-        leftArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentImage > 0){
-                    currentImage--;
-                    imageView.setImageResource(imageViewArrayList.get(currentImage));
-                    seekBar.setProgress(currentImage);
-                }else{
-                    currentImage = imageViewArrayList.size()-1;
-                    imageView.setImageResource(imageViewArrayList.get(currentImage));
-                    seekBar.setProgress(currentImage);
-                }
-            }
-        });
-
-    }
-
-    // Set 4 displayed images
-    private void setGalleryImages(ArrayList<Integer> imagesList){
-        ImageView imageView1 = findViewById(R.id.galleryImageLeft);
-        ImageView imageView2 = findViewById(R.id.galleryImageRight);
-        ImageView imageView3 = findViewById(R.id.galleryImageBottomLeft);
-        ImageView imageView4 = findViewById(R.id.galleryImageBottomRIght);
-
-        imageView1.setImageResource(imagesList.get(0));
-        imageView2.setImageResource(imagesList.get(1));
-        imageView3.setImageResource(imagesList.get(2));
-        imageView4.setImageResource(imagesList.get(3));
     }
 
     // animate Reserve Button
@@ -281,8 +169,90 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         locationImageView.animate().rotation(locationImageView.getRotation() + 360.0F).setDuration(500L);
     }
 
-    // Expandable ListView Setup Function
-    private void setupExpandableListView(){
+    // Gallery Images Adapter
+    private class ViewPagerImageAdapter extends PagerAdapter {
+        @Override
+        public int getCount() {
+            return imageViewArrayList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return view == ((ImageView) object);
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setImageResource(imageViewArrayList.get(position));
+            ((ViewPager) container).addView(imageView, 0);
+            return imageView;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            ((ViewPager) container).removeView((ImageView) object);
+        }
+    }
+
+    // Image ArrayList Setup
+    public void setupImageViewArrayList(){
+
+        imageViewArrayList = new ArrayList<Integer>();
+
+        imageViewArrayList.add(R.drawable.splash);
+        imageViewArrayList.add(R.drawable.main_header);
+        imageViewArrayList.add(R.drawable.main_header_two);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_focused);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal_background);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_disabled);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light);
+        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light_focused);
+    }
+
+    // ViewPager Setup
+    public void setupImagesViewPager() {
+
+        if (imageViewArrayList.size() == 0) {
+
+            imageViewArrayList.add(R.drawable.icon);
+
+        }
+        ViewPager viewPager = findViewById(R.id.viewPager);
+
+        ViewPagerImageAdapter viewPagerImageAdapter = new ViewPagerImageAdapter();
+        viewPager.setAdapter(viewPagerImageAdapter);
+
+        viewPager.setOffscreenPageLimit(2);
+
+        final SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setEnabled(false);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                seekBar.setProgress(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    public void setupExpandableRecyclerView(){
+
+        expandableRecyclerView = findViewById(R.id.expandableRecyclerView);
 
         ArrayList<ExpandableGroupItem> expandableGroupItem = new ArrayList<ExpandableGroupItem>();
         ArrayList<ExpandableChildItem> expandableChildItem = new ArrayList<ExpandableChildItem>();
@@ -297,16 +267,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
         expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
 
-        // expandablelistview setup and adapter linking
-        expandableListView = findViewById(R.id.expandableListView);
-        expandableListView.setFocusable(false);
-
-        ExpandableListViewAdapter mNewAdapter = new ExpandableListViewAdapter(expandableGroupItem, expandableListView);
-
-        mNewAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-
-        expandableListView.setAdapter(mNewAdapter);
-
-        checkExpandableListViewHeight();
+        ExpandableRecyclerAdapter expandableRecyclerAdapter = new ExpandableRecyclerAdapter(expandableGroupItem, context);
+        expandableRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        expandableRecyclerView.setAdapter(expandableRecyclerAdapter);
+        expandableRecyclerView.setNestedScrollingEnabled(false);
     }
 }

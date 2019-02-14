@@ -65,8 +65,8 @@ public class GalleryActivity extends AppCompatActivity
                 // ListView Linking and Adapter set-up and test
                 ListView listview = dialog.findViewById(R.id.listView);
 
-                // Linking filter icon of SearchView
-                ImageView filterImageView = dialog.findViewById(R.id.filterImage);
+//                // Linking filter icon of SearchView
+//                ImageView filterImageView = dialog.findViewById(R.id.filterImage);
 
                 // Fill Up Dialog ListView Array
                 ArrayList<SearchViewResultsSetter> x = new ArrayList<>();
@@ -81,51 +81,51 @@ public class GalleryActivity extends AppCompatActivity
                 listview.setAdapter(searchViewResultsListAdapter);
 
                 // Setting ALL LISTENERS for filter icon of SearchView
-                filterImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // Filter View Custom Dialog
-                        Dialog dialog = new Dialog(GalleryActivity.this);
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(R.layout.gallery_filter_view);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                        dialog.setCancelable(true);
-                        dialog.show();
-
-                        // Filter Listview arraylist set-up for testing
-                        final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
-                        filterList.add(new GalleryFilterSetter("HELLO", false));
-                        filterList.add(new GalleryFilterSetter("WORLD", false));
-
-                        final GalleryFilterCustomListAdapter customFilterListVewAdapter =
-                                new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
-
-                        ListView listView = dialog.findViewById(R.id.filterlistView);
-                        listView.setAdapter(customFilterListVewAdapter);
-
-                        // Process okButton Press
-                        Button okButton = dialog.findViewById(R.id.okButton);
-                        okButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(GalleryActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        // Process clearButton press
-                        Button clearButton = dialog.findViewById(R.id.clearAllButton);
-                        clearButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                for(int i = 0; i < filterList.size(); i++){
-                                    filterList.get(i).setChecked(false);
-                                }
-                                customFilterListVewAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                });
+//                filterImageView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        // Filter View Custom Dialog
+//                        Dialog dialog = new Dialog(GalleryActivity.this);
+//                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                        dialog.setContentView(R.layout.gallery_filter_view);
+//                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//                        dialog.setCancelable(true);
+//                        dialog.show();
+//
+//                        // Filter Listview arraylist set-up for testing
+//                        final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
+//                        filterList.add(new GalleryFilterSetter("HELLO", false));
+//                        filterList.add(new GalleryFilterSetter("WORLD", false));
+//
+//                        final GalleryFilterCustomListAdapter customFilterListVewAdapter =
+//                                new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
+//
+//                        ListView listView = dialog.findViewById(R.id.filterlistView);
+//                        listView.setAdapter(customFilterListVewAdapter);
+//
+//                        // Process okButton Press
+//                        Button okButton = dialog.findViewById(R.id.okButton);
+//                        okButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Toast.makeText(GalleryActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                        // Process clearButton press
+//                        Button clearButton = dialog.findViewById(R.id.clearAllButton);
+//                        clearButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                for(int i = 0; i < filterList.size(); i++){
+//                                    filterList.get(i).setChecked(false);
+//                                }
+//                                customFilterListVewAdapter.notifyDataSetChanged();
+//                            }
+//                        });
+//                    }
+//                });
             }
         });
         //------------------------------------------------------------------------------------------------------------//

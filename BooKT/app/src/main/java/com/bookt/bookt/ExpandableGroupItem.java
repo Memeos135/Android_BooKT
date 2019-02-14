@@ -1,13 +1,16 @@
 package com.bookt.bookt;
 
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
+
 import java.util.ArrayList;
 
-class ExpandableGroupItem {
+class ExpandableGroupItem extends ExpandableGroup<ExpandableChildItem> {
     String menuCategory;
     ArrayList<ExpandableChildItem> expandableChildItemArrayList;
 
-    ExpandableGroupItem(String menuCategory, ArrayList<ExpandableChildItem> expandableChildItemArrayList) {
-        this.expandableChildItemArrayList = expandableChildItemArrayList;
+    public ExpandableGroupItem(String menuCategory, ArrayList<ExpandableChildItem> childItemArrayList) {
+        super(menuCategory, childItemArrayList);
+        this.expandableChildItemArrayList = childItemArrayList;
         this.menuCategory = menuCategory;
     }
 

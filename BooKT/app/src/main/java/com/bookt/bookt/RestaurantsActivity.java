@@ -1,7 +1,9 @@
 package com.bookt.bookt;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -18,7 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,14 +45,10 @@ public class RestaurantsActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(RestaurantsActivity.this, "Listener Works!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        fab.setImageResource(R.drawable.ic_filter_list_black_24dp);
+
+        // Setting up floating button dialog
+        setupFabDialog(fab);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -131,5 +133,53 @@ public class RestaurantsActivity extends AppCompatActivity
         locationImageView.clearAnimation();
         locationImageView.setRotation(360.0F);
         locationImageView.animate().rotation(locationImageView.getRotation() + 360.0F).setDuration(500L);
+    }
+
+    // Setting up FloatingActionButton Filter Dialog
+    public void setupFabDialog(FloatingActionButton fab){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Filter View Custom Dialog
+                Dialog dialog = new Dialog(RestaurantsActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.gallery_filter_view);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.setCancelable(true);
+                dialog.show();
+
+                // Filter Listview arraylist set-up for testing
+                final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
+                filterList.add(new GalleryFilterSetter("HELLO", false));
+                filterList.add(new GalleryFilterSetter("WORLD", false));
+
+                final GalleryFilterCustomListAdapter customFilterListVewAdapter =
+                        new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
+
+                ListView listView = dialog.findViewById(R.id.filterlistView);
+                listView.setAdapter(customFilterListVewAdapter);
+
+                // Process okButton Press
+                Button okButton = dialog.findViewById(R.id.okButton);
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(RestaurantsActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Process clearButton press
+                Button clearButton = dialog.findViewById(R.id.clearAllButton);
+                clearButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for(int i = 0; i < filterList.size(); i++){
+                            filterList.get(i).setChecked(false);
+                        }
+                        customFilterListVewAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 }

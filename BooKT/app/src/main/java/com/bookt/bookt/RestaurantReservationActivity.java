@@ -110,7 +110,7 @@ public class RestaurantReservationActivity extends AppCompatActivity {
 
                 }
 
-                textView.setText(hourOfDay + ':' + minute + ' ' + status);
+                textView.setText(hourOfDay + ":" + minute + ' ' + status);
 
             }
         }, hour, minute, false).show();
