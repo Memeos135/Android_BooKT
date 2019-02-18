@@ -90,12 +90,11 @@
                         android:layout_height="30dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="16dp"
-                        android:alpha="0.5"
                         android:contentDescription="TODO"
-                        android:onClick="callIconProcess"
+                        android:onClick="foodMenu"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_call_black_24dp" />
+                        app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
 
 
                 </android.support.constraint.ConstraintLayout>

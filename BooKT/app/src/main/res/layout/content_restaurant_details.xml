@@ -32,25 +32,45 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="26dp"
             tools:layout="@layout/map_view" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/expandableRecyclerView"
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/expandableRecyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="top"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:focusable="false"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--tools:listitem="@layout/expandable_listview_group">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+        <include
+            layout="@layout/ratings_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
-            android:focusable="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/expandable_listview_group">
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp" />
 
-        </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/callNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="Telephone number:    +966547171060"
+            android:onClick="callIconProcess"
+            android:textAlignment="viewStart"
+            android:textColor="@color/light_grey"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -104,10 +104,12 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                 String status = "AM";
 
                 if(hourOfDay > 11){
-
-                    status = "PM";
-                    hourOfDay -= 12;
-
+                    if(hourOfDay == 12){
+                        status = "PM";
+                    }else{
+                        status = "PM";
+                        hourOfDay -= 12;
+                    }
                 }
 
                 textView.setText(hourOfDay + ":" + minute + ' ' + status);

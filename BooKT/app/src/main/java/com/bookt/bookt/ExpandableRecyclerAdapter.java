@@ -47,14 +47,12 @@ public class ExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<Exp
         holder.foodTitle.setText(childItemsArrayList.get(childIndex).getFoodTitle());
         holder.foodDescription.setText(childItemsArrayList.get(childIndex).getFoodDescription());
         holder.foodPrice.setText(childItemsArrayList.get(childIndex).getFoodPrice());
-
     }
 
     @Override
     public void onBindGroupViewHolder(ExpandableRecyclerAdapter.GroupItemHolder holder, int flatPosition, ExpandableGroup group) {
 
         holder.menuCategory.setText(groupItemsArrayList.get(flatPosition).getMenuCategory());
-
     }
 
     public class GroupItemHolder extends GroupViewHolder {

@@ -59,8 +59,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         // Setting up Header ViewPager
         setupImagesViewPager();
 
-        // Setting up Expandable Recycler View
-        setupExpandableRecyclerView();
+//        // Setting up Expandable Recycler View
+//        setupExpandableRecyclerView();
 
         // animate reserve button to grab attention
         animateReserveButton();
@@ -109,6 +109,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         return true;
     }
 
+    // foodMenu image function
+    public void foodMenu(View v){
+        startActivity(new Intent(context, FoodMenuActivity.class));
+    }
+
     // check permission for phone calls
     private boolean isPermissionGranted(){
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
@@ -136,6 +141,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     // reservation button processing function
     public void processReservationButton(View v){
         context.startActivity(new Intent(context, RestaurantReservationActivity.class));
+    }
+
+
+    // see all reviews text function process
+    public void reviewsActivity(View v){
+        startActivity(new Intent(context, ReviewsActivity.class));
     }
 
     // call icon OnClick
@@ -250,26 +261,26 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         });
     }
 
-    public void setupExpandableRecyclerView(){
-
-        expandableRecyclerView = findViewById(R.id.expandableRecyclerView);
-
-        ArrayList<ExpandableGroupItem> expandableGroupItem = new ArrayList<ExpandableGroupItem>();
-        ArrayList<ExpandableChildItem> expandableChildItem = new ArrayList<ExpandableChildItem>();
-
-        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
-        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
-        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
-
-        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
-        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
-        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
-        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
-        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
-
-        ExpandableRecyclerAdapter expandableRecyclerAdapter = new ExpandableRecyclerAdapter(expandableGroupItem, context);
-        expandableRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        expandableRecyclerView.setAdapter(expandableRecyclerAdapter);
-        expandableRecyclerView.setNestedScrollingEnabled(false);
-    }
+//    public void setupExpandableRecyclerView(){
+//
+//        expandableRecyclerView = findViewById(R.id.expandableRecyclerView);
+//
+//        ArrayList<ExpandableGroupItem> expandableGroupItem = new ArrayList<ExpandableGroupItem>();
+//        ArrayList<ExpandableChildItem> expandableChildItem = new ArrayList<ExpandableChildItem>();
+//
+//        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
+//        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
+//        expandableChildItem.add(new ExpandableChildItem("Cheese Burgers", "Double patty with cheese", "", "6$"));
+//
+//        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+//        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+//        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+//        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+//        expandableGroupItem.add(new ExpandableGroupItem("Starters", expandableChildItem));
+//
+//        ExpandableRecyclerAdapter expandableRecyclerAdapter = new ExpandableRecyclerAdapter(expandableGroupItem, context);
+//        expandableRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+//        expandableRecyclerView.setAdapter(expandableRecyclerAdapter);
+//        expandableRecyclerView.setNestedScrollingEnabled(false);
+//    }
 }

@@ -46,6 +46,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".ReservationConfirmationActivity"/>
         <activity android:name=".RestaurantReservationActivity"/>
+        <activity android:name=".FoodMenuActivity"/>
+        <activity android:name=".ReviewsActivity"/>
     </application>
 
 </manifest>
