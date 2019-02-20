@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,24 +40,34 @@ public class RestaurantReservationActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.resSeats);
         if("minus".equals(v.getTag())){
             if(seatCounter == 0){
-                Toast.makeText(this, "Cannot reduce further", Toast.LENGTH_SHORT).show();
-                textView.setTextColor(textView.getResources().getColor(R.color.white));
+                //
             }else{
-                seatCounter--;
+                if(seatCounter == 1) {
+                    seatCounter--;
+                    textView.setText("x" + seatCounter);
+                    textView.setTextColor(textView.getResources().getColor(R.color.light_grey));
+                }else{
+                    seatCounter--;
+                    textView.setText("x" + seatCounter);
+                    textView.setTextColor(textView.getResources().getColor(R.color.red_app));
+                }
+            }
+        }else{
+            if(seatCounter > 19){
+                Toast.makeText(context, String.valueOf(seatCounter) +
+                        " is the maximum number of seats you can reserve.", Toast.LENGTH_SHORT).show();
+            }else {
+                seatCounter++;
                 textView.setText("x" + seatCounter);
                 textView.setTextColor(textView.getResources().getColor(R.color.red_app));
             }
-        }else{
-            seatCounter++;
-            textView.setText("x" + seatCounter);
-            textView.setTextColor(textView.getResources().getColor(R.color.red_app));
         }
     }
 
     // DatePicker
     public void dateHandler(View v){
         final TextView textView = findViewById(R.id.resDate);
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -70,8 +81,35 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                    textView.setText(month + "/" +
-                            dayOfMonth + "/" + year);
+                    if((month == Calendar.getInstance().MONTH-1) &&
+                            (year == Calendar.getInstance().get(Calendar.YEAR)) &&
+                            (dayOfMonth < Calendar.getInstance().get(Calendar.DAY_OF_MONTH))){
+
+                        Toast.makeText(RestaurantReservationActivity.this, "You cannot reserve for a previous day", Toast.LENGTH_SHORT).show();
+                        textView.setText("00/00/0000");
+                        textView.setTextColor(getResources().getColor(R.color.light_grey));
+
+                    }else if((month < Calendar.getInstance().MONTH-1) || (year < Calendar.getInstance().get(Calendar.YEAR))) {
+
+                        Toast.makeText(RestaurantReservationActivity.this,
+                                "You cannot reserve for the next or previous year 1", Toast.LENGTH_SHORT).show();
+                        textView.setText("00/00/0000");
+                        textView.setTextColor(getResources().getColor(R.color.light_grey));
+
+                    }else if((month >= Calendar.getInstance().MONTH-1) && (year > Calendar.getInstance().get(Calendar.YEAR))) {
+
+                        Toast.makeText(RestaurantReservationActivity.this,
+                                "You cannot reserve for the next or previous year 2", Toast.LENGTH_SHORT).show();
+                        textView.setText("00/00/0000");
+                        textView.setTextColor(getResources().getColor(R.color.light_grey));
+
+                    }else {
+
+                        textView.setText(month + "/" +
+                                dayOfMonth + "/" + year);
+                        textView.setTextColor(getResources().getColor(R.color.red_app));
+
+                    }
 
                 }
             }, year, month, dayOfMonth);
@@ -103,6 +141,8 @@ public class RestaurantReservationActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String status = "AM";
 
+                String min = String.valueOf(minute);
+
                 if(hourOfDay > 11){
                     if(hourOfDay == 12){
                         status = "PM";
@@ -112,7 +152,11 @@ public class RestaurantReservationActivity extends AppCompatActivity {
                     }
                 }
 
-                textView.setText(hourOfDay + ":" + minute + ' ' + status);
+                if(minute < 10){
+                    min = "0"+min;
+                }
+
+                textView.setText(hourOfDay + ":" + min + ' ' + status);
 
             }
         }, hour, minute, false).show();

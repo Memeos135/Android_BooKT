@@ -37,18 +37,18 @@
             tools:layout="@layout/map_view" />
 
         <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/expandableRecyclerView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="top"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:layout_marginEnd="16dp"-->
-            <!--android:focusable="false"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--tools:listitem="@layout/expandable_listview_group">-->
+        <!--android:id="@+id/expandableRecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="top"-->
+        <!--android:layout_marginStart="20dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:focusable="false"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--tools:listitem="@layout/expandable_listview_group">-->
 
         <!--</android.support.v7.widget.RecyclerView>-->
 
@@ -64,11 +64,10 @@
             android:id="@+id/callNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="Telephone number:    +966547171060"
+            android:layout_marginEnd="40dp"
             android:onClick="callIconProcess"
-            android:textAlignment="viewStart"
+            android:text="+966547171060"
+            android:textAlignment="textEnd"
             android:textColor="@color/light_grey"
             android:textSize="14sp" />
 

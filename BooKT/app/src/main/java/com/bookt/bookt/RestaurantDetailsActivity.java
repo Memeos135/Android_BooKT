@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -46,6 +51,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         setContentView(R.layout.restaurant_details);
 
         context = this;
+
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        Drawable drawable = ratingBar.getProgressDrawable();
+        drawable.setColorFilter(Color.parseColor("#eb2748"), PorterDuff.Mode.SRC_ATOP);
 
 //        // Setup ExpandableListView
 //        setupExpandableListView();
@@ -154,7 +163,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
 
-        builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?")
+        builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?\n\nReservation through the application is preferred.")
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -261,7 +270,17 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
         });
     }
 
-//    public void setupExpandableRecyclerView(){
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    //    public void setupExpandableRecyclerView(){
 //
 //        expandableRecyclerView = findViewById(R.id.expandableRecyclerView);
 //
