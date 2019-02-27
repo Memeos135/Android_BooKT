@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/NSVRestaurans"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#161616"
@@ -10,11 +9,27 @@
     tools:context=".RestaurantsDetails"
     tools:showIn="@layout/activity_restaurants_details">
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="#EB2748"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerTab"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+
+    </android.support.v4.view.ViewPager>
+
+</android.support.constraint.ConstraintLayout>

@@ -128,23 +128,12 @@ public class ScrollingActivity extends AppCompatActivity implements NavigationVi
 
         RecyclerView recyclerView = findViewById(R.id.galleryRecyclerView);
         GalleryAdapter galleryAdapter = new GalleryAdapter(this,galleryArrayList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,10);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         gridLayoutManager.generateDefaultLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int i) {
-                if(i%4 ==0 ){
-                    return 6;
-                }
-                else if (i %4 == 1){
-                    return  4;
-                }
-                else if (i %4 == 2){
-                    return  4;
-                }
-                else{
-                    return 6;
-                }
+               return 1;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);

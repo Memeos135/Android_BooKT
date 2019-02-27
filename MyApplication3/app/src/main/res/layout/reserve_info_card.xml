@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#161616"
+    app:cardCornerRadius="0dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#161616">
+
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Time"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/hoursPicker"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/seatsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Seats"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.002"
+            app:layout_constraintStart_toStartOf="@+id/seatsPicker"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:focusable="false"
+            android:text="Date"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/dayPicker"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/seatsPicker"
+            app:layout_constraintEnd_toEndOf="@+id/seatsPicker"
+            app:layout_constraintStart_toStartOf="@+id/seatsPicker"
+            app:layout_constraintTop_toTopOf="@+id/seatsPicker" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/dayPicker"
+            app:layout_constraintEnd_toEndOf="@+id/dayPicker"
+            app:layout_constraintStart_toStartOf="@+id/dayPicker"
+            app:layout_constraintTop_toTopOf="@+id/seatsPicker" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/monthPicker"
+            app:layout_constraintEnd_toStartOf="@+id/yearPicker"
+            app:layout_constraintStart_toEndOf="@+id/dayPicker"
+            app:layout_constraintTop_toTopOf="@+id/monthPicker"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/hoursPicker"
+            app:layout_constraintEnd_toEndOf="@+id/hoursPicker"
+            app:layout_constraintEnd_toStartOf="@+id/minutesPicker"
+            app:layout_constraintStart_toStartOf="@+id/hoursPicker"
+            app:layout_constraintTop_toTopOf="@+id/hoursPicker"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/minutesPicker"
+            app:layout_constraintEnd_toEndOf="@+id/minutesPicker"
+            app:layout_constraintStart_toStartOf="@+id/minutesPicker"
+            app:layout_constraintTop_toTopOf="@+id/minutesPicker" />
+
+        <ImageView
+            android:id="@+id/imageView16"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:background="@drawable/button_background_picker"
+            app:layout_constraintBottom_toBottomOf="@+id/ampmPicker"
+            app:layout_constraintEnd_toEndOf="@+id/ampmPicker"
+            app:layout_constraintStart_toEndOf="@+id/minutesPicker"
+            app:layout_constraintTop_toTopOf="@+id/ampmPicker" />
+
+        <NumberPicker
+            android:id="@+id/monthPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/dayPicker"
+            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <NumberPicker
+            android:id="@+id/yearPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.PickerYear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/monthPicker"
+            app:layout_constraintTop_toTopOf="@+id/monthPicker"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <NumberPicker
+            android:id="@+id/dayPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toEndOf="@+id/seatsPicker"
+            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <NumberPicker
+            android:id="@+id/seatsPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seatsText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <NumberPicker
+            android:id="@+id/hoursPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+
+            android:layout_marginStart="16dp"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/yearPicker"
+            app:layout_constraintTop_toBottomOf="@+id/timerText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <NumberPicker
+            android:id="@+id/ampmPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+
+            android:layout_marginEnd="8dp"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="@+id/minutesPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/minutesPicker"
+            app:layout_constraintTop_toTopOf="@+id/minutesPicker" />
+
+        <NumberPicker
+            android:id="@+id/minutesPicker"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            android:solidColor="#161616"
+            android:theme="@style/AppTheme.Picker"
+            app:layout_constraintBottom_toBottomOf="@+id/hoursPicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/hoursPicker"
+            app:layout_constraintTop_toTopOf="@+id/hoursPicker" />
+
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/monthPicker"
+            app:layout_constraintVertical_bias="0.0">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:text="Family"
+                android:textColor="#FFFFFF"
+                app:buttonTint="#EB2748" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:text="Single"
+                android:textColor="#FFFFFF"
+                app:buttonTint="#EB2748" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Section :"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.031"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v7.widget.CardView>

@@ -61,12 +61,6 @@ public class MenuAdapter extends ExpandableRecyclerViewAdapter<MenuAdapter.TypeH
 
 
 
-
-
-
-
-
-
     public class TypeHolder extends GroupViewHolder{
         ConstraintLayout constraintLayout;
         ImageView imageView;
@@ -78,8 +72,17 @@ public class MenuAdapter extends ExpandableRecyclerViewAdapter<MenuAdapter.TypeH
         }
 
 
+        @Override
+        public void expand() {
+            super.expand();
+            imageView.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
+        }
 
-
+        @Override
+        public void collapse() {
+            super.collapse();
+            imageView.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
+        }
     }
 
     public class ItemsHolder extends ChildViewHolder{

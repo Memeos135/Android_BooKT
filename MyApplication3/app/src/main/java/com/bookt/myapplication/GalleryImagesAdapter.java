@@ -40,6 +40,7 @@ public class GalleryImagesAdapter extends RecyclerView.Adapter<GalleryImagesAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
+        myViewHolder.seekBar.setEnabled(false);
         myViewHolder.seekBar.setMax(imagesId.size()-1);
         myViewHolder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

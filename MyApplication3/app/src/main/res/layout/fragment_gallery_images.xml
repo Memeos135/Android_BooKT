@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuFragment">
+    tools:context=".GalleryImagesFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/details_recycler"
+        android:id="@+id/galleryRecyclerViewImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#161616"
-        tools:listitem="@layout/type_cardview" />
+        android:background="#161616" />
 </FrameLayout>

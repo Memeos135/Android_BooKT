@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "876916356023",
+    "firebase_url": "https://bookt-a9889.firebaseio.com",
+    "project_id": "bookt-a9889",
+    "storage_bucket": "bookt-a9889.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876916356023:android:e19619a4325cf1f3",
+        "android_client_info": {
+          "package_name": "com.bookt.bookt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876916356023-5irkqv0db8cqi91h3gecul9q7d64dl6a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjDdNzMAtN-BBaM-IM5DMAmp3bIrLjbFk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,9 +4,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_restaurants_details">RestaurantsDetails</string>
-
+    <string name="facebook_application_id" translatable="false">636854190067278</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 </resources>

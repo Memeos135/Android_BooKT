@@ -49,17 +49,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             }
             else if (counter == 1){
                 myViewHolder.cardView.setContentPadding(2, 4, 0, 4);
-                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#EB2748"));
+                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 counter++;
             }
             else if( counter == 2){
                 myViewHolder.cardView.setContentPadding(0, 4, 2, 4);
-                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#EB2748"));
+                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 counter++;
             }
             else{
                 myViewHolder.cardView.setContentPadding(2, 4, 0, 4);
-                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                myViewHolder.galleryText.setBackgroundColor(Color.parseColor("#EB2748"));
                 counter =0;
             }
             myViewHolder.galleryImage.setImageResource(R.drawable.gicon);

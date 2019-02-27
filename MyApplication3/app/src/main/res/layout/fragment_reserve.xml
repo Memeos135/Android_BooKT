@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#161616"
     tools:context=".ReserveFragment">
 
     <android.support.v4.widget.NestedScrollView
@@ -13,33 +14,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
 
             <include
                 layout="@layout/restaurants_informations_cardview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:focusable="true" />
 
             <fragment
                 android:id="@+id/fragment"
                 android:name="com.bookt.myapplication.MapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="190dp"
+                android:layout_margin="4dp"
                 android:tag="tag"
                 tools:layout="@layout/fragment_map" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/galleryRecyclerViewImages"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="4dp"
-                tools:listitem="@layout/gallerey_images_cardview" />
-
-
 
 
         </LinearLayout>

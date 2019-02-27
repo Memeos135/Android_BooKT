@@ -28,6 +28,9 @@ public class PagesAdapter extends FragmentPagerAdapter {
             case 1:
                 MenuFragment tab2 = new MenuFragment();
                 return tab2;
+            case 2:
+                GalleryImagesFragment tab3 = new GalleryImagesFragment();
+                return tab3;
             default:
                 return null;
         }

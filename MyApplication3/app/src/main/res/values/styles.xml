@@ -13,6 +13,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorSecondary">#00FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.PickerYear" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/browser_actions_title_color</item>
+        <item name="android:textColorSecondary">#00FFFFFF</item>
+    </style>
+
+
+ 
+
     <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
