@@ -27,13 +27,13 @@ public class ReviewsActivity extends AppCompatActivity {
 
         context = this;
 
-        RatingBar ratingBar = findViewById(R.id.ratingBar);
-        Drawable drawable = ratingBar.getProgressDrawable();
-        drawable.setColorFilter(Color.parseColor("#eb2748"), PorterDuff.Mode.SRC_ATOP);
+//        RatingBar ratingBar = findViewById(R.id.ratingBar);
+//        Drawable drawable = ratingBar.getProgressDrawable();
+//        drawable.setColorFilter(Color.parseColor("#eb2748"), PorterDuff.Mode.SRC_ATOP);
 
         ListView listView = findViewById(R.id.listViewReview);
 
-        removeRatingCardExtraViews();
+//        removeRatingCardExtraViews();
 
         setupListView(listView);
     }

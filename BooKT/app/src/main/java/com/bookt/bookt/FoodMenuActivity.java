@@ -1,6 +1,5 @@
 package com.bookt.bookt;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 public class FoodMenuActivity extends AppCompatActivity implements MenuTabLayoutAdapter.MenuFragment.OnFragmentInteractionListener {
 
-    TextView title;
+    //TextView title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +22,7 @@ public class FoodMenuActivity extends AppCompatActivity implements MenuTabLayout
 
         ViewPager viewPager = findViewById(R.id.menuViewPager);
 
-        title = findViewById(R.id.menuCategory);
+        //title = findViewById(R.id.menuCategory);
 
         readTabs(tabLayout);
 
@@ -60,7 +59,7 @@ public class FoodMenuActivity extends AppCompatActivity implements MenuTabLayout
 
         viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
 
-        title.setText(tabLayout.getTabAt(0).getText());
+        //title.setText(tabLayout.getTabAt(0).getText());
 
         // should send the tab arraylist into the adapter if reading tabs from firebase
         MenuTabLayoutAdapter menuTabLayoutAdapter = new MenuTabLayoutAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -73,7 +72,8 @@ public class FoodMenuActivity extends AppCompatActivity implements MenuTabLayout
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                title.setText(tab.getText());
+//                TextView textView = findViewById(R.id.menuTitle);
+//                textView.setText(tab.getText());
             }
 
             @Override

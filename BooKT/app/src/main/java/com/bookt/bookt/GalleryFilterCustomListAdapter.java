@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ListView;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,22 +34,22 @@ public class GalleryFilterCustomListAdapter extends ArrayAdapter<GalleryFilterSe
                     .inflate(R.layout.gallery_custom_filter_listview, parent, false);
         }
 
-        final CheckBox checkBox = view.findViewById(R.id.checkBox);
+        final RadioButton radioButton = view.findViewById(R.id.checkBox);
 
-        checkBox.setText(list.get(position).getFilterText());
+        radioButton.setText(list.get(position).getFilterText());
 
-        // check if CLEAR ALL button has been pressed or if the adapter has been called on DataChangedNotify
-        if(!list.get(position).getChecked()){
-            checkBox.setChecked(false);
-        }
+//        // check if CLEAR ALL button has been pressed or if the adapter has been called on DataChangedNotify
+//        if(!list.get(position).getChecked()){
+//            radioButton.setChecked(false);
+//        }
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (checkBox.isChecked()){
-                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.red_app));
+                if (radioButton.isChecked()){
+                    radioButton.setTextColor(radioButton.getResources().getColor(R.color.red_app));
                 }else{
-                    checkBox.setTextColor(checkBox.getResources().getColor(R.color.gray));
+                    radioButton.setTextColor(radioButton.getResources().getColor(R.color.gray));
                 }
             }
         });

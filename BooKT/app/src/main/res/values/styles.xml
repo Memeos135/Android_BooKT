@@ -10,6 +10,17 @@
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
     </style>
 
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorSecondary">#00FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.PickerYear" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/browser_actions_title_color</item>
+        <item name="android:textColorSecondary">#00FFFFFF</item>
+    </style>
+
+
     <!-- Style to replace actionbar overflow icon. set item 'android:actionOverflowButtonStyle' in AppTheme -->
     <style name="MyActionButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@android:drawable/ic_menu_sort_by_size</item>

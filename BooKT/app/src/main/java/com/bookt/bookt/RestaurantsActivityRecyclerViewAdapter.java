@@ -10,6 +10,9 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
     private Context context;
     private List<RestaurantsActivityCard> list;
+    private int lastPosition = -1;
 
     public RestaurantsActivityRecyclerViewAdapter(Context context, ArrayList<RestaurantsActivityCard> list) {
         this.context = context;
@@ -42,9 +46,9 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull RestaurantsActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
 
-        holder.restaurantImage.setImageResource(R.drawable.icon);
+        holder.restaurantImage.setImageResource(R.drawable.test_cat);
         holder.restaurantName.setText(list.get(position).getRestaurantName());
-        holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
+//        holder.restaurantSubCategory.setText(list.get(position).getRestaurantSubCategory());
         holder.restaurantLocation.setText(list.get(position).getRestaurantLocation());
 
         if(list.get(position).getRestaurantPriceRange() == 1){
@@ -77,17 +81,6 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
         }
 
-        Spannable wordtoSpan = new SpannableString(holder.restaurantOpenCloseHour.getText().toString());
-
-        wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantOpenCloseHour.getResources().getColor(R.color.red_app)), 4, 13,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        wordtoSpan.setSpan(new ForegroundColorSpan(holder.restaurantOpenCloseHour.getResources().getColor(R.color.red_app)), 26,
-                holder.restaurantOpenCloseHour.getText().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        holder.restaurantOpenCloseHour.setText(wordtoSpan);
-
-
     }
 
     @Override
@@ -106,7 +99,8 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
         TextView restaurantPriceDollar;
 
-        TextView restaurantOpenCloseHour;
+        TextView restaurantOpenHour;
+        TextView restaurantCloseHour;
 
         public MyViewHolder(View itemView) {
 
@@ -119,7 +113,8 @@ public class RestaurantsActivityRecyclerViewAdapter extends RecyclerView.Adapter
 
             restaurantPriceDollar = itemView.findViewById(R.id.dollars);
 
-            restaurantOpenCloseHour = itemView.findViewById(R.id.restaurantOpenCloseHour);
+            restaurantOpenHour = itemView.findViewById(R.id.restaurantOpenHour);
+            restaurantCloseHour = itemView.findViewById(R.id.restaurantCloseHour);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

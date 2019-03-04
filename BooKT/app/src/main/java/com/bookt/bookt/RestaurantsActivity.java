@@ -3,10 +3,15 @@ package com.bookt.bookt;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,10 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,10 +52,11 @@ public class RestaurantsActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_filter_list_black_24dp);
+        fab.setVisibility(View.INVISIBLE);
+//        fab.setImageResource(R.drawable.ic_filter_list_black_24dp);
 
         // Setting up floating button dialog
-        setupFabDialog(fab);
+        //setupFabDialog(fab);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,17 +77,20 @@ public class RestaurantsActivity extends AppCompatActivity
                 "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
         list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
                 "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm ", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+        list.add(new RestaurantsActivityCard("Restaurant Test", "Spaghetti",
+                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
         recyclerView.setFocusable(false);
         // Disable nestedScroll because we're using NestedScrollView
         recyclerView.setNestedScrollingEnabled(false);
-
-        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
-        // Point cursor focus to the start of NestedScrollView (default)
-        nestedScrollView.requestFocus();
 
         RestaurantsActivityRecyclerViewAdapter recyclerViewRestaurantsAdapter = new RestaurantsActivityRecyclerViewAdapter(this, list);
 
@@ -135,51 +146,58 @@ public class RestaurantsActivity extends AppCompatActivity
         locationImageView.animate().rotation(locationImageView.getRotation() + 360.0F).setDuration(500L);
     }
 
-    // Setting up FloatingActionButton Filter Dialog
-    public void setupFabDialog(FloatingActionButton fab){
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Filter View Custom Dialog
-                Dialog dialog = new Dialog(RestaurantsActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.gallery_filter_view);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.setCancelable(true);
-                dialog.show();
+//    // Setting up FloatingActionButton Filter Dialog
+//    public void setupFabDialog(FloatingActionButton fab){
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Filter View Custom Dialog
+//                final Dialog dialog = new Dialog(RestaurantsActivity.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setContentView(R.layout.gallery_filter_view);
+//                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//                dialog.getWindow().setGravity(Gravity.TOP);
+//                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//                dialog.setCancelable(true);
+//                dialog.show();
+//
+//                // Filter Listview arraylist set-up for testing
+//                final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
+//                filterList.add(new GalleryFilterSetter("HELLO", false));
+//                filterList.add(new GalleryFilterSetter("WORLD", false));
+//
+//                final GalleryFilterCustomListAdapter customFilterListVewAdapter =
+//                        new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
+//
+//                ListView listView = dialog.findViewById(R.id.filterlistView);
+//                listView.setAdapter(customFilterListVewAdapter);
+//
+//                // Process okButton Press
+//                Button okButton = dialog.findViewById(R.id.okButton);
+//                okButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.cancel();
+//                        Toast.makeText(RestaurantsActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//                // Process clearButton press
+//                Button clearButton = dialog.findViewById(R.id.clearAllButton);
+//                clearButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        for(int i = 0; i < filterList.size(); i++){
+//                            filterList.get(i).setChecked(false);
+//                        }
+//                        customFilterListVewAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//        });
+//    }
 
-                // Filter Listview arraylist set-up for testing
-                final ArrayList<GalleryFilterSetter> filterList = new ArrayList<>();
-                filterList.add(new GalleryFilterSetter("HELLO", false));
-                filterList.add(new GalleryFilterSetter("WORLD", false));
-
-                final GalleryFilterCustomListAdapter customFilterListVewAdapter =
-                        new GalleryFilterCustomListAdapter(getApplicationContext(), filterList);
-
-                ListView listView = dialog.findViewById(R.id.filterlistView);
-                listView.setAdapter(customFilterListVewAdapter);
-
-                // Process okButton Press
-                Button okButton = dialog.findViewById(R.id.okButton);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(RestaurantsActivity.this, "OK PRESSED", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                // Process clearButton press
-                Button clearButton = dialog.findViewById(R.id.clearAllButton);
-                clearButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for(int i = 0; i < filterList.size(); i++){
-                            filterList.get(i).setChecked(false);
-                        }
-                        customFilterListVewAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
+    public void backArrowHandler(View view){
+        onBackPressed();
     }
 }

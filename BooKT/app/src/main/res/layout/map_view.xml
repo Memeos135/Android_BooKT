@@ -11,8 +11,8 @@
         android:layout_marginTop="4dp"
         android:text="Location    Al Nahda"
         android:textAlignment="viewStart"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textColor="@color/title_grey"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

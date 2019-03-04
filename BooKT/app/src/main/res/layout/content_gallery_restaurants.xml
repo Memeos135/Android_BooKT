@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".GalleryActivity"
-    tools:showIn="@layout/app_bar_gallery_restaurants_activities"
-    android:fitsSystemWindows="true">
+    tools:showIn="@layout/app_bar_gallery_activity">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"

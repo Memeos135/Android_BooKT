@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 
 public class ReviewsListAdapter extends ArrayAdapter<ReviewsCard> {
 
-    ArrayList<ReviewsCard> list;
+    private ArrayList<ReviewsCard> list;
 
     public ReviewsListAdapter(@NonNull Context context, @NonNull ArrayList<ReviewsCard> objects) {
         super(context, 0,  objects);
@@ -41,4 +44,5 @@ public class ReviewsListAdapter extends ArrayAdapter<ReviewsCard> {
 
         return view;
     }
+
 }

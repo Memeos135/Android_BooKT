@@ -25,6 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/ratings_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
         <fragment
             android:id="@+id/mapFragment"
             android:name="com.bookt.bookt.MapFragment"
@@ -32,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="26dp"
             tools:layout="@layout/map_view" />
 
@@ -52,22 +59,15 @@
 
         <!--</android.support.v7.widget.RecyclerView>-->
 
-        <include
-            layout="@layout/ratings_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp" />
-
         <TextView
             android:id="@+id/callNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
             android:onClick="callIconProcess"
             android:text="+966547171060"
-            android:textAlignment="textEnd"
+            android:textAlignment="center"
             android:textColor="@color/light_grey"
             android:textSize="14sp" />
 

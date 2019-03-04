@@ -2,12 +2,21 @@ package com.bookt.bookt;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +25,7 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
 
     private Context context;
     private List<GalleryActivityCard> list;
+    private int lastPosition = -1;
 
     /*
     RecyclerView Arraylist Positions
@@ -31,23 +41,31 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     @NonNull
     @Override
     public GalleryActivityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if((position % 2) == 0){
-            // If card position is EVEN
-            // System.out.println("@ EVEN");
-            // Inflate card associated with (0.55, 0.5) split
-            View view;
+        position++;
+
+        View view;
             LayoutInflater mInflater = LayoutInflater.from(context);
-            view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
+            view = mInflater.inflate(R.layout.testing_card, parent, false);
+
             return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
-        }else{
-            // If card position is ODD
-            // System.out.println("@ ODD");
-            // Inflate card associated with (0.5, 0.55) split
-            View view;
-            LayoutInflater mInflater = LayoutInflater.from(context);
-            view = mInflater.inflate(R.layout.gallery_view_card_two, parent, false);
-            return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
-        }
+
+//        if((position % 2) == 0){
+//            // If card position is EVEN
+//            // System.out.println("@ EVEN");
+//            // Inflate card associated with (0.55, 0.5) split
+//            View view;
+//            LayoutInflater mInflater = LayoutInflater.from(context);
+//            view = mInflater.inflate(R.layout.gallery_view_card, parent, false);
+//            return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
+//        }else{
+//            // If card position is ODD
+//            // System.out.println("@ ODD");
+//            // Inflate card associated with (0.5, 0.55) split
+//            View view;
+//            LayoutInflater mInflater = LayoutInflater.from(context);
+//            view = mInflater.inflate(R.layout.gallery_view_card_two, parent, false);
+//            return new GalleryActivityRecyclerViewAdapter.MyViewHolder(view);
+//        }
         /*
         // If card position is at FIRST
         if(position == 0){
@@ -93,11 +111,10 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     @Override
     public void onBindViewHolder(@NonNull GalleryActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
 
-        holder.imageViewTwo.setImageResource(R.drawable.test_cat);
-        holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
+        holder.imageView.setImageResource(R.drawable.test_cat);
+        holder.textView.setText(list.get(position).getRestaurantTypeName());
 
-        // ImageLeft listener
-        holder.imageViewOne.setOnClickListener(new View.OnClickListener() {
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context,
@@ -105,17 +122,31 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
             }
         });
 
-        holder.imageViewOne.setImageResource(R.drawable.test_cat);
-        holder.nameOne.setText(list.get(position).getRestaurantTypeName());
+        setAnimation(holder.itemView, position);
 
-        // ImageRight listener
-        holder.imageViewTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context,
-                        RestaurantsActivity.class));
-            }
-        });
+//        holder.imageViewTwo.setImageResource(R.drawable.test_cat);
+//        holder.nameTwo.setText(list.get(position).getRestaurantTypeName());
+//
+//        // ImageLeft listener
+//        holder.imageViewOne.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                context.startActivity(new Intent(context,
+//                        RestaurantsActivity.class));
+//            }
+//        });
+//
+//        holder.imageViewOne.setImageResource(R.drawable.test_cat);
+//        holder.nameOne.setText(list.get(position).getRestaurantTypeName());
+//
+//        // ImageRight listener
+//        holder.imageViewTwo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                context.startActivity(new Intent(context,
+//                        RestaurantsActivity.class));
+//            }
+//        });
 
         /*
         After onCreate Inflation of specific XMLs, check position of card.
@@ -149,9 +180,6 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
     @Override
     public int getItemViewType(int position) {
 
-        // Save position of card in RecyclerView to use in onCreate and onBindViewHolder
-        this.position = position;
-
         return super.getItemViewType(position);
     }
 
@@ -167,26 +195,33 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
         // imageViewTwo and nameTwo are the RIGHT side image and text of dynamic splits
         // imageViewThree and nameThree are for the BIG image
 
-        ImageView imageViewOne;
-        ImageView imageViewTwo;
-        //ImageView imageViewThree;
-
-        TextView nameOne;
-        TextView nameTwo;
+//        ImageView imageViewOne;
+//        ImageView imageViewTwo;
+//        //ImageView imageViewThree;
+//
+//        TextView nameOne;
+//        TextView nameTwo;
         //TextView nameThree;
+
+        TextView textView;
+        ImageView imageView;
+        ConstraintLayout constraintLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            if(itemView.findViewById(R.id.imageViewLeft) != null) {
-
-                imageViewOne = itemView.findViewById(R.id.imageViewLeft);
-                nameOne = itemView.findViewById(R.id.textViewLeft);
-
-                imageViewTwo = itemView.findViewById(R.id.imageViewRight);
-                nameTwo = itemView.findViewById(R.id.textViewRight);
-
-            }
+            textView = itemView.findViewById(R.id.textView2);
+            imageView = itemView.findViewById(R.id.imageView4);
+            constraintLayout = itemView.findViewById(R.id.constraint);
+//            if(itemView.findViewById(R.id.imageViewLeft) != null) {
+//
+//                imageViewOne = itemView.findViewById(R.id.imageViewLeft);
+//                nameOne = itemView.findViewById(R.id.textViewLeft);
+//
+//                imageViewTwo = itemView.findViewById(R.id.imageViewRight);
+//                nameTwo = itemView.findViewById(R.id.textViewRight);
+//
+//            }
 
             /*
             if(itemView.findViewById(R.id.imageViewLeft)!=null) {
@@ -204,6 +239,15 @@ public class GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<Gal
 
             }
             */
+        }
+    }
+    private void setAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.setStartOffset(position * 100);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 }

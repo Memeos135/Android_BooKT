@@ -1,6 +1,7 @@
 package com.bookt.bookt;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
     private Context context;
     private ArrayList<Integer> imageViewArrayList;
     private int currentImage;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +54,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 
         context = this;
 
-        RatingBar ratingBar = findViewById(R.id.ratingBar);
+        ratingBar = findViewById(R.id.ratingBar);
         Drawable drawable = ratingBar.getProgressDrawable();
         drawable.setColorFilter(Color.parseColor("#eb2748"), PorterDuff.Mode.SRC_ATOP);
+
+//        setRatingWithAnimation(4.5f);
 
 //        // Setup ExpandableListView
 //        setupExpandableListView();
@@ -301,5 +305,14 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Navi
 //        expandableRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 //        expandableRecyclerView.setAdapter(expandableRecyclerAdapter);
 //        expandableRecyclerView.setNestedScrollingEnabled(false);
+//    }
+
+//    public void setRatingWithAnimation(float ratingWithAnimation) {
+//
+//        ObjectAnimator
+//                .ofFloat(ratingBar,"Rating",0,ratingWithAnimation)
+//                .setDuration(1000)
+//                .start();
+//
 //    }
 }

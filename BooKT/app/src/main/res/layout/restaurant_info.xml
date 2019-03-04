@@ -96,7 +96,6 @@
         android:onClick="processReservationButton"
         android:text="RESERVE"
         android:textColor="@color/white"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/resCuisine"
         app:layout_constraintEnd_toEndOf="@+id/dollars"
         app:layout_constraintHorizontal_bias="1.0"
