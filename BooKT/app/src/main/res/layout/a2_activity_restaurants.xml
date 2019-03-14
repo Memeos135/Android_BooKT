@@ -15,13 +15,13 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="250dp"
+        android:layout_width="180dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#161616"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/a0_menu_nav_header"
-        app:menu="@menu/activity_gallery_drawer"
-        app:itemTextColor="@color/white"/>
+        app:itemTextColor="@color/white"
+        app:menu="@menu/activity_gallery_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

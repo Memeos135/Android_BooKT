@@ -13,23 +13,13 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Profile" />
         <item
-            android:id="@+id/Reservations"
-            android:icon="@drawable/common_full_open_on_phone"
-            android:title="Reservations"
-            />
-        <item
-            android:id="@+id/History"
-            android:icon="@drawable/ic_history_black_24dp"
-            android:title="History"
-            />
-        <item
             android:id="@+id/Signup"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Sign-up" />
+            android:title="Sign up" />
         <item
             android:id="@+id/Signin"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Sign-in" />
+            android:title="Login" />
     </group>
 
 </menu>

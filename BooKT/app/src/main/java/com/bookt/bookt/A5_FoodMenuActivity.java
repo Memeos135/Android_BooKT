@@ -77,9 +77,6 @@ public class A5_FoodMenuActivity extends AppCompatActivity implements A5_MenuTab
 
             }
         });
-
-
-
     }
 
     @Override

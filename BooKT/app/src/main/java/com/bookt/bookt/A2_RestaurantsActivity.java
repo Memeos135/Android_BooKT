@@ -102,15 +102,11 @@ public class A2_RestaurantsActivity extends AppCompatActivity
         if (id == R.id.Home) {
             context.startActivity(new Intent(context, A1_GalleryActivity.class));
         } else if (id == R.id.Profile) {
-
-        } else if (id == R.id.Reservations) {
-
-        } else if (id == R.id.History) {
-
+            context.startActivity(new Intent(context, A0_ProfileActivity.class));
         } else if (id == R.id.Signup) {
-
+            context.startActivity(new Intent(context, A0_SignupActivity.class));
         } else if (id == R.id.Signin) {
-
+            context.startActivity(new Intent(context, A0_LoginActivity.class));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

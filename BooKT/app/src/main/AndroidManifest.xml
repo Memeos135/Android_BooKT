@@ -49,6 +49,9 @@
         <activity android:name=".A6_RestaurantReservationActivity"/>
         <activity android:name=".A5_FoodMenuActivity"/>
         <activity android:name=".A4_ReviewsActivity"/>
+        <activity android:name=".A0_ProfileActivity"/>
+        <activity android:name=".A0_LoginActivity"/>
+        <activity android:name=".A0_SignupActivity"/>
     </application>
 
 </manifest>

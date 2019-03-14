@@ -40,7 +40,7 @@ public class A7_ReservationConfirmationActivity extends AppCompatActivity{
 
     // animation login buttons
     public void animateButtons(){
-        Button loginButton = findViewById(R.id.loginSignupButton);
+        Button loginButton = findViewById(R.id.loginButton);
         Button googleLogin = findViewById(R.id.googleLogin);
         Button facebookLogin = findViewById(R.id.facebookLogin);
         TextView textView = findViewById(R.id.textLogin);
