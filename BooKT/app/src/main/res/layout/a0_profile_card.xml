@@ -30,67 +30,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-        <ImageView
-            android:id="@+id/profilePhoneNumberImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePersonName"
-            app:srcCompat="@drawable/ic_call_black_24dp" />
+        <!--<ImageView-->
+            <!--android:id="@+id/profilePhoneNumberImage"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/profilePersonName"-->
+            <!--app:srcCompat="@drawable/ic_call_black_24dp" />-->
 
-        <TextView
-            android:id="@+id/profilePhoneNumberText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="0547127613"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/profilePhoneNumberImage"
-            app:layout_constraintStart_toEndOf="@+id/profilePhoneNumberImage"
-            app:layout_constraintTop_toTopOf="@+id/profilePhoneNumberImage" />
+        <!--<TextView-->
+            <!--android:id="@+id/profilePhoneNumberText"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:text="0547127613"-->
+            <!--android:textColor="@color/white"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/profilePhoneNumberImage"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/profilePhoneNumberImage"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/profilePhoneNumberImage" />-->
 
-        <ImageView
-            android:id="@+id/profilePersonEmailImage"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/profilePhoneNumberImage"
-            app:layout_constraintTop_toBottomOf="@+id/profilePhoneNumberImage"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+        <!--<ImageView-->
+            <!--android:id="@+id/profilePersonEmailImage"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/profilePhoneNumberImage"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/profilePhoneNumberImage"-->
+            <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
-        <TextView
-            android:id="@+id/profilePersonEmailText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="bookt19.15@gmail.com"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/profilePersonEmailImage"
-            app:layout_constraintStart_toStartOf="@+id/profilePhoneNumberText"
-            app:layout_constraintTop_toTopOf="@+id/profilePersonEmailImage" />
+        <!--<TextView-->
+            <!--android:id="@+id/profilePersonEmailText"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="bookt19.15@gmail.com"-->
+            <!--android:textColor="@color/white"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/profilePersonEmailImage"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/profilePhoneNumberText"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/profilePersonEmailImage" />-->
 
-        <TextView
-            android:id="@+id/profileReservations"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Reservations"
-            android:textColor="@color/red_app"
-            android:textSize="17sp"
-            app:layout_constraintStart_toStartOf="@+id/profilePersonEmailImage"
-            app:layout_constraintTop_toBottomOf="@+id/profilePersonEmailText" />
+        <!--<TextView-->
+            <!--android:id="@+id/profileReservations"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:text="Reservations"-->
+            <!--android:textColor="@color/red_app"-->
+            <!--android:textSize="17sp"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/profilePersonEmailImage"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/profilePersonEmailText" />-->
 
-        <TextView
-            android:id="@+id/rightLine"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/red_app"
-            app:layout_constraintBottom_toBottomOf="@+id/profileReservations"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profileReservations"
-            app:layout_constraintTop_toTopOf="@+id/profileReservations" />
+        <!--<TextView-->
+            <!--android:id="@+id/rightLine"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:background="@color/red_app"-->
+            <!--app:layout_constraintBottom_toBottomOf="@+id/profileReservations"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/profileReservations"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/profileReservations" />-->
 
     </android.support.constraint.ConstraintLayout>

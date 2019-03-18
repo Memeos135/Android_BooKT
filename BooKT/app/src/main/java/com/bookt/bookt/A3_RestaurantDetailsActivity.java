@@ -165,7 +165,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
                         }else{
                             Toast.makeText(context,
                                     "Please enable phone permission through settings > apps & notifications",
-                                    Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 })

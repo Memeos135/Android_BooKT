@@ -217,14 +217,14 @@
                     app:layout_constraintTop_toTopOf="@+id/hoursPicker" />
 
                 <RadioGroup
-                    android:id="@+id/toggle"
+                    android:id="@+id/toggleRes"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/custom_radio_button"
-                    android:checkedButton="@+id/offer"
+                    android:checkedButton="@+id/inactive"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -245,7 +245,7 @@
                         android:textColor="@color/white" />
 
                     <RadioButton
-                        android:id="@+id/offer"
+                        android:id="@+id/inactive"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="1dp"
@@ -294,7 +294,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toggle" />
+                    app:layout_constraintTop_toBottomOf="@+id/toggleRes" />
 
                 <EditText
                     android:id="@+id/numText"

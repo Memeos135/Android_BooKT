@@ -11,6 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class A0_ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -36,6 +40,9 @@ public class A0_ProfileActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setupDefault();
+
     }
 
     @Override
@@ -66,5 +73,81 @@ public class A0_ProfileActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void radioHandler(View v){
+        if (v.getTag().equals("active")){
+            // READ ACTIVE RESERVATIONS FROM FIREBASE
+            ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+
+            ListView listView = findViewById(R.id.listViewHistory);
+            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+            listView.setAdapter(a0HistoryAdapter);
+
+        }else{
+
+            ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+
+            ListView listView = findViewById(R.id.listViewHistory);
+            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+            listView.setAdapter(a0HistoryAdapter);
+
+        }
+    }
+
+    public void setupDefault(){
+        ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+        list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+
+        ListView listView = findViewById(R.id.listViewHistory);
+        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+        listView.setAdapter(a0HistoryAdapter);
     }
 }
