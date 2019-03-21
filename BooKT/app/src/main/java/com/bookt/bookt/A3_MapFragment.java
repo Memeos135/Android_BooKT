@@ -1,11 +1,14 @@
 package com.bookt.bookt;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,20 +34,32 @@ public class A3_MapFragment extends Fragment {
         mapView = v.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
-
         // Gets to GoogleMap from the MapView and does initialization stuff
         MapsInitializer.initialize(getActivity());
 
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                LatLng latLng = new LatLng(21.802820, 39.132578);
-                googleMap.getUiSettings().setAllGesturesEnabled(false);
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.0F);
-                googleMap.addMarker(new MarkerOptions().position(latLng)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        .draggable(false).visible(true));
-                googleMap.moveCamera(cameraUpdate);
+                A2_RestaurantsActivityCard card = getActivity().getIntent().getParcelableExtra("restaurant_brief");
+                // EXTRACT LOCATION COORDINATES FROM CARD OVER HERE, THEN SET IT IN LatLng
+                if (card.getRestaurant_location().length() > 100) {
+
+                    String latitude = card.getRestaurant_location().substring(card.getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_location().indexOf("@") + 11));
+                    String longitude = card.getRestaurant_location().substring((card.getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_location().indexOf("@") + 22)));
+
+                    LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                    googleMap.getUiSettings().setAllGesturesEnabled(false);
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.0F);
+                    googleMap.addMarker(new MarkerOptions().position(latLng)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            .draggable(false).visible(true));
+                    googleMap.moveCamera(cameraUpdate);
+
+                }else{
+
+                    Toast.makeText(getContext(), "Map is not working due to location format.", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 

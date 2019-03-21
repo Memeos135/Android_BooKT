@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,17 +13,30 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class A2_RestaurantsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
     private Context context;
+    private A2_RestaurantsActivityListViewAdapter a2_restaurantsActivityListViewAdapter;
+    private ArrayList<A2_RestaurantsActivityCard> list;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -52,29 +66,39 @@ public class A2_RestaurantsActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView and Toolbar setup-------------------------------//
-        ArrayList<A2_RestaurantsActivityCard> list = new ArrayList<>();
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm ", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm ", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
-        list.add(new A2_RestaurantsActivityCard("Restaurant Test", "Spaghetti",
-                "Jeddah", 3, "10:00" + "pm", "12:00" + "pm"));
+
+        list = new ArrayList<>();
 
         ListView listView = findViewById(R.id.listView);
-
-        A2_RestaurantsActivityListViewAdapter a2_restaurantsActivityListViewAdapter = new A2_RestaurantsActivityListViewAdapter(this, list);
-
+        a2_restaurantsActivityListViewAdapter =
+                new A2_RestaurantsActivityListViewAdapter(this, list);
         listView.setAdapter(a2_restaurantsActivityListViewAdapter);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Country")
+                .child("Saudi Arabia").child("cities").child("Jeddah").child("Cuisine").child("ids")
+                .child(getIntent().getStringExtra("restaurant_name"));
+
+        showWaiting();
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                    A2_RestaurantsActivityCard a2_restaurantsActivityCard =
+                            dataSnapshot1.getValue(A2_RestaurantsActivityCard.class);
+                    a2_restaurantsActivityCard.setRestaurant_cuisine(getIntent().getStringExtra("restaurant_name"));
+                    list.add(a2_restaurantsActivityCard);
+                }
+                a2_restaurantsActivityListViewAdapter.updateList(list);
+                a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
+                cancelWaiting();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "Please make sure you have internet connection.", Toast.LENGTH_SHORT).show();
+            }
+        });
         // --------------------------------------------------------------------------------------------------------//
     }
 
@@ -171,4 +195,15 @@ public class A2_RestaurantsActivity extends AppCompatActivity
 //            }
 //        });
 //    }
+
+    public void showWaiting(){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup parent = (ViewGroup)findViewById(R.id.coordinatorLayout);
+        inflater.inflate(R.layout.waiting_animation, parent);
+    }
+
+    public void cancelWaiting(){
+        ProgressBar progressBar = findViewById(R.id.waitProgressBar);
+        ((ViewGroup)progressBar.getParent()).removeView(progressBar);
+    }
 }

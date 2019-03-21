@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,14 +28,25 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class A1_GalleryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    private A1_GalleryActivityRecyclerViewAdapter recycleViewAdpaterGallery;
     private Context context;
+    private ArrayList<A1_GalleryActivityCard> list;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -101,23 +116,25 @@ public class A1_GalleryActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView setup--------------------------------------------//
-        ArrayList<A1_GalleryActivityCard> list = new ArrayList<>();
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
-        list.add(new A1_GalleryActivityCard("hello",""));
+//        ArrayList<A1_GalleryActivityCard> list = new ArrayList<>();
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//        list.add(new A1_GalleryActivityCard("hello"));
+//
+//
+//
 
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
         recyclerView.setFocusable(false);
         // Disable nestedScroll because we're using NestedScrollView
@@ -127,7 +144,7 @@ public class A1_GalleryActivity extends AppCompatActivity
         // Point cursor focus to the start of NestedScrollView (default)
         nestedScrollView.requestFocus();
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,13);
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(),13);
         gridLayoutManager.generateDefaultLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             // default - MUST implement
@@ -141,37 +158,67 @@ public class A1_GalleryActivity extends AppCompatActivity
                 }else if(i%5 == 0){
 
                     // give this cell full screen width, as 13 is the number of columns of the recycler's grid layout manager
-                   return 13;
+                    return 13;
 
-               }else{
+                }else{
 
                     // logic to implement dynamic cell widths for those other than every 5th
-                   if(i%2 == 0){
+                    if(i%2 == 0){
 
-                       if(gridLayoutManager.getSpanSizeLookup().getSpanSize(i-2) == 7){
-                           return 6;
-                       }else{
-                           return 7;
-                       }
+                        if(gridLayoutManager.getSpanSizeLookup().getSpanSize(i-2) == 7){
+                            return 6;
+                        }else{
+                            return 7;
+                        }
 
-                   }else{
+                    }else{
 
-                       if(gridLayoutManager.getSpanSizeLookup().getSpanSize(i-2) == 6){
-                           return 7;
-                       }else{
-                           return 6;
-                       }
+                        if(gridLayoutManager.getSpanSizeLookup().getSpanSize(i-2) == 6){
+                            return 7;
+                        }else{
+                            return 6;
+                        }
 
-                   }
-               }
+                    }
+                }
             }
 
         });
 
-        A1_GalleryActivityRecyclerViewAdapter recycleViewAdpaterGallery = new A1_GalleryActivityRecyclerViewAdapter(this,list);
-
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        list = new ArrayList<>();
+        list.add(new A1_GalleryActivityCard(""));
+
+        recycleViewAdpaterGallery = new A1_GalleryActivityRecyclerViewAdapter(getApplicationContext(),list);
         recyclerView.setAdapter(recycleViewAdpaterGallery);
+
+
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Country").child("Saudi Arabia")
+                .child("cities").child("Jeddah").child("Cuisine").child("Cuisine_names");
+
+        showWaiting();
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                    A1_GalleryActivityCard a1_galleryActivityCard = dataSnapshot1.getValue(A1_GalleryActivityCard.class);
+                    //Log.i("test", a1_galleryActivityCard.getCuisineType());
+                    list.add(new A1_GalleryActivityCard(a1_galleryActivityCard.getCuisineType()));
+                }
+                recycleViewAdpaterGallery.updateList(list);
+                recycleViewAdpaterGallery.notifyDataSetChanged();
+                cancelWaiting();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "Please make sure you have internet connection.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        new CuisineReader().execute();
         // --------------------------------------------------------------------------------------------------------//
 
     }
@@ -214,5 +261,42 @@ public class A1_GalleryActivity extends AppCompatActivity
         locationImageView.clearAnimation();
         locationImageView.setRotation(360.0F);
         locationImageView.animate().rotation(locationImageView.getRotation()+ 360.0F).setDuration(500L);
+    }
+//
+//    // ASYNC TASK TO READ AVAILABLE CUISINES
+//    class CuisineReader extends AsyncTask<Void, Void, ArrayList<A1_GalleryActivityCard>>{
+//        ArrayList<A1_GalleryActivityCard> list = new ArrayList<>();
+//
+//        @Override
+//        protected ArrayList<A1_GalleryActivityCard> doInBackground(Void... voids) {
+//
+//
+//            return list;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArrayList<A1_GalleryActivityCard> a1_galleryActivityCards) {
+//            super.onPostExecute(a1_galleryActivityCards);
+//
+//            for(int i = 0; i < a1_galleryActivityCards.size(); i++){
+//                Log.i("test", a1_galleryActivityCards.get(i).getRestaurantTypeName());
+//            }
+//
+//            recycleViewAdpaterGallery =
+//                    new A1_GalleryActivityRecyclerViewAdapter(getApplicationContext(),a1_galleryActivityCards);
+//
+//            recyclerView.setAdapter(recycleViewAdpaterGallery);
+//        }
+//    }
+
+    public void showWaiting(){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup parent = (ViewGroup)findViewById(R.id.coordinatorLayout);
+        inflater.inflate(R.layout.waiting_animation, parent);
+    }
+
+    public void cancelWaiting(){
+        ProgressBar progressBar = findViewById(R.id.waitProgressBar);
+        ((ViewGroup)progressBar.getParent()).removeView(progressBar);
     }
 }

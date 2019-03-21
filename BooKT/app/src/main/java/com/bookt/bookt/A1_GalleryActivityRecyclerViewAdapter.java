@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,17 +40,20 @@ public class A1_GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<
 
     }
 
+    public void updateList(ArrayList<A1_GalleryActivityCard> list){
+        this.list = list;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final A1_GalleryActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
-
         holder.cuisineImage.setImageResource(R.drawable.test_cat);
-        holder.cuisineText.setText(list.get(position).getRestaurantTypeName());
+        holder.cuisineText.setText(list.get(position).getCuisineType());
 
         holder.cuisineImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context,
-                        A2_RestaurantsActivity.class));
+                        A2_RestaurantsActivity.class).putExtra("restaurant_name", holder.cuisineText.getText()));
             }
         });
 
