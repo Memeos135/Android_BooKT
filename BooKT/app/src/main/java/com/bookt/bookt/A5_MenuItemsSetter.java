@@ -2,25 +2,16 @@ package com.bookt.bookt;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 class A5_MenuItemsSetter implements Parcelable {
-    private String foodImage;
-    private String foodTitle;
-    private String foodDescription;
-    private String foodPrice;
-
-    A5_MenuItemsSetter(String foodTitle, String foodDescription, String foodImage, String foodPrice) {
-        this.foodTitle = foodTitle;
-        this.foodDescription = foodDescription;
-        this.foodImage = foodImage;
-        this.foodPrice = foodPrice;
-    }
+    private String menuCategory;
+    private ArrayList<MenuItemElement> menuItems;
 
     protected A5_MenuItemsSetter(Parcel in) {
-        foodImage = in.readString();
-        foodTitle = in.readString();
-        foodDescription = in.readString();
-        foodPrice = in.readString();
+        menuCategory = in.readString();
     }
 
     public static final Creator<A5_MenuItemsSetter> CREATOR = new Creator<A5_MenuItemsSetter>() {
@@ -35,48 +26,37 @@ class A5_MenuItemsSetter implements Parcelable {
         }
     };
 
-    public void setFoodTitle(String foodTitle){
-        this.foodTitle = foodTitle;
-    }
-
-    public void setFoodDescription(String foodDescription){
-        this.foodDescription = foodDescription;
-    }
-
-    public void setFoodPrice(String foodPrice){
-        this.foodPrice = foodPrice;
-    }
-
-    public void setFoodImage(String foodImage){
-        this.foodImage = foodImage;
-    }
-
-    public String getFoodTitle(){
-        return foodTitle;
-    }
-
-    public String getFoodDescription(){
-        return foodDescription;
-    }
-
-    public String getFoodImage(){
-        return foodImage;
-    }
-
-    public String getFoodPrice(){
-        return foodPrice;
-    }
-
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(foodImage);
-        parcel.writeString(foodTitle);
-        parcel.writeString(foodDescription);
-        parcel.writeString(foodPrice);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(menuCategory);
+    }
+
+    public String getMenuCategory() {
+        return menuCategory;
+    }
+
+    public void setMenuCategory(String menuCategory) {
+        this.menuCategory = menuCategory;
+    }
+
+    public ArrayList<MenuItemElement> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(ArrayList<MenuItemElement> menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    public A5_MenuItemsSetter() {
+    }
+
+    public A5_MenuItemsSetter(String menuCategory, ArrayList<MenuItemElement> menuItems) {
+        this.menuCategory = menuCategory;
+        this.menuItems = menuItems;
     }
 }

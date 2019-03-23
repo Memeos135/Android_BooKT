@@ -7,8 +7,8 @@ import android.os.Parcelable;
 class A1_GalleryActivityCard implements Parcelable {
     String type;
 
-    public A1_GalleryActivityCard(String cuisineType) {
-        this.type = cuisineType;
+    public A1_GalleryActivityCard(String type) {
+        this.type = type;
     }
 
     protected A1_GalleryActivityCard(Parcel in) {
@@ -28,11 +28,11 @@ class A1_GalleryActivityCard implements Parcelable {
         }
     };
 
-    public void setCuisineType(String cuisineType) {
-        this.type = cuisineType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getCuisineType() {
+    public String getType() {
         return type;
     }
 

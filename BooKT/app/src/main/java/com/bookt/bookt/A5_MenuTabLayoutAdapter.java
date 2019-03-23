@@ -1,5 +1,6 @@
 package com.bookt.bookt;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public class A5_MenuTabLayoutAdapter extends FragmentPagerAdapter {
 
     private int tabCount = 0;
+    private ArrayList<A5_MenuItemsSetter> list;
 
-    public A5_MenuTabLayoutAdapter(FragmentManager fm, int tabCount) {
+    public A5_MenuTabLayoutAdapter(FragmentManager fm, int tabCount, ArrayList<A5_MenuItemsSetter> list) {
         super(fm);
         this.tabCount = tabCount;
+        this.list = list;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class A5_MenuTabLayoutAdapter extends FragmentPagerAdapter {
         // Meaning, every index of it is an arraylist (menu category)
         // hence, we access the 0th index of that particular list to get the category itself
 
-        MenuFragment menuFragment = new MenuFragment();
+        MenuFragment menuFragment = new MenuFragment(list.get(position).getMenuItems());
         return menuFragment;
     }
 
@@ -44,11 +47,17 @@ public class A5_MenuTabLayoutAdapter extends FragmentPagerAdapter {
 
         private static final String ARG_PARAM1 = "param1";
         private static final String ARG_PARAM2 = "param2";
+        private ArrayList<MenuItemElement> list;
 
         private MenuFragment.OnFragmentInteractionListener mListener;
 
         public MenuFragment() {
 
+        }
+
+        @SuppressLint("ValidFragment")
+        public MenuFragment(ArrayList<MenuItemElement> list){
+            this.list = list;
         }
 
         public static MenuFragment newInstance(String param1, String param2) {
@@ -72,16 +81,7 @@ public class A5_MenuTabLayoutAdapter extends FragmentPagerAdapter {
 
             ListView listView = view.findViewById(R.id.menuListView);
 
-            ArrayList<A5_MenuItemsSetter> menuList = new ArrayList<>();
-
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-            menuList.add(new A5_MenuItemsSetter("Cheese Burgers", "Double patty with cheese", "", "6$"));
-
-            A5_MenuListAdapter a5MenuListAdapter = new A5_MenuListAdapter(getContext(), menuList);
+            A5_MenuListAdapter a5MenuListAdapter = new A5_MenuListAdapter(getContext(), list);
 
             listView.setAdapter(a5MenuListAdapter);
 

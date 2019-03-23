@@ -248,7 +248,7 @@
         android:id="@+id/totalRatings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(1050)"
+        android:text="1050"
         android:textColor="@color/light_grey"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/rating"

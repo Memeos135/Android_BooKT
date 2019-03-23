@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class A5_MenuListAdapter extends ArrayAdapter<A5_MenuItemsSetter> {
+public class A5_MenuListAdapter extends ArrayAdapter<MenuItemElement> {
 
-    private ArrayList<A5_MenuItemsSetter> list;
+    private ArrayList<MenuItemElement> list;
     private int lastPosition = -1;
 
-    public A5_MenuListAdapter(@NonNull Context context, @NonNull ArrayList<A5_MenuItemsSetter> objects) {
+    public A5_MenuListAdapter(@NonNull Context context, @NonNull ArrayList<MenuItemElement> objects) {
         super(context, 0,  objects);
         this.list = objects;
     }
@@ -36,9 +36,9 @@ public class A5_MenuListAdapter extends ArrayAdapter<A5_MenuItemsSetter> {
         TextView foodDescription = view.findViewById(R.id.foodDescription);
         TextView foodPrice = view.findViewById(R.id.foodPrice);
 
-        foodTitle.setText(list.get(position).getFoodTitle());
-        foodDescription.setText(list.get(position).getFoodDescription());
-        foodPrice.setText(list.get(position).getFoodPrice());
+        foodTitle.setText(list.get(position).getName());
+        foodDescription.setText(list.get(position).getDescription());
+        foodPrice.setText(list.get(position).getPrice());
 
         setAnimation(view, position);
         return view;

@@ -42,10 +42,10 @@ public class A3_MapFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 A2_RestaurantsActivityCard card = getActivity().getIntent().getParcelableExtra("restaurant_brief");
                 // EXTRACT LOCATION COORDINATES FROM CARD OVER HERE, THEN SET IT IN LatLng
-                if (card.getRestaurant_location().length() > 100) {
+                if (card.getRestaurant_info().getRestaurant_location().length() > 100) {
 
-                    String latitude = card.getRestaurant_location().substring(card.getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_location().indexOf("@") + 11));
-                    String longitude = card.getRestaurant_location().substring((card.getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_location().indexOf("@") + 22)));
+                    String latitude = card.getRestaurant_info().getRestaurant_location().substring(card.getRestaurant_info().getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_info().getRestaurant_location().indexOf("@") + 11));
+                    String longitude = card.getRestaurant_info().getRestaurant_location().substring((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 22)));
 
                     LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
                     googleMap.getUiSettings().setAllGesturesEnabled(false);

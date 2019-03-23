@@ -47,7 +47,7 @@ public class A1_GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(@NonNull final A1_GalleryActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.cuisineImage.setImageResource(R.drawable.test_cat);
-        holder.cuisineText.setText(list.get(position).getCuisineType());
+        holder.cuisineText.setText(list.get(position).getType());
 
         holder.cuisineImage.setOnClickListener(new View.OnClickListener() {
             @Override

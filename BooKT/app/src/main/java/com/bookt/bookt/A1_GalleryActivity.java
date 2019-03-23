@@ -116,23 +116,6 @@ public class A1_GalleryActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // -------------------------------------------RecyclerView setup--------------------------------------------//
-//        ArrayList<A1_GalleryActivityCard> list = new ArrayList<>();
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//        list.add(new A1_GalleryActivityCard("hello"));
-//
-//
-//
 
         recyclerView = findViewById(R.id.recyclerView);
         // Disable cursor focus on RecyclerView (do not point cursor to recyclerView as default)
@@ -199,17 +182,23 @@ public class A1_GalleryActivity extends AppCompatActivity
 
         showWaiting();
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-                    A1_GalleryActivityCard a1_galleryActivityCard = dataSnapshot1.getValue(A1_GalleryActivityCard.class);
-                    //Log.i("test", a1_galleryActivityCard.getCuisineType());
-                    list.add(new A1_GalleryActivityCard(a1_galleryActivityCard.getCuisineType()));
+                    if(dataSnapshot.exists()) {
+                        A1_GalleryActivityCard a1_galleryActivityCard = dataSnapshot1.getValue(A1_GalleryActivityCard.class);
+                        list.add(new A1_GalleryActivityCard(a1_galleryActivityCard.getType()));
+                    }
                 }
-                recycleViewAdpaterGallery.updateList(list);
-                recycleViewAdpaterGallery.notifyDataSetChanged();
+                if(list.size() > 1){
+                    recycleViewAdpaterGallery.updateList(list);
+                    recycleViewAdpaterGallery.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(context, "No records found in database.", Toast.LENGTH_SHORT).show();
+                }
                 cancelWaiting();
+                mDatabase.removeEventListener(this);
             }
 
             @Override

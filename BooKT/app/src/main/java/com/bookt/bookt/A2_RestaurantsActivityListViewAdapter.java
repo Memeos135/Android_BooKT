@@ -27,11 +27,13 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
     private Context context;
     private List<A2_RestaurantsActivityCard> list;
     private int lastPosition = -1;
+    private String name;
 
-    public A2_RestaurantsActivityListViewAdapter(@NonNull Context context, @NonNull ArrayList<A2_RestaurantsActivityCard> list) {
+    public A2_RestaurantsActivityListViewAdapter(@NonNull Context context, @NonNull ArrayList<A2_RestaurantsActivityCard> list, String name) {
         super(context, 0,  list);
         this.context = context;
         this.list = list;
+        this.name = name;
     }
 
     @NonNull
@@ -52,12 +54,17 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
 
 
         restaurantImage.setImageResource(R.drawable.test_cat);
-        restaurantName.setText(list.get(position).getRestaurant_name());
-        restaurantLocation.setText(list.get(position).getRestaurant_location());
-        restaurantOpenHour.setText(list.get(position).getRestaurant_open());
-        restaurantCloseHour.setText(list.get(position).getRestaurant_close());
-        restaurantReviews.setText(list.get(position).getRestaurant_reviews());
-        restaurantStatus.setText(list.get(position).getRestaurant_status());
+        restaurantName.setText(list.get(position).getRestaurant_info().getRestaurant_name());
+        restaurantLocation.setText(list.get(position).getRestaurant_info().getRestaurant_location());
+        restaurantOpenHour.setText(list.get(position).getRestaurant_info().getRestaurant_open());
+        restaurantCloseHour.setText(list.get(position).getRestaurant_info().getRestaurant_close());
+
+        if(list.get(position).getReviews() != null) {
+            restaurantReviews.setText(String.valueOf(list.get(position).getReviews().getReviewCount()));
+        }else{
+            restaurantReviews.setText("0");
+        }
+        restaurantStatus.setText(list.get(position).getRestaurant_info().getStatus());
 
         checkPrice(view, position);
 
@@ -65,8 +72,8 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, A3_RestaurantDetailsActivity.class)
-                        .putExtra("restaurant_key", list.get(position).getFirebaseId())
-                .putExtra("restaurant_brief", list.get(position)));
+                .putExtra("restaurant_brief", list.get(position))
+                .putExtra("cuisine", name));
             }
         });
 
@@ -91,28 +98,28 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
     public void checkPrice(View view, int position){
         TextView restaurantPriceDollar = view.findViewById(R.id.dollars);
 
-        if(list.get(position).getRestaurant_price().equals("cheap")){
+        if(list.get(position).getRestaurant_info().getRestaurant_price().equals("cheap")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_price().equals("semi-moderate")){
+        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("semi-moderate")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_price().equals("moderate")){
+        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("moderate")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_price().equals("semi-expensive")){
+        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("semi-expensive")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),

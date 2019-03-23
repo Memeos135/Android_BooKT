@@ -71,27 +71,32 @@ public class A2_RestaurantsActivity extends AppCompatActivity
 
         ListView listView = findViewById(R.id.listView);
         a2_restaurantsActivityListViewAdapter =
-                new A2_RestaurantsActivityListViewAdapter(this, list);
+                new A2_RestaurantsActivityListViewAdapter(this, list, getIntent().getStringExtra("restaurant_name"));
         listView.setAdapter(a2_restaurantsActivityListViewAdapter);
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Country")
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Country")
                 .child("Saudi Arabia").child("cities").child("Jeddah").child("Cuisine").child("ids")
                 .child(getIntent().getStringExtra("restaurant_name"));
 
         showWaiting();
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
                     A2_RestaurantsActivityCard a2_restaurantsActivityCard =
                             dataSnapshot1.getValue(A2_RestaurantsActivityCard.class);
-                    a2_restaurantsActivityCard.setRestaurant_cuisine(getIntent().getStringExtra("restaurant_name"));
+
+                    if(dataSnapshot1.child("reviews").getChildrenCount() > 0){
+                        a2_restaurantsActivityCard.getReviews().setReviewCount(dataSnapshot1.child("reviews").getChildrenCount());
+                    }
+
                     list.add(a2_restaurantsActivityCard);
                 }
                 a2_restaurantsActivityListViewAdapter.updateList(list);
                 a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
                 cancelWaiting();
+                mDatabase.removeEventListener(this);
             }
 
             @Override

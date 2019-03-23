@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -44,7 +46,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import junit.framework.Test;
+
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +64,7 @@ import java.util.Locale;
 public class A3_RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context context;
-    private ArrayList<Integer> imageViewArrayList;
+    private ArrayList<String> imageViewArrayList;
     private RatingBar ratingBar;
 
     @Override
@@ -62,6 +74,8 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         setContentView(R.layout.a3_restaurant_details_activity);
 
         context = this;
+
+        checkMenu();
 
         A2_RestaurantsActivityCard card = getIntent().getParcelableExtra("restaurant_brief");
         setupRestaurantCard(card);
@@ -79,11 +93,12 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         // Setting up Gallery Images
         setupImageViewArrayList();
 
-        // Setting up Header ViewPager
-        setupImagesViewPager();
-
         // animate reserve button to grab attention
         animateReserveButton();
+
+        setupOtherDetails();
+
+        setupReviews();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -126,7 +141,9 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
     // foodMenu image function
     public void foodMenu(View v){
-        startActivity(new Intent(context, A5_FoodMenuActivity.class));
+        startActivity(new Intent(context, A5_FoodMenuActivity.class)
+        .putExtra("id",
+                ((A2_RestaurantsActivityCard) getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id()));
     }
 
     // check permission for phone calls
@@ -211,9 +228,17 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             ImageView imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setImageResource(imageViewArrayList.get(position));
+
+            Picasso.get()
+                    .load(imageViewArrayList.get(position))
+                    .error(R.drawable.icon)
+                    .placeholder(R.drawable.icon)
+                    .fit()
+                    .centerCrop()
+                    .into(imageView);
+
             ((ViewPager) container).addView(imageView, 0);
+
             return imageView;
         }
 
@@ -226,18 +251,31 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     // Image ArrayList Setup
     public void setupImageViewArrayList(){
 
-        imageViewArrayList = new ArrayList<Integer>();
+        imageViewArrayList = new ArrayList<String>();
 
-        imageViewArrayList.add(R.drawable.splash_screen);
-        imageViewArrayList.add(R.drawable.main_header);
-        imageViewArrayList.add(R.drawable.main_header_two);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_focused);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_dark_normal_background);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_disabled);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light);
-        imageViewArrayList.add(R.drawable.common_google_signin_btn_icon_light_focused);
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
+                .child(((A2_RestaurantsActivityCard)getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
+                .child("imageList");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    String url = String.valueOf(dataSnapshot1.getValue());
+                    imageViewArrayList.add(url);
+                }
+                // Setting up Header ViewPager
+                setupImagesViewPager();
+
+                ((SeekBar)findViewById(R.id.seekBar)).setMax(imageViewArrayList.size()-1);
+                mDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // ViewPager Setup
@@ -245,7 +283,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
         if (imageViewArrayList.size() == 0) {
 
-            imageViewArrayList.add(R.drawable.icon);
+//            imageViewArrayList.add(R.drawable.icon);
 
         }
         ViewPager viewPager = findViewById(R.id.viewPager);
@@ -295,39 +333,49 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         TextView openCloseHour = findViewById(R.id.openCloseHour);
         TextView restaurantCuisine = findViewById(R.id.resCuisine);
         TextView priceRange = findViewById(R.id.dollars);
+        TextView totalRatings = findViewById(R.id.totalRatings);
 
-        restaurantName.setText(card.getRestaurant_name());
+        restaurantName.setText(card.getRestaurant_info().getRestaurant_name());
 
-        openCloseHour.setText(card.getRestaurant_open() + " - " + card.getRestaurant_close());
-        restaurantCuisine.setText(card.getRestaurant_cuisine());
+        openCloseHour.setText(card.getRestaurant_info().getRestaurant_open() + " - " + card.getRestaurant_info().getRestaurant_close());
+        restaurantCuisine.setText(getIntent().getStringExtra("cuisine"));
+
+        A2_RestaurantsActivityCard brief = getIntent().getParcelableExtra("restaurant_brief");
+
+        if(brief.getReviews() != null) {
+            int val = (int) brief.getReviews().getReviewCount();
+            totalRatings.setText(String.valueOf(val));
+        }else{
+            totalRatings.setText("0");
+        }
 
         colorPrice(priceRange, openCloseHour, card);
 
     }
 
     public void colorPrice(TextView restaurantPriceDollar, TextView openCloseHour, A2_RestaurantsActivityCard card){
-        if(card.getRestaurant_price().equals("cheap")){
+        if(card.getRestaurant_info().getRestaurant_price().equals("cheap")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(card.getRestaurant_price().equals("semi-moderate")){
+        }else if(card.getRestaurant_info().getRestaurant_price().equals("semi-moderate")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(card.getRestaurant_price().equals("moderate")){
+        }else if(card.getRestaurant_info().getRestaurant_price().equals("moderate")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
                     0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(card.getRestaurant_price().equals("semi-expensive")){
+        }else if(card.getRestaurant_info().getRestaurant_price().equals("semi-expensive")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
             wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
@@ -349,9 +397,9 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         TextView restaurantLocation = findViewById(R.id.restaurantLocation);
         // INSTEAD OF t, WE USE card OBJECT to get LOCATION and PARSE it.
 
-        if (card.getRestaurant_location().length() > 100) {
-            String latitude = card.getRestaurant_location().substring(card.getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_location().indexOf("@") + 11));
-            String longitude = card.getRestaurant_location().substring((card.getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_location().indexOf("@") + 22)));
+        if (card.getRestaurant_info().getRestaurant_location().length() > 100) {
+            String latitude = card.getRestaurant_info().getRestaurant_location().substring(card.getRestaurant_info().getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_info().getRestaurant_location().indexOf("@") + 11));
+            String longitude = card.getRestaurant_info().getRestaurant_location().substring((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 22)));
 
             Geocoder geocoder;
             List<Address> addresses;
@@ -376,5 +424,68 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         } else {
             restaurantLocation.setText("Location format is wrong");
         }
+    }
+
+    public void setupOtherDetails(){
+
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
+                .child(((A2_RestaurantsActivityCard) getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
+                .child("restaurantDetails");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ((TextView) findViewById(R.id.callNumber)).setText(dataSnapshot.child("restaurant_telephone").getValue().toString());
+                mDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void setupReviews(){
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
+                .child(((A2_RestaurantsActivityCard) getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
+                .child("reviews");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // DO FIREBASE REVIEWS FOR RESTAURANT DETAILS
+
+                mDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void checkMenu(){
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
+                .child(((A2_RestaurantsActivityCard)getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
+                .child("menuItems");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    findViewById(R.id.menuImage).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.menuImage).setClickable(false);
+                }
+                mDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
