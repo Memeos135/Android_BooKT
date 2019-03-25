@@ -60,12 +60,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class A3_RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context context;
     private ArrayList<String> imageViewArrayList;
     private RatingBar ratingBar;
+    private String [] returnCoordinates = new String[2];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +90,6 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         TextView seeAllReviews = findViewById(R.id.seeAll);
         seeAllReviews.setAnimation(new AnimationUtils().loadAnimation(context, R.anim.fui_slide_in_right));
 
-        new A3_MapFragment();
         setupLocationInfo(card);
 
         // Setting up Gallery Images
@@ -186,7 +188,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
 
-        builder.setTitle("0547171060").setMessage("Would you like to call this restaurant?\n\nReservation through the application is preferred.")
+        builder.setTitle(((TextView) v).getText().toString()).setMessage("Would you like to call this restaurant?\n\nReservation through the application is preferred.")
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -232,7 +234,6 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
             Picasso.get()
                     .load(imageViewArrayList.get(position))
                     .error(R.drawable.icon)
-                    .placeholder(R.drawable.icon)
                     .fit()
                     .centerCrop()
                     .into(imageView);
@@ -260,15 +261,20 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    String url = String.valueOf(dataSnapshot1.getValue());
-                    imageViewArrayList.add(url);
-                }
-                // Setting up Header ViewPager
-                setupImagesViewPager();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        String url = String.valueOf(dataSnapshot1.getValue());
+                        imageViewArrayList.add(url);
+                    }
+                    // Setting up Header ViewPager
+                    setupImagesViewPager();
 
-                ((SeekBar)findViewById(R.id.seekBar)).setMax(imageViewArrayList.size()-1);
-                mDatabase.removeEventListener(this);
+                    ((SeekBar) findViewById(R.id.seekBar)).setMax(imageViewArrayList.size() - 1);
+                    mDatabase.removeEventListener(this);
+                } else{
+                    Toast.makeText(context, "No gallery image records found", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -398,15 +404,23 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         // INSTEAD OF t, WE USE card OBJECT to get LOCATION and PARSE it.
 
         if (card.getRestaurant_info().getRestaurant_location().length() > 100) {
-            String latitude = card.getRestaurant_info().getRestaurant_location().substring(card.getRestaurant_info().getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_info().getRestaurant_location().indexOf("@") + 11));
-            String longitude = card.getRestaurant_info().getRestaurant_location().substring((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 22)));
+
+
+
+            String [] parsedCoordinates = getIntent().getStringArrayExtra("location");
+
+            Bundle bundle = new Bundle();
+
+            bundle.putString("latitude+longitude", parsedCoordinates[0] + " " + parsedCoordinates[1]);
+
+            new A3_MapFragment().setArguments(bundle);
 
             Geocoder geocoder;
             List<Address> addresses;
             geocoder = new Geocoder(this, Locale.getDefault());
 
             try {
-                addresses = geocoder.getFromLocation(Double.parseDouble(latitude), Double.parseDouble(longitude), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                addresses = geocoder.getFromLocation(Double.parseDouble(parsedCoordinates[0]), Double.parseDouble(parsedCoordinates[1]), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
                 String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
 
@@ -435,8 +449,12 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ((TextView) findViewById(R.id.callNumber)).setText(dataSnapshot.child("restaurant_telephone").getValue().toString());
-                mDatabase.removeEventListener(this);
+                if(!dataSnapshot.child("restaurant_telephone").getValue().toString().equals("")) {
+                    ((TextView) findViewById(R.id.callNumber)).setText(dataSnapshot.child("restaurant_telephone").getValue().toString());
+                    mDatabase.removeEventListener(this);
+                }else{
+                    Toast.makeText(context, "No restaurant telephone number was registered in the database", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -454,9 +472,13 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
 
-                // DO FIREBASE REVIEWS FOR RESTAURANT DETAILS
+                    // DO FIREBASE REVIEWS FOR RESTAURANT DETAILS
 
+                }else{
+                    Toast.makeText(context, "No reviews records exist in database", Toast.LENGTH_SHORT).show();
+                }
                 mDatabase.removeEventListener(this);
             }
 

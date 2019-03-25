@@ -53,7 +53,7 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         ampm[0] = "am";
         ampm[1] = "pm";
 
-        final String [] months = new  String[12-Calendar.getInstance().get(Calendar.MONTH)];
+        final String [] months = new  String[Calendar.getInstance().get(Calendar.MONTH)+1];
         final String [] hours = new String[12];
         final String [] minutes = new String[4];
         final String [] seats = new String [seatMax];

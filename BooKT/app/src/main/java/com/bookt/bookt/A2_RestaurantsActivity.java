@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,20 +82,25 @@ public class A2_RestaurantsActivity extends AppCompatActivity
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-                    A2_RestaurantsActivityCard a2_restaurantsActivityCard =
-                            dataSnapshot1.getValue(A2_RestaurantsActivityCard.class);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        A2_RestaurantsActivityCard a2_restaurantsActivityCard =
+                                dataSnapshot1.getValue(A2_RestaurantsActivityCard.class);
 
-                    if(dataSnapshot1.child("reviews").getChildrenCount() > 0){
-                        a2_restaurantsActivityCard.getReviews().setReviewCount(dataSnapshot1.child("reviews").getChildrenCount());
+                        if (dataSnapshot1.child("reviews").getChildrenCount() > 0) {
+                            a2_restaurantsActivityCard.getReviews().setReviewCount(dataSnapshot1.child("reviews").getChildrenCount());
+                        }
+
+                        list.add(a2_restaurantsActivityCard);
                     }
-
-                    list.add(a2_restaurantsActivityCard);
+                    a2_restaurantsActivityListViewAdapter.updateList(list);
+                    a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
+                    cancelWaiting();
+                    mDatabase.removeEventListener(this);
+                }else{
+                    cancelWaiting();
+                    Toast.makeText(context, "No records exist in database", Toast.LENGTH_SHORT).show();
                 }
-                a2_restaurantsActivityListViewAdapter.updateList(list);
-                a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
-                cancelWaiting();
-                mDatabase.removeEventListener(this);
             }
 
             @Override

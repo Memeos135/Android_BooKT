@@ -44,8 +44,11 @@ public class A4_ReviewsListAdapter extends ArrayAdapter<A4_ReviewsCard> {
 
         Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
         animation.setInterpolator(new DecelerateInterpolator());
-        animation.setStartOffset(position * 100);
-
+        if(position > 8){
+            animation.setStartOffset(8 * 50);
+        }else{
+            animation.setStartOffset(position * 75);
+        }
         view.setAnimation(animation);
 
         return view;

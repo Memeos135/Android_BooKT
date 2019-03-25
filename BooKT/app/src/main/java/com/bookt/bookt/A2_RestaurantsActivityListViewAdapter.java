@@ -2,13 +2,13 @@ package com.bookt.bookt;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +19,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_RestaurantsActivityCard> {
 
@@ -28,6 +34,7 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
     private List<A2_RestaurantsActivityCard> list;
     private int lastPosition = -1;
     private String name;
+    private String [] x = new String[2];
 
     public A2_RestaurantsActivityListViewAdapter(@NonNull Context context, @NonNull ArrayList<A2_RestaurantsActivityCard> list, String name) {
         super(context, 0,  list);
@@ -44,7 +51,7 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
             view = LayoutInflater.from(getContext()).inflate(R.layout.a2_restaurant_card, parent, false);
         }
 
-        ImageView restaurantImage = view.findViewById(R.id.restaurantImage);
+        final ImageView restaurantImage = view.findViewById(R.id.restaurantImage);
         TextView restaurantName = view.findViewById(R.id.restaurantName);
         TextView restaurantLocation = view.findViewById(R.id.restaurantLocation);
         TextView restaurantOpenHour = view.findViewById(R.id.textView9);
@@ -52,10 +59,17 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
         TextView restaurantReviews = view.findViewById(R.id.textView11);
         TextView restaurantStatus = view.findViewById(R.id.congestionText);
 
+        Picasso.get()
+                .load(list.get(position).getRestaurant_info().getRestaurant_image())
+                .error(R.drawable.icon)
+                .fit()
+                .centerCrop()
+                .into(restaurantImage);
 
-        restaurantImage.setImageResource(R.drawable.test_cat);
         restaurantName.setText(list.get(position).getRestaurant_info().getRestaurant_name());
-        restaurantLocation.setText(list.get(position).getRestaurant_info().getRestaurant_location());
+
+        setupLocationInfo(list.get(position), view);
+
         restaurantOpenHour.setText(list.get(position).getRestaurant_info().getRestaurant_open());
         restaurantCloseHour.setText(list.get(position).getRestaurant_info().getRestaurant_close());
 
@@ -73,7 +87,8 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
             public void onClick(View view) {
                 context.startActivity(new Intent(context, A3_RestaurantDetailsActivity.class)
                 .putExtra("restaurant_brief", list.get(position))
-                .putExtra("cuisine", name));
+                .putExtra("cuisine", name)
+                .putExtra("location", x));
             }
         });
 
@@ -89,50 +104,107 @@ public class A2_RestaurantsActivityListViewAdapter extends ArrayAdapter<A2_Resta
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
             animation.setInterpolator(new DecelerateInterpolator());
-            animation.setStartOffset(position * 100);
+            if(position > 8){
+                animation.setStartOffset(8 * 50);
+            }else{
+                animation.setStartOffset(position * 75);
+            }
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
     }
 
-    public void checkPrice(View view, int position){
+    private void checkPrice(View view, int position){
         TextView restaurantPriceDollar = view.findViewById(R.id.dollars);
 
-        if(list.get(position).getRestaurant_info().getRestaurant_price().equals("cheap")){
+        switch (list.get(position).getRestaurant_info().getRestaurant_price()) {
+            case "cheap": {
 
-            Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
-            wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
-                    0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            restaurantPriceDollar.setText(wordtoSpan);
+                Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
+                wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                        0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("semi-moderate")){
+                break;
+            }
+            case "semi-moderate": {
 
-            Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
-            wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
-                    0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            restaurantPriceDollar.setText(wordtoSpan);
+                Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
+                wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                        0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("moderate")){
+                break;
+            }
+            case "moderate": {
 
-            Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
-            wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
-                    0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            restaurantPriceDollar.setText(wordtoSpan);
+                Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
+                wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                        0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                restaurantPriceDollar.setText(wordtoSpan);
 
-        }else if(list.get(position).getRestaurant_info().getRestaurant_price().equals("semi-expensive")){
+                break;
+            }
+            case "semi-expensive": {
 
-            Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
-            wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
-                    0, restaurantPriceDollar.getText().toString().length()-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            restaurantPriceDollar.setText(wordtoSpan);
+                Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
+                wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                        0, restaurantPriceDollar.getText().toString().length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                restaurantPriceDollar.setText(wordtoSpan);
 
-        }else{
+                break;
+            }
+            default: {
 
-            Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
-            wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
-                    0, restaurantPriceDollar.getText().toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            restaurantPriceDollar.setText(wordtoSpan);
+                Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
+                wordtoSpan.setSpan(new ForegroundColorSpan(restaurantPriceDollar.getResources().getColor(R.color.red_app)),
+                        0, restaurantPriceDollar.getText().toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                restaurantPriceDollar.setText(wordtoSpan);
 
+                break;
+            }
         }
+    }
+
+    public void setupLocationInfo(A2_RestaurantsActivityCard card, View v) {
+
+        TextView restaurantLocation = v.findViewById(R.id.restaurantLocation);
+        // INSTEAD OF t, WE USE card OBJECT to get LOCATION and PARSE it.
+            Pattern p = Pattern.compile("@(.*),(.*),");
+            Matcher m = p.matcher(card.getRestaurant_info().getRestaurant_location());
+            if (m.find()) {
+                x[0] = m.toString();
+                String y = x[0].substring(x[0].indexOf("h=@") + 3, x[0].length() - 2);
+
+                String latitude = y.substring(0, y.indexOf(","));
+                String longitude = y.substring(y.indexOf(",") + 1);
+
+                x[0] = latitude;
+                x[1] = longitude;
+
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(v.getContext(), Locale.getDefault());
+
+                try {
+                    addresses = geocoder.getFromLocation(Double.parseDouble(x[0]), Double.parseDouble(x[1]), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                    String address = addresses.get(0).getSubLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+//            String city = addresses.get(0).getLocality();
+//            String state = addresses.get(0).getAdminArea();
+//            String country = addresses.get(0).getCountryName();
+//            String postalCode = addresses.get(0).getPostalCode();
+//            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+                    restaurantLocation.setText(address);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                restaurantLocation.setText("Location format is wrong");
+            }
+
     }
 }

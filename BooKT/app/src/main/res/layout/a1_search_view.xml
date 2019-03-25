@@ -12,14 +12,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintBottom_toBottomOf="@+id/reviewText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_close_black_24dp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/reviewText"
         android:layout_width="0dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
@@ -45,5 +45,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/reviewText" />
 </android.support.constraint.ConstraintLayout>

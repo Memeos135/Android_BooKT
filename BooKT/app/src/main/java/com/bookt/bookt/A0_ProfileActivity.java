@@ -102,7 +102,7 @@ public class A0_ProfileActivity extends AppCompatActivity
             list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
 
             ListView listView = findViewById(R.id.listViewHistory);
-            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list, "active");
             listView.setAdapter(a0HistoryAdapter);
 
         }else{
@@ -116,7 +116,7 @@ public class A0_ProfileActivity extends AppCompatActivity
             list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
 
             ListView listView = findViewById(R.id.listViewHistory);
-            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list , "in-active");
             listView.setAdapter(a0HistoryAdapter);
 
         }
@@ -147,7 +147,7 @@ public class A0_ProfileActivity extends AppCompatActivity
         list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
 
         ListView listView = findViewById(R.id.listViewHistory);
-        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list);
+        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list, "active");
         listView.setAdapter(a0HistoryAdapter);
     }
 }

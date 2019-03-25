@@ -22,12 +22,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class A3_MapFragment extends Fragment {
 
-    private MapView mapView;
+    public A3_MapFragment() {
+    }
 
+    private MapView mapView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.a3_map_view, container, false);
 
@@ -44,10 +46,10 @@ public class A3_MapFragment extends Fragment {
                 // EXTRACT LOCATION COORDINATES FROM CARD OVER HERE, THEN SET IT IN LatLng
                 if (card.getRestaurant_info().getRestaurant_location().length() > 100) {
 
-                    String latitude = card.getRestaurant_info().getRestaurant_location().substring(card.getRestaurant_info().getRestaurant_location().indexOf("@") + 1, (card.getRestaurant_info().getRestaurant_location().indexOf("@") + 11));
-                    String longitude = card.getRestaurant_info().getRestaurant_location().substring((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 12), ((card.getRestaurant_info().getRestaurant_location().indexOf("@") + 22)));
+                    A3_RestaurantDetailsActivity a3_restaurantDetailsActivity = (A3_RestaurantDetailsActivity) getActivity();
+                    String[] x = a3_restaurantDetailsActivity.getIntent().getStringArrayExtra("location");
 
-                    LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                    LatLng latLng = new LatLng(Double.parseDouble(x[0]), Double.parseDouble(x[1]));
                     googleMap.getUiSettings().setAllGesturesEnabled(false);
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.0F);
                     googleMap.addMarker(new MarkerOptions().position(latLng)

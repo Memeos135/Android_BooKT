@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +88,11 @@ public class A1_GalleryActivityRecyclerViewAdapter extends RecyclerView.Adapter<
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
             animation.setInterpolator(new DecelerateInterpolator());
-            animation.setStartOffset(position * 100);
+            if(position > 8){
+                animation.setStartOffset(8 * 50);
+            }else{
+                animation.setStartOffset(position * 75);
+            }
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }

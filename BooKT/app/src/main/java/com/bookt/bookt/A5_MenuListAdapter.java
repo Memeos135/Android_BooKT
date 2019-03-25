@@ -10,7 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,15 @@ public class A5_MenuListAdapter extends ArrayAdapter<MenuItemElement> {
         TextView foodTitle = view.findViewById(R.id.foodTitle);
         TextView foodDescription = view.findViewById(R.id.foodDescription);
         TextView foodPrice = view.findViewById(R.id.foodPrice);
+        ImageView foodImage = view.findViewById(R.id.foodImage);
+
+
+        Picasso.get()
+                .load(list.get(position).getImage())
+                .error(R.drawable.icon)
+                .fit()
+                .centerCrop()
+                .into(foodImage);
 
         foodTitle.setText(list.get(position).getName());
         foodDescription.setText(list.get(position).getDescription());
@@ -48,7 +60,11 @@ public class A5_MenuListAdapter extends ArrayAdapter<MenuItemElement> {
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
             animation.setInterpolator(new DecelerateInterpolator());
-            animation.setStartOffset(position * 100);
+            if(position > 8){
+                animation.setStartOffset(8 * 50);
+            }else{
+                animation.setStartOffset(position * 75);
+            }
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
