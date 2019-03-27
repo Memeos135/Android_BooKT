@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_black"
@@ -224,14 +225,13 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/custom_radio_button"
-                    android:checkedButton="@+id/inactive"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seatsPicker">
 
                     <RadioButton
-                        android:id="@+id/search"
+                        android:id="@+id/family"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="1dp"
@@ -241,11 +241,10 @@
                         android:background="@drawable/toggle_widget_background"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="Family"
                         android:textColor="@color/white" />
 
                     <RadioButton
-                        android:id="@+id/inactive"
+                        android:id="@+id/singles"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="1dp"
@@ -255,7 +254,6 @@
                         android:background="@drawable/toggle_widget_background"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="Singles"
                         android:textColor="@color/white" />
 
                 </RadioGroup>
@@ -273,7 +271,7 @@
                     android:inputType="textPersonName"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/light_grey"
                     android:textColorHint="#9A9A9A"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"

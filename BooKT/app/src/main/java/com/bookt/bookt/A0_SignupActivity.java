@@ -17,11 +17,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class A0_SignupActivity extends AppCompatActivity {
     private TextView emailAddress;
     private TextView personName;
     private TextView password;
     private TextView personMobile;
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,39 +49,48 @@ public class A0_SignupActivity extends AppCompatActivity {
 
     public void signupHandler(View view){
         if(personMobile.getText().equals("") || emailAddress.getText().equals("") || password.getText().equals("")
-         || personMobile.getText().equals("") || (personMobile.getText().toString().length() > 10)){
+         || personMobile.getText().equals("") || (personMobile.getText().toString().length() != 10)){
 
-            Toast.makeText(this, "Please fill in all fields. Mobile numbers cannot exceed 10 digits.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all fields. Mobile number length is 10 digits.", Toast.LENGTH_SHORT).show();
 
-        }else{
+        }else {
 
-            final FirebaseAuth mAuth  = FirebaseAuth.getInstance();
+            if (validate(emailAddress.getText().toString())) {
 
-            mAuth.createUserWithEmailAndPassword(emailAddress.getText().toString(), password.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
+                final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(String.valueOf(mAuth.getUid()));
-                        UserProfileInformation userProfileInformation = new UserProfileInformation(personName.getText().toString(),
-                                emailAddress.getText().toString(), personMobile.getText().toString());
-                        mDatabase.child("profile_info").setValue(userProfileInformation);
-                        mDatabase.child("reservations").child("active").setValue("empty");
-                        mDatabase.child("reservations").child("in-active").setValue("empty");
+                mAuth.createUserWithEmailAndPassword(emailAddress.getText().toString(), password.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
 
-                        startActivity(new Intent(getApplicationContext(), A0_LoginActivity.class)
-                        .putExtra("email", emailAddress.getText().toString())
-                        .putExtra("password", password.getText().toString()));
+                                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(String.valueOf(mAuth.getUid()));
+                                    UserProfileInformation userProfileInformation = new UserProfileInformation(personName.getText().toString(),
+                                            emailAddress.getText().toString(), personMobile.getText().toString());
+                                    mDatabase.child("profile_info").setValue(userProfileInformation);
+                                    mDatabase.child("reservations").child("active").setValue("empty");
+                                    mDatabase.child("reservations").child("in-active").setValue("empty");
 
-                    }else{
+                                    startActivity(new Intent(getApplicationContext(), A0_LoginActivity.class)
+                                            .putExtra("email", emailAddress.getText().toString())
+                                            .putExtra("password", password.getText().toString())
+                                            .putExtra("activity", ""));
 
-                        Toast.makeText(A0_SignupActivity.this, "Registration failed, please try again.", Toast.LENGTH_SHORT).show();
+                                } else {
 
-                    }
-                }
-            });
+                                    Toast.makeText(A0_SignupActivity.this, "Registration failed, please try again.", Toast.LENGTH_SHORT).show();
 
+                                }
+                            }
+                        });
+
+            }
         }
+    }
+
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
     }
 }

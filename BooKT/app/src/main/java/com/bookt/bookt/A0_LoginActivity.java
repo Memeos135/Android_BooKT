@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -90,8 +91,34 @@ public class A0_LoginActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
 
-                                            Toast.makeText(context, "LOGIN WORKS", Toast.LENGTH_SHORT).show();
-                                            FirebaseAuth.getInstance().signOut();
+                                            switch (getIntent().getStringExtra("activity")) {
+                                                case "A0_ProfileActivity":
+
+                                                    startActivity(new Intent(context, A0_ProfileActivity.class));
+
+                                                    break;
+                                                case "A1_GalleryActivity":
+
+                                                    startActivity(new Intent(context, A1_GalleryActivity.class));
+
+                                                    break;
+                                                case "A2_RestaurantsActivity":
+
+                                                    startActivity(new Intent(context, A2_RestaurantsActivity.class));
+
+                                                    break;
+                                                case "A3_RestaurantDetailsActivity":
+
+                                                    startActivity(new Intent(context, A3_RestaurantDetailsActivity.class));
+
+                                                    break;
+
+                                                default:
+
+                                                    startActivity(new Intent(context, A1_GalleryActivity.class));
+
+                                                    break;
+                                            }
 
                                         } else {
 

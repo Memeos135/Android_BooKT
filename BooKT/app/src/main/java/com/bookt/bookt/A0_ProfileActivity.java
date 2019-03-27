@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -41,7 +45,16 @@ public class A0_ProfileActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setupDefault();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+        }
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            setupDefault();
+        }else{
+            ((TextView) findViewById(R.id.profilePersonName)).setText("");
+        }
 
     }
 
@@ -67,7 +80,13 @@ public class A0_ProfileActivity extends AppCompatActivity
         } else if (id == R.id.Signup) {
             context.startActivity(new Intent(context, A0_SignupActivity.class));
         } else if (id == R.id.Signin) {
-            context.startActivity(new Intent(context, A0_LoginActivity.class));
+            context.startActivity(new Intent(context, A0_LoginActivity.class)
+            .putExtra("activity", "A0_ProfileActivity"));
+        } else if(id == R.id.Signout) {
+            FirebaseAuth.getInstance().signOut();
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -78,47 +97,56 @@ public class A0_ProfileActivity extends AppCompatActivity
     public void radioHandler(View v){
         if (v.getTag().equals("active")){
             // READ ACTIVE RESERVATIONS FROM FIREBASE
-            ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
 
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+            if(FirebaseAuth.getInstance().getCurrentUser()!= null) {
+                ArrayList<A0_ReservationsHistorySetter> activeList = new ArrayList<>();
+                // DO FIREBASE
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                activeList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
 
-            ListView listView = findViewById(R.id.listViewHistory);
-            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list, "active");
-            listView.setAdapter(a0HistoryAdapter);
+                ListView listView = findViewById(R.id.listViewHistory);
+                A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, activeList, "active");
+                listView.setAdapter(a0HistoryAdapter);
+            }else{
+
+            }
 
         }else{
 
-            ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+            if(FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
-            list.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                ArrayList<A0_ReservationsHistorySetter> oldList = new ArrayList<>();
 
-            ListView listView = findViewById(R.id.listViewHistory);
-            A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list , "in-active");
-            listView.setAdapter(a0HistoryAdapter);
+                oldList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                oldList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                oldList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                oldList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
+                oldList.add(new A0_ReservationsHistorySetter("Date: 13 March", "Time: 10:00PM", "21.802820, 39.132578", "McDonalds"));
 
+                ListView listView = findViewById(R.id.listViewHistory);
+                A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, oldList, "in-active");
+                listView.setAdapter(a0HistoryAdapter);
+            }else{
+
+            }
         }
     }
 
@@ -149,5 +177,21 @@ public class A0_ProfileActivity extends AppCompatActivity
         ListView listView = findViewById(R.id.listViewHistory);
         A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list, "active");
         listView.setAdapter(a0HistoryAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+            setupDefault();
+        }else{
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
+        }
     }
 }

@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,6 +64,11 @@ public class A2_RestaurantsActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+        }
 
         // -------------------------------------------RecyclerView and Toolbar setup-------------------------------//
 
@@ -139,7 +145,13 @@ public class A2_RestaurantsActivity extends AppCompatActivity
         } else if (id == R.id.Signup) {
             context.startActivity(new Intent(context, A0_SignupActivity.class));
         } else if (id == R.id.Signin) {
-            context.startActivity(new Intent(context, A0_LoginActivity.class));
+            context.startActivity(new Intent(context, A0_LoginActivity.class)
+            .putExtra("activity", "A2_RestaurantsActivity"));
+        } else if(id == R.id.Signout) {
+            FirebaseAuth.getInstance().signOut();
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -214,5 +226,20 @@ public class A2_RestaurantsActivity extends AppCompatActivity
     public void cancelWaiting(){
         ProgressBar progressBar = findViewById(R.id.waitProgressBar);
         ((ViewGroup)progressBar.getParent()).removeView(progressBar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+        }else{
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
+        }
     }
 }

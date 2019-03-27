@@ -41,11 +41,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +70,6 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     private Context context;
     private ArrayList<String> imageViewArrayList;
     private RatingBar ratingBar;
-    private String [] returnCoordinates = new String[2];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,6 +114,11 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+        }
     }
 
 
@@ -133,7 +139,13 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         } else if (id == R.id.Signup) {
             context.startActivity(new Intent(context, A0_SignupActivity.class));
         } else if (id == R.id.Signin) {
-            context.startActivity(new Intent(context, A0_LoginActivity.class));
+            context.startActivity(new Intent(context, A0_LoginActivity.class)
+            .putExtra("activity", "A3_RestaurantDetailsActivity"));
+        } else if(id == R.id.Signout) {
+            FirebaseAuth.getInstance().signOut();
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -174,7 +186,9 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
     // reservation button processing function
     public void processReservationButton(View v){
-        context.startActivity(new Intent(context, A6_RestaurantReservationActivity.class));
+        A2_RestaurantsActivityCard card = getIntent().getParcelableExtra("restaurant_brief");
+        context.startActivity(new Intent(context, A6_RestaurantReservationActivity.class)
+        .putExtra("restaurant_brief", card.getRestaurant_info().getFirebase_id()));
     }
 
 
@@ -509,5 +523,20 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.signed_drawer);
+        }else{
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_gallery_drawer);
+        }
     }
 }

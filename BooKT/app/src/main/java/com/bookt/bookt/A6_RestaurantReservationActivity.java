@@ -3,14 +3,31 @@ package com.bookt.bookt;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
@@ -19,6 +36,11 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
     private String [] day;
     private int currentDay = 0;
     private int daysInMonth;
+    private EditText name;
+    private EditText email;
+    private EditText number;
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +49,47 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
         context = this;
 
+        String firebaseID = getIntent().getStringExtra("restaurant_brief");
+
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
+                .child(firebaseID)
+                .child("restaurantDetails").child("sections");
+
+        showWaiting();
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue().toString().equals("Single")){
+
+                    RadioGroup radioGroup = findViewById(R.id.toggleRes);
+                    radioGroup.removeViewAt(0);
+                    radioGroup.check(R.id.singles);
+                    ((RadioButton)findViewById(R.id.singles)).setText("Singles");
+
+                }else if(dataSnapshot.getValue().toString().equals("Family")){
+
+                    RadioGroup radioGroup = findViewById(R.id.toggleRes);
+                    radioGroup.removeViewAt(1);
+                    radioGroup.check(R.id.family);
+                    ((RadioButton)findViewById(R.id.family)).setText("Family");
+
+                }
+                cancelWaiting();
+                mDatabase.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         setupPickers(20);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            setupCustomerInfo();
+        }
     }
 
     // Back image handler
@@ -36,11 +98,29 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
     }
 
     public void buttonHandler(View v){
+        name = findViewById(R.id.fNameText);
+        email = findViewById(R.id.emailText);
+        number = findViewById(R.id.numText);
+
         Button button = (Button) v;
+
         if("cancelButton".equals(button.getTag())){
             onBackPressed();
         }else{
-            context.startActivity(new Intent(context, A7_ReservationConfirmationActivity.class));
+            if(FirebaseAuth.getInstance().getCurrentUser() == null){
+                if(!name.getText().toString().equals("") && !email.getText().toString().equals("") && !number.getText().toString().equals("") &&
+                number.getText().toString().length() == 10){
+                    if(validate(email.getText().toString()) && number.getText().toString().startsWith("05")) {
+                        context.startActivity(new Intent(context, A7_ReservationConfirmationActivity.class));
+                    }else{
+                        Toast.makeText(context, "You must provide a valid email address. Mobile numbers start with 05.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(context, "Please fill your name, number, and email address. Mobile number length is 10 digits.", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                // PROCESS RESERVATION DIALOG
+            }
         }
     }
 
@@ -213,6 +293,47 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         daysP.setDisplayedValues(day);
         daysP.setMinValue(0);
         daysP.setMaxValue(day.length - dayReduction);
+    }
+
+    public void setupCustomerInfo(){
+        name = findViewById(R.id.fNameText);
+        email = findViewById(R.id.emailText);
+        number = findViewById(R.id.numText);
+
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_info");
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    name.setText(dataSnapshot.child("name").getValue().toString());
+                    email.setText(dataSnapshot.child("email").getValue().toString());
+                    number.setText(dataSnapshot.child("mobile").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void showWaiting(){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup parent = (ViewGroup)findViewById(R.id.coordinatorLayout);
+        inflater.inflate(R.layout.waiting_animation, parent);
+    }
+
+    public void cancelWaiting(){
+        ProgressBar progressBar = findViewById(R.id.waitProgressBar);
+        ((ViewGroup)progressBar.getParent()).removeView(progressBar);
+    }
+
+    public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
     }
 
 }
