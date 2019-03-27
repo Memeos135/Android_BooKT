@@ -304,7 +304,7 @@
                     android:background="@color/card_black"
                     android:ems="10"
                     android:hint="+966 00 000 0000"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textColor="@color/light_grey"
