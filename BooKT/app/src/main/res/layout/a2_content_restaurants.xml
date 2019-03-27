@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/red_app"
+        android:background="@color/app_black"
         app:layout_collapseMode="pin">
 
         <android.support.constraint.ConstraintLayout

@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,7 @@ public class A1_GalleryActivity extends AppCompatActivity
     private A1_GalleryActivityRecyclerViewAdapter recycleViewAdpaterGallery;
     private Context context;
     private ArrayList<A1_GalleryActivityCard> list;
+    private ImageView headerImage;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -59,6 +61,10 @@ public class A1_GalleryActivity extends AppCompatActivity
         setContentView(R.layout.a1_activity_gallery);
 
         context = this;
+
+        headerImage = findViewById(R.id.headerImage);
+
+        Picasso.get().load(R.drawable.table_header).fit().centerCrop().into(headerImage);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

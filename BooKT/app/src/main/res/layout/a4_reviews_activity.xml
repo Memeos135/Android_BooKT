@@ -58,7 +58,7 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="55dp"
         android:checkedButton="@+id/five"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,9 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:gravity="center"
+            android:paddingTop="4dp"
             android:text="Five"
             android:textColor="@color/white" />
 
@@ -88,7 +90,9 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:gravity="center"
+            android:paddingTop="4dp"
             android:text="Four"
             android:textColor="@color/white" />
 
@@ -102,7 +106,9 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:gravity="center"
+            android:paddingTop="4dp"
             android:text="Three"
             android:textColor="@color/white" />
 
@@ -116,7 +122,9 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:gravity="center"
+            android:paddingTop="4dp"
             android:text="Two"
             android:textColor="@color/white" />
 
@@ -130,7 +138,9 @@
             android:layout_weight="1"
             android:background="@drawable/toggle_widget_background"
             android:button="@null"
+            android:drawableTop="@drawable/ic_star_black_24dp"
             android:gravity="center"
+            android:paddingTop="4dp"
             android:text="One"
             android:textColor="@color/white" />
 

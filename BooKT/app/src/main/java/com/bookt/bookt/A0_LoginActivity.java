@@ -7,9 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +88,8 @@ public class A0_LoginActivity extends AppCompatActivity {
                     if (!emailAddress.getText().toString().equals("") && !password.getText().toString().equals("")) {
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+                        showWaiting();
+
                         mAuth.signInWithEmailAndPassword(emailAddress.getText().toString(), password.getText().toString())
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -119,6 +124,8 @@ public class A0_LoginActivity extends AppCompatActivity {
 
                                                     break;
                                             }
+
+                                            cancelWaiting();
 
                                         } else {
 
@@ -174,5 +181,16 @@ public class A0_LoginActivity extends AppCompatActivity {
                 Toast.makeText(context, response.getError().toString(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void showWaiting(){
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup parent = (ViewGroup)findViewById(R.id.drawer_layout);
+        inflater.inflate(R.layout.waiting_animation, parent);
+    }
+
+    public void cancelWaiting(){
+        ProgressBar progressBar = findViewById(R.id.waitProgressBar);
+        ((ViewGroup)progressBar.getParent()).removeView(progressBar);
     }
 }

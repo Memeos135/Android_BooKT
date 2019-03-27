@@ -2,26 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/resCuisineTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginStart="30dp"
         android:text="Cuisine"
         android:textColor="@color/title_grey"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ressTimeTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ressTimeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/locationImage" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ressTimeTitle" />
 
     <TextView
         android:id="@+id/dollars"
@@ -90,7 +86,7 @@
 
     <Button
         android:id="@+id/reserveButton"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:background="@color/red_app"
         android:onClick="processReservationButton"
@@ -119,9 +115,9 @@
     <TextView
         android:id="@+id/restaurantName"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="90dp"
         android:gravity="center_vertical"
         android:text="Crust Gourmet Pizza Bar"

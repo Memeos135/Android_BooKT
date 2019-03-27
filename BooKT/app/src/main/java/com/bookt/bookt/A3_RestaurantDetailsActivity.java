@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -30,18 +28,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -55,15 +48,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import junit.framework.Test;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class A3_RestaurantDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -277,7 +265,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        String url = String.valueOf(dataSnapshot1.getValue());
+                        String url = dataSnapshot1.child("image").getValue().toString();
                         imageViewArrayList.add(url);
                     }
                     // Setting up Header ViewPager
@@ -511,9 +499,9 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
-                    findViewById(R.id.menuImage).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.menuImage).setClickable(false);
+                if(dataSnapshot.exists()){
+                    findViewById(R.id.menuImage).setVisibility(View.VISIBLE);
+                    findViewById(R.id.menuImage).setClickable(true);
                 }
                 mDatabase.removeEventListener(this);
             }

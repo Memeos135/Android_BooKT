@@ -3,7 +3,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:scaleType">fitXY</item>
-        <item name="android:statusBarColor">@color/red_app</item>
+        <item name="android:statusBarColor">@color/app_black</item>
         <item name="android:windowBackground">@color/app_black</item>
     </style>
 

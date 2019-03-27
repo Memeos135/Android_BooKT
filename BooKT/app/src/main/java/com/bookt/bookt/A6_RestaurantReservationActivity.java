@@ -60,19 +60,25 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                RadioGroup radioGroup = findViewById(R.id.toggleRes);
+
                 if(dataSnapshot.getValue().toString().equals("Single")){
 
-                    RadioGroup radioGroup = findViewById(R.id.toggleRes);
                     radioGroup.removeViewAt(0);
                     radioGroup.check(R.id.singles);
                     ((RadioButton)findViewById(R.id.singles)).setText("Singles");
 
                 }else if(dataSnapshot.getValue().toString().equals("Family")){
 
-                    RadioGroup radioGroup = findViewById(R.id.toggleRes);
                     radioGroup.removeViewAt(1);
                     radioGroup.check(R.id.family);
                     ((RadioButton)findViewById(R.id.family)).setText("Family");
+
+                }else{
+                    radioGroup.check(R.id.family);
+                    ((RadioButton)findViewById(R.id.family)).setText("Family");
+                    ((RadioButton)findViewById(R.id.singles)).setText("Singles");
 
                 }
                 cancelWaiting();
