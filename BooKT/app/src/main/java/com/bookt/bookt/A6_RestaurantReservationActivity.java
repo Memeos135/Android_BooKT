@@ -67,13 +67,13 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
                     radioGroup.removeViewAt(0);
                     radioGroup.check(R.id.singles);
-                    ((RadioButton)findViewById(R.id.singles)).setText("Singles");
+                    ((RadioButton)findViewById(R.id.singles)).setText(" Only Singles");
 
                 }else if(dataSnapshot.getValue().toString().equals("Family")){
 
                     radioGroup.removeViewAt(1);
                     radioGroup.check(R.id.family);
-                    ((RadioButton)findViewById(R.id.family)).setText("Family");
+                    ((RadioButton)findViewById(R.id.family)).setText("Only Family");
 
                 }else{
                     radioGroup.check(R.id.family);
@@ -82,7 +82,6 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
                 }
                 cancelWaiting();
-                mDatabase.removeEventListener(this);
             }
 
             @Override
@@ -328,7 +327,7 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
     public void showWaiting(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup parent = (ViewGroup)findViewById(R.id.coordinatorLayout);
+        ViewGroup parent = (ViewGroup)findViewById(R.id.constraintLayout2);
         inflater.inflate(R.layout.waiting_animation, parent);
     }
 

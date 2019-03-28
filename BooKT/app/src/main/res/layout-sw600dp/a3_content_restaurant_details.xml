@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".A3_RestaurantDetailsActivity"
+    tools:showIn="@layout/a3_app_bar_restaurant_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/a3_restaurant_details_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            layout="@layout/a3_restaurant_details_ratings_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.bookt.bookt.A3_MapFragment"
+            layout="@layout/a3_map_view"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="26dp"
+            tools:layout="@layout/a3_map_view" />
+
+        <TextView
+            android:id="@+id/callNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="32dp"
+            android:onClick="callIconProcess"
+            android:text="+966547171060"
+            android:textAlignment="center"
+            android:textColor="@color/light_grey"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

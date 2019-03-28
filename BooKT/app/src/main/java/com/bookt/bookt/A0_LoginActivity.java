@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,9 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Collections;
 import java.util.List;
@@ -88,52 +85,54 @@ public class A0_LoginActivity extends AppCompatActivity {
                     if (!emailAddress.getText().toString().equals("") && !password.getText().toString().equals("")) {
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                        showWaiting();
+                        if(findViewById(R.id.waitProgressBar) == null) {
+                            showWaiting();
 
-                        mAuth.signInWithEmailAndPassword(emailAddress.getText().toString(), password.getText().toString())
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
+                            mAuth.signInWithEmailAndPassword(emailAddress.getText().toString(), password.getText().toString())
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
 
-                                            switch (getIntent().getStringExtra("activity")) {
-                                                case "A0_ProfileActivity":
+                                                switch (getIntent().getStringExtra("activity")) {
+                                                    case "A0_ProfileActivity":
 
-                                                    startActivity(new Intent(context, A0_ProfileActivity.class));
+                                                        startActivity(new Intent(context, A0_ProfileActivity.class));
 
-                                                    break;
-                                                case "A1_GalleryActivity":
+                                                        break;
+                                                    case "A1_GalleryActivity":
 
-                                                    startActivity(new Intent(context, A1_GalleryActivity.class));
+                                                        startActivity(new Intent(context, A1_GalleryActivity.class));
 
-                                                    break;
-                                                case "A2_RestaurantsActivity":
+                                                        break;
+                                                    case "A2_RestaurantsActivity":
 
-                                                    startActivity(new Intent(context, A2_RestaurantsActivity.class));
+                                                        startActivity(new Intent(context, A2_RestaurantsActivity.class));
 
-                                                    break;
-                                                case "A3_RestaurantDetailsActivity":
+                                                        break;
+                                                    case "A3_RestaurantDetailsActivity":
 
-                                                    startActivity(new Intent(context, A3_RestaurantDetailsActivity.class));
+                                                        startActivity(new Intent(context, A3_RestaurantDetailsActivity.class));
 
-                                                    break;
+                                                        break;
 
-                                                default:
+                                                    default:
 
-                                                    startActivity(new Intent(context, A1_GalleryActivity.class));
+                                                        startActivity(new Intent(context, A1_GalleryActivity.class));
 
-                                                    break;
+                                                        break;
+                                                }
+
+                                                cancelWaiting();
+
+                                            } else {
+
+                                                Toast.makeText(context, "Authentication failed, please try again.", Toast.LENGTH_SHORT).show();
+
                                             }
-
-                                            cancelWaiting();
-
-                                        } else {
-
-                                            Toast.makeText(context, "Authentication failed, please try again.", Toast.LENGTH_SHORT).show();
-
                                         }
-                                    }
-                                });
+                                    });
+                        }
                     }else{
                         Toast.makeText(context, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
                     }
