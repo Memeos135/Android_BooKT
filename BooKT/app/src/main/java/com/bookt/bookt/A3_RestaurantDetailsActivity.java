@@ -176,7 +176,9 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     public void processReservationButton(View v){
         A2_RestaurantsActivityCard card = getIntent().getParcelableExtra("restaurant_brief");
         context.startActivity(new Intent(context, A6_RestaurantReservationActivity.class)
-        .putExtra("restaurant_brief", card.getRestaurant_info().getFirebase_id()));
+        .putExtra("id", card.getRestaurant_info().getFirebase_id())
+        .putExtra("open-hour", card.getRestaurant_info().getRestaurant_open())
+        .putExtra("close-hour", card.getRestaurant_info().getRestaurant_close()));
     }
 
 

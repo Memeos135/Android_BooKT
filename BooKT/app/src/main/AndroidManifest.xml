@@ -83,6 +83,10 @@
             android:name=".A0_SignupActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".ProfileEditActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

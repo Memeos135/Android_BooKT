@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -263,18 +264,11 @@ public class A0_ProfileActivity extends AppCompatActivity
 
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-            final Dialog dialog = new Dialog(context);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.profile_edit_dialog);
-            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            dialog.getWindow().setGravity(Gravity.CENTER);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.setCancelable(true);
+            startActivity(new Intent(context, ProfileEditActivity.class));
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                dialog.create();
-            }
-            dialog.show();
+        }else{
+
+            Toast.makeText(context, "Please login first.", Toast.LENGTH_SHORT).show();
 
         }
     }

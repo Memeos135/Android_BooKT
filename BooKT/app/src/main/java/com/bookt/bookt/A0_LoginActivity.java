@@ -123,13 +123,12 @@ public class A0_LoginActivity extends AppCompatActivity {
                                                         break;
                                                 }
 
-                                                cancelWaiting();
-
                                             } else {
 
                                                 Toast.makeText(context, "Authentication failed, please try again.", Toast.LENGTH_SHORT).show();
 
                                             }
+                                            cancelWaiting();
                                         }
                                     });
                         }

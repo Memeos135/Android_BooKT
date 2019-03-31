@@ -62,12 +62,9 @@
                 android:id="@+id/ressTimeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="Time"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="@+id/ampmPicker"
-                app:layout_constraintStart_toEndOf="@+id/minutesPicker"
                 app:layout_constraintTop_toTopOf="@+id/resDateTitle" />
 
             <ImageView
@@ -115,15 +112,15 @@
                 app:layout_constraintTop_toTopOf="@+id/hoursPicker"
                 app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="39dp"
-                android:layout_height="35dp"
-                android:background="@drawable/button_background_picker"
-                app:layout_constraintBottom_toBottomOf="@+id/minutesPicker"
-                app:layout_constraintEnd_toEndOf="@+id/minutesPicker"
-                app:layout_constraintStart_toStartOf="@+id/minutesPicker"
-                app:layout_constraintTop_toTopOf="@+id/minutesPicker" />
+            <!--<ImageView-->
+                <!--android:id="@+id/imageView15"-->
+                <!--android:layout_width="39dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:background="@drawable/button_background_picker"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/minutesPicker"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/minutesPicker"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/minutesPicker"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/minutesPicker" />-->
 
             <ImageView
                 android:id="@+id/imageView16"
@@ -192,7 +189,7 @@
                 android:focusable="false"
                 android:solidColor="@color/app_black"
                 android:theme="@style/AppTheme.Picker"
-                app:layout_constraintEnd_toStartOf="@+id/minutesPicker"
+                app:layout_constraintEnd_toStartOf="@+id/ampmPicker"
                 app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle" />
 
             <NumberPicker
@@ -206,18 +203,18 @@
                 android:solidColor="@color/app_black"
                 android:theme="@style/AppTheme.Picker"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/minutesPicker" />
+                app:layout_constraintTop_toBottomOf="@+id/ressTimeTitle" />
 
-            <NumberPicker
-                android:id="@+id/minutesPicker"
-                android:layout_width="42dp"
-                android:layout_height="135dp"
-                android:descendantFocusability="blocksDescendants"
-                android:focusable="false"
-                android:solidColor="@color/app_black"
-                android:theme="@style/AppTheme.Picker"
-                app:layout_constraintEnd_toStartOf="@+id/ampmPicker"
-                app:layout_constraintTop_toTopOf="@+id/hoursPicker" />
+            <!--<NumberPicker-->
+                <!--android:id="@+id/minutesPicker"-->
+                <!--android:layout_width="42dp"-->
+                <!--android:layout_height="135dp"-->
+                <!--android:descendantFocusability="blocksDescendants"-->
+                <!--android:focusable="false"-->
+                <!--android:solidColor="@color/app_black"-->
+                <!--android:theme="@style/AppTheme.Picker"-->
+                <!--app:layout_constraintEnd_toStartOf="@+id/ampmPicker"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/hoursPicker" />-->
 
             <RadioGroup
                 android:id="@+id/toggleRes"

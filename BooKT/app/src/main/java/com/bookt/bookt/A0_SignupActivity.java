@@ -34,7 +34,7 @@ public class A0_SignupActivity extends AppCompatActivity {
         setContentView(R.layout.a0_signup_activity);
 
         emailAddress = findViewById(R.id.emailText);
-        personName = findViewById(R.id.nameText);
+        personName = findViewById(R.id.emailText);
         password = findViewById(R.id.passwordText);
         personMobile = findViewById(R.id.mobileText);
 

@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/nameLabel"
+                android:id="@+id/emailLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -99,7 +99,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/signupHeader" />
 
             <EditText
-                android:id="@+id/nameText"
+                android:id="@+id/emailText"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
@@ -111,8 +111,8 @@
                 android:paddingEnd="16dp"
                 android:textColor="@color/app_black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/nameLabel"
-                app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
+                app:layout_constraintStart_toStartOf="@+id/emailLabel"
+                app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
 
             <TextView
                 android:id="@+id/emailLabel"
@@ -123,7 +123,7 @@
                 android:text="Email"
                 android:textColor="@color/title_grey"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameText" />
+                app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
             <EditText
                 android:id="@+id/emailText"

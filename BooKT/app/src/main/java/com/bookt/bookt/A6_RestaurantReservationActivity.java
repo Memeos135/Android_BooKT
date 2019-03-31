@@ -39,6 +39,8 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
     private EditText name;
     private EditText email;
     private EditText number;
+    private String openHour;
+    private String closeHour;
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -49,7 +51,15 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
 
         context = this;
 
-        String firebaseID = getIntent().getStringExtra("restaurant_brief");
+        String firebaseID = getIntent().getStringExtra("id");
+
+        String open = getIntent().getStringExtra("open-hour");
+        String close = getIntent().getStringExtra("close-hour");
+
+        // AM -> PM LOGIC
+
+        openHour = open.substring(0, open.indexOf(":"));
+        closeHour = close.substring(0, close.indexOf(":"));
 
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
                 .child(firebaseID)
@@ -138,9 +148,11 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         ampm[0] = "am";
         ampm[1] = "pm";
 
+        int timeRange = Integer.parseInt(closeHour) - Integer.parseInt(openHour);
+
         final String [] months = new  String[Calendar.getInstance().get(Calendar.MONTH)+1];
-        final String [] hours = new String[12];
-        final String [] minutes = new String[4];
+        final String [] hours = new String[timeRange];
+//        final String [] minutes = new String[4];
         final String [] seats = new String [seatMax];
 
         // Month starts from 0, so we add 1 to it. This makes January start from 1 instead of 0.
@@ -156,9 +168,9 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         day= new String[(daysInMonth-currentDay)+1];
 
         // Populate the minutes array
-        for(int i =0;i<4;i++){
-            minutes[i] = ""+(i*15);
-        }
+//        for(int i =0;i<4;i++){
+//            minutes[i] = ""+(i*15);
+//        }
 
         // Populate the months array, starting from the current month
         for(int i = 0; i < months.length; i++){
@@ -166,8 +178,8 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         }
 
         // Populate the hours array
-        for(int i = 0; i < 12; i++){
-            hours[i] = "" + (i+1);
+        for(int i = 0; i < timeRange; i++){
+            hours[i] = "" + (i+Integer.parseInt(openHour));
         }
 
         // Populate the days array, starting from the current day
@@ -186,7 +198,7 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         NumberPicker monthsP  = findViewById(R.id.monthPicker);
         NumberPicker yearsP   = findViewById(R.id.yearPicker);
         NumberPicker hoursP   = findViewById(R.id.hoursPicker);
-        NumberPicker minutesP = findViewById(R.id.minutesPicker);
+//        NumberPicker minutesP = findViewById(R.id.minutesPicker);
         NumberPicker ampmP    = findViewById(R.id.ampmPicker);
 
         seatsP.setDisplayedValues(seats);
@@ -205,9 +217,9 @@ public class A6_RestaurantReservationActivity extends AppCompatActivity {
         hoursP.setMinValue(0);
         hoursP.setMaxValue(hours.length-1);
 
-        minutesP.setDisplayedValues(minutes);
-        minutesP.setMinValue(0);
-        minutesP.setMaxValue(minutes.length-1);
+//        minutesP.setDisplayedValues(minutes);
+//        minutesP.setMinValue(0);
+//        minutesP.setMaxValue(minutes.length-1);
 
         daysP.setDisplayedValues(day);
         daysP.setMinValue(0);
