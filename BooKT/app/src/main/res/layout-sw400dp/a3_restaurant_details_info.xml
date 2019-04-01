@@ -101,7 +101,6 @@
         android:id="@+id/resCuisine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="Pizza"
@@ -109,7 +108,7 @@
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/resCuisineTitle"
-        app:layout_constraintStart_toEndOf="@+id/openCloseHour"
+        app:layout_constraintStart_toStartOf="@+id/resCuisineTitle"
         app:layout_constraintTop_toBottomOf="@+id/resCuisineTitle"
         app:layout_constraintVertical_bias="0.0" />
 

@@ -1,5 +1,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
@@ -8,15 +9,15 @@
         android:id="@+id/resCuisineTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Cuisine"
         android:textColor="@color/title_grey"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ressTimeTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/reserveButton"
+        app:layout_constraintStart_toEndOf="@+id/ressTimeTitle"
         app:layout_constraintTop_toTopOf="@+id/ressTimeTitle" />
 
     <TextView
@@ -24,19 +25,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="$$$$$"
         android:textColor="@color/red_app"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/restaurantName" />
 
     <TextView
         android:id="@+id/restaurantLocation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="18dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="16dp"
         android:text="Al Nahda, The Market Place Gungahlim Place, Gungahlin ACT 2912"
@@ -88,26 +89,25 @@
         android:id="@+id/reserveButton"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginTop="8dp"
         android:background="@color/red_app"
         android:onClick="processReservationButton"
         android:text="RESERVE"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/resCuisine"
         app:layout_constraintEnd_toEndOf="@+id/dollars"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/resCuisineTitle"
-        app:layout_constraintTop_toTopOf="@+id/resCuisineTitle"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintTop_toTopOf="@+id/resCuisineTitle" />
 
     <TextView
         android:id="@+id/resCuisine"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:gravity="center"
         android:text="Pizza"
         android:textColor="@color/light_grey"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/resCuisineTitle"
         app:layout_constraintStart_toStartOf="@+id/resCuisineTitle"
         app:layout_constraintTop_toBottomOf="@+id/resCuisineTitle"
         app:layout_constraintVertical_bias="0.0" />
