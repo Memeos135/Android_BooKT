@@ -53,32 +53,33 @@ public class A0_HistoryAdapter extends ArrayAdapter<A0_ReservationsHistorySetter
         TextView resHisTime = view.findViewById(R.id.resHisTime);
 
         restaurantName.setText(list.get(position).getRestaurantName());
-        resHisTime.setText(list.get(position).getTime());
+        resHisTime.setText(list.get(position).getHour());
         resHisDate.setText(list.get(position).getDate());
 
-        ImageView locationImage = view.findViewById(R.id.locationImage);
-        locationImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String latitude = list.get(position).getLocation().substring((list.get(position).getLocation().indexOf(",")+2));
-                String longitude = list.get(position).getLocation().substring(0, list.get(position).getLocation().indexOf(",")-1);
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:<" + latitude  + ">,<" + longitude + ">?q=<"
-                                + latitude  + ">,<" + longitude + ">(" + list.get(position).getRestaurantName() + ")"));
-                getContext().startActivity(intent);
-            }
-        });
+//        ImageView locationImage = view.findViewById(R.id.locationImage);
+//
+//        locationImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String latitude = list.get(position).getLocation().substring((list.get(position).getLocation().indexOf(",")+2));
+//                String longitude = list.get(position).getLocation().substring(0, list.get(position).getLocation().indexOf(",")-1);
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                        Uri.parse("geo:<" + latitude  + ">,<" + longitude + ">?q=<"
+//                                + latitude  + ">,<" + longitude + ">(" + list.get(position).getRestaurantName() + ")"));
+//                getContext().startActivity(intent);
+//            }
+//        });
 
         TextView editText = view.findViewById(R.id.resHisEdit);
 
         if(status.equals("active")){
 
-            editText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getContext().startActivity(new Intent(getContext(), A6_RestaurantReservationActivity.class));
-                }
-            });
+//            editText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    getContext().startActivity(new Intent(getContext(), A6_RestaurantReservationActivity.class));
+//                }
+//            });
 
         }else{
 
@@ -86,31 +87,31 @@ public class A0_HistoryAdapter extends ArrayAdapter<A0_ReservationsHistorySetter
             resHisDate.setTextColor(view.getResources().getColor(R.color.dark_gray));
             resHisTime.setTextColor(view.getResources().getColor(R.color.dark_gray));
 
-            editText.setText("Review");
-            editText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    final Dialog dialog = new Dialog(getContext());
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.a0_profile_restaurant_review);
-                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                    dialog.getWindow().setGravity(Gravity.TOP);
-                    dialog.setCancelable(true);
-                    dialog.show();
-
-                    RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
-
-                    ((Button) dialog.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // DO FIREBASE
-
-                            dialog.cancel();
-                        }
-                    });
-                }
-            });
+//            editText.setText("Review");
+//            editText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    final Dialog dialog = new Dialog(getContext());
+//                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                    dialog.setContentView(R.layout.a0_profile_restaurant_review);
+//                    dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//                    dialog.getWindow().setGravity(Gravity.TOP);
+//                    dialog.setCancelable(true);
+//                    dialog.show();
+//
+//                    RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+//
+//                    ((Button) dialog.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            // DO FIREBASE
+//
+//                            dialog.cancel();
+//                        }
+//                    });
+//                }
+//            });
 
         }
 

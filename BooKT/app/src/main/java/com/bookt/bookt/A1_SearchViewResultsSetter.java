@@ -2,27 +2,50 @@ package com.bookt.bookt;
 
 public class A1_SearchViewResultsSetter {
 
-    private String restaurantName;
-    private String district;
+    private String name;
+    private String location;
+    private String cuisine;
+    private String key;
 
-    A1_SearchViewResultsSetter(String restaurantName, String district) {
-        this.restaurantName = restaurantName;
-        this.district = district;
+    public String getKey() {
+        return key;
     }
 
-    public void setRestaurantName(String restaurantName){
-        this.restaurantName = restaurantName;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public void setDistrict(String district){
-        this.district = district;
+    public String getName() {
+        return name;
     }
 
-    public String getRestaurantName(){
-        return restaurantName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDistrict(){
-        return district;
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
+    public A1_SearchViewResultsSetter() {
+    }
+
+    public A1_SearchViewResultsSetter(String name, String location, String cuisine, String key) {
+        this.name = name;
+        this.location = location;
+        this.cuisine = cuisine;
+        this.key = key;
     }
 }

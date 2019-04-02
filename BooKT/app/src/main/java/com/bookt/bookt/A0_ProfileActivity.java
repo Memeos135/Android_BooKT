@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -114,27 +115,34 @@ public class A0_ProfileActivity extends AppCompatActivity
 
             if(FirebaseAuth.getInstance().getCurrentUser()!= null) {
                 final ArrayList<A0_ReservationsHistorySetter> activeList = new ArrayList<>();
+                final A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, activeList, "active");
 
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("reservations")
                         .child("active");
 
-                showWaiting();
+                ListView listView = findViewById(R.id.listViewHistory);
+                listView.setAdapter(a0HistoryAdapter);
 
-                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-//                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                                 A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot1.getValue(A0_ReservationsHistorySetter.class);
-//                                 activeList.add(profileReservationsSetter);
-//                            }
-//                        ListView listView = findViewById(R.id.listViewHistory);
-//                        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, activeList, "active");
-//                        listView.setAdapter(a0HistoryAdapter);
-//                        }
-                        cancelWaiting();
+                        if(dataSnapshot.exists()) {
+
+                            for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                                    Log.i("test", dataSnapshot2.getValue().toString());
+                                    A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot2.getValue(A0_ReservationsHistorySetter.class);
+                                    activeList.add(profileReservationsSetter);
+                                }
+                                a0HistoryAdapter.notifyDataSetChanged();
+                            }
+                        }else{
+                            activeList.clear();
+                            a0HistoryAdapter.notifyDataSetChanged();
+                            Toast.makeText(context, "No records exist.", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
@@ -146,7 +154,7 @@ public class A0_ProfileActivity extends AppCompatActivity
 
 
             }else{
-
+                Toast.makeText(context, "You have been signed out.", Toast.LENGTH_SHORT).show();
             }
 
         }else{
@@ -154,27 +162,29 @@ public class A0_ProfileActivity extends AppCompatActivity
             if(FirebaseAuth.getInstance().getCurrentUser() != null) {
 
                 final ArrayList<A0_ReservationsHistorySetter> oldList = new ArrayList<>();
+                final A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, oldList, "active");
 
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("reservations")
                         .child("in-active");
 
-                showWaiting();
-
-                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-//                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                                 A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot1.getValue(A0_ReservationsHistorySetter.class);
-//                                 oldList.add(profileReservationsSetter);
-//                            }
-//                        ListView listView = findViewById(R.id.listViewHistory);
-//                        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, oldList, "in-active");
-//                        listView.setAdapter(a0HistoryAdapter);
-//                        }
-                        cancelWaiting();
+                        if(dataSnapshot.exists()) {
+                            for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                Log.i("test", dataSnapshot1.getValue().toString());
+                                A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot1.getValue(A0_ReservationsHistorySetter.class);
+                                oldList.add(profileReservationsSetter);
+                            }
+                            ListView listView = findViewById(R.id.listViewHistory);
+                            listView.setAdapter(a0HistoryAdapter);
+                        }else{
+                            oldList.clear();
+                            a0HistoryAdapter.notifyDataSetChanged();
+                            Toast.makeText(context, "No records exist.", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
@@ -184,7 +194,7 @@ public class A0_ProfileActivity extends AppCompatActivity
                     }
                 });
             }else{
-
+                Toast.makeText(context, "You have been signed out.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -192,36 +202,19 @@ public class A0_ProfileActivity extends AppCompatActivity
     public void setupDefault(){
 
         final TextView userName = findViewById(R.id.profilePersonName);
-        final ListView listView = findViewById(R.id.listViewHistory);
 
-        final ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_info");
 
-        // READ PROFILE INFORMATION
-
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users")
-                .child(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-
-        showWaiting();
-
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    userName.setText(dataSnapshot.child("profile_info").child("name").getValue().toString());
-
-                    if(dataSnapshot.child("reservations").child("active").exists()
-                            && dataSnapshot.child("reservations").child("active").getChildrenCount() > 0){
-//                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                                 A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot1.getValue(A0_ReservationsHistorySetter.class);
-//                                 oldList.add(profileReservationsSetter);
-//                            }
-//                        ListView listView = findViewById(R.id.listViewHistory);
-//                        A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, oldList, "in-active");
-//                        listView.setAdapter(a0HistoryAdapter);
-                    }
-
+                if(dataSnapshot.exists()) {
+                    userName.setText(dataSnapshot.child("name").getValue().toString());
+                }else{
+                    userName.setText("");
+                    Toast.makeText(context, "Records deleted.", Toast.LENGTH_SHORT).show();
                 }
-                cancelWaiting();
             }
 
             @Override
@@ -229,6 +222,47 @@ public class A0_ProfileActivity extends AppCompatActivity
 
             }
         });
+
+        final ArrayList<A0_ReservationsHistorySetter> list = new ArrayList<>();
+        final A0_HistoryAdapter a0HistoryAdapter = new A0_HistoryAdapter(context, list, "active");
+
+        // READ PROFILE INFORMATION
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("reservations")
+                .child("active");
+
+        ListView listView = findViewById(R.id.listViewHistory);
+        listView.setAdapter(a0HistoryAdapter);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+
+                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                            Log.i("test", dataSnapshot2.getValue().toString());
+                            A0_ReservationsHistorySetter profileReservationsSetter = dataSnapshot2.getValue(A0_ReservationsHistorySetter.class);
+                            list.add(profileReservationsSetter);
+                        }
+                        a0HistoryAdapter.notifyDataSetChanged();
+                    }
+                }else{
+                    list.clear();
+                    a0HistoryAdapter.notifyDataSetChanged();
+                    Toast.makeText(context, "No records exist.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
     }

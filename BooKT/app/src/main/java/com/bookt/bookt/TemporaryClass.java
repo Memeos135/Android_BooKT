@@ -1,11 +1,6 @@
 package com.bookt.bookt;
 
-public class A0_ReservationsHistorySetter {
-    private String date;
-    private String time;
-    private String location;
-    private String restaurantName;
-
+public class TemporaryClass {
     private String name;
     private String email;
     private String mobile;
@@ -15,9 +10,6 @@ public class A0_ReservationsHistorySetter {
     private String day;
     private String hour;
     private String sections;
-
-    public A0_ReservationsHistorySetter() {
-    }
 
     public String getName() {
         return name;
@@ -83,6 +75,9 @@ public class A0_ReservationsHistorySetter {
         this.hour = hour;
     }
 
+    public TemporaryClass() {
+    }
+
     public String getSections() {
         return sections;
     }
@@ -91,10 +86,7 @@ public class A0_ReservationsHistorySetter {
         this.sections = sections;
     }
 
-    public A0_ReservationsHistorySetter(String date, String location, String restaurantName, String name, String email, String mobile, String additional_info, String year, String month, String day, String hour, String sections) {
-        this.date = date;
-        this.location = location;
-        this.restaurantName = restaurantName;
+    public TemporaryClass(String name, String email, String mobile, String additional_info, String year, String month, String day, String hour, String sections) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
@@ -104,29 +96,5 @@ public class A0_ReservationsHistorySetter {
         this.day = day;
         this.hour = hour;
         this.sections = sections;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
     }
 }

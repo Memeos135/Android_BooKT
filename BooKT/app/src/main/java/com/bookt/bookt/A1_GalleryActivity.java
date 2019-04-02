@@ -12,8 +12,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +30,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -87,22 +91,68 @@ public class A1_GalleryActivity extends AppCompatActivity
                 dialog.create();
                 dialog.show();
 
-                // ListView Linking and Adapter set-up and test
                 ListView listview = dialog.findViewById(R.id.listView);
-
-//                // Linking filter icon of SearchView
-
-                // Fill Up Dialog ListView Array
-                ArrayList<A1_SearchViewResultsSetter> x = new ArrayList<>();
-                x.add(new A1_SearchViewResultsSetter("Burger King", "Northern Obhur"));
-                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
-                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
-                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
-                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
-                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
-
-                A1_SearchViewResultsListAdapter a1SearchViewResultsListAdapter = new A1_SearchViewResultsListAdapter(context, x);
+                final ArrayList<A1_SearchViewResultsSetter> searchResults = new ArrayList<>();
+                final A1_SearchViewResultsListAdapter a1SearchViewResultsListAdapter = new A1_SearchViewResultsListAdapter(context, searchResults);
                 listview.setAdapter(a1SearchViewResultsListAdapter);
+
+                ((EditText) dialog.findViewById(R.id.reviewText)).addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            searchResults.clear();
+                            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Search");
+
+                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                            if (dataSnapshot1.child("name").getValue().toString().contains(((EditText) dialog.findViewById(R.id.reviewText)).getText().toString())) {
+                                                A1_SearchViewResultsSetter searchSetter = dataSnapshot1.getValue(A1_SearchViewResultsSetter.class);
+                                                searchSetter.setKey(dataSnapshot1.getKey());
+                                                searchResults.add(searchSetter);
+                                            }
+                                            a1SearchViewResultsListAdapter.notifyDataSetChanged();
+                                        }
+                                    } else {
+                                        Toast.makeText(context, "No records.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+//                // ListView Linking and Adapter set-up and test
+//                ListView listview = dialog.findViewById(R.id.listView);
+//
+////                // Linking filter icon of SearchView
+//
+//                // Fill Up Dialog ListView Array
+//                ArrayList<A1_SearchViewResultsSetter> x = new ArrayList<>();
+//                x.add(new A1_SearchViewResultsSetter("Burger King", "Northern Obhur"));
+//                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+//                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+//                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+//                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+//                x.add(new A1_SearchViewResultsSetter("McDonalds", "Southern Obhur"));
+//
+//                A1_SearchViewResultsListAdapter a1SearchViewResultsListAdapter = new A1_SearchViewResultsListAdapter(context, x);
+//                listview.setAdapter(a1SearchViewResultsListAdapter);
 
                 ImageView imageView = dialog.findViewById(R.id.closeImage);
                 imageView.setOnClickListener(new View.OnClickListener() {
@@ -196,23 +246,25 @@ public class A1_GalleryActivity extends AppCompatActivity
 
         showWaiting();
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-                    if(dataSnapshot.exists()) {
-                        A1_GalleryActivityCard a1_galleryActivityCard = dataSnapshot1.getValue(A1_GalleryActivityCard.class);
-                        list.add(new A1_GalleryActivityCard(a1_galleryActivityCard.getType()));
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        if (dataSnapshot.exists()) {
+                            A1_GalleryActivityCard a1_galleryActivityCard = dataSnapshot1.getValue(A1_GalleryActivityCard.class);
+                            list.add(new A1_GalleryActivityCard(a1_galleryActivityCard.getType()));
+                        }
                     }
-                }
-                if(list.size() > 1){
                     recycleViewAdpaterGallery.updateList(list);
                     recycleViewAdpaterGallery.notifyDataSetChanged();
+                    cancelWaiting();
+
                 }else{
-                    Toast.makeText(context, "No records found in database.", Toast.LENGTH_SHORT).show();
+                    list.clear();
+                    recycleViewAdpaterGallery.notifyDataSetChanged();
+                    Toast.makeText(context, "No records found in database", Toast.LENGTH_SHORT).show();
                 }
-                cancelWaiting();
-                mDatabase.removeEventListener(this);
             }
 
             @Override

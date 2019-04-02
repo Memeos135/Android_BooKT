@@ -83,9 +83,7 @@ public class A2_RestaurantsActivity extends AppCompatActivity
                 .child("Saudi Arabia").child("cities").child("Jeddah").child("Cuisine").child("ids")
                 .child(getIntent().getStringExtra("restaurant_name"));
 
-        showWaiting();
-
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -101,10 +99,9 @@ public class A2_RestaurantsActivity extends AppCompatActivity
                     }
                     a2_restaurantsActivityListViewAdapter.updateList(list);
                     a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
-                    cancelWaiting();
-                    mDatabase.removeEventListener(this);
                 }else{
-                    cancelWaiting();
+                    list.clear();
+                    a2_restaurantsActivityListViewAdapter.notifyDataSetChanged();
                     Toast.makeText(context, "No records exist in database", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -28,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     private Context context;
     private ArrayList<String> imageViewArrayList;
     private RatingBar ratingBar;
+    private ViewPagerImageAdapter viewPagerImageAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -178,7 +180,10 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         context.startActivity(new Intent(context, A6_RestaurantReservationActivity.class)
         .putExtra("id", card.getRestaurant_info().getFirebase_id())
         .putExtra("open-hour", card.getRestaurant_info().getRestaurant_open())
-        .putExtra("close-hour", card.getRestaurant_info().getRestaurant_close()));
+        .putExtra("close-hour", card.getRestaurant_info().getRestaurant_close())
+        .putExtra("restaurant_details", card)
+        .putExtra("location", ((TextView) findViewById(R.id.restaurantLocation)).getText().toString())
+        .putExtra("cuisine", ((TextView) findViewById(R.id.resCuisine)).getText().toString()));
     }
 
 
@@ -256,15 +261,15 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     // Image ArrayList Setup
     public void setupImageViewArrayList(){
 
-        imageViewArrayList = new ArrayList<String>();
-
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Restaurants")
                 .child(((A2_RestaurantsActivityCard)getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
                 .child("imageList");
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                imageViewArrayList = new ArrayList<String>();
+
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         String url = dataSnapshot1.child("image").getValue().toString();
@@ -275,7 +280,10 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
                     ((SeekBar) findViewById(R.id.seekBar)).setMax(imageViewArrayList.size() - 1);
                     mDatabase.removeEventListener(this);
+
                 } else{
+                    imageViewArrayList.clear();
+                    viewPagerImageAdapter.notifyDataSetChanged();
                     Toast.makeText(context, "No gallery image records found", Toast.LENGTH_SHORT).show();
                 }
 
@@ -298,7 +306,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         }
         ViewPager viewPager = findViewById(R.id.viewPager);
 
-        ViewPagerImageAdapter viewPagerImageAdapter = new ViewPagerImageAdapter();
+        viewPagerImageAdapter = new ViewPagerImageAdapter();
         viewPager.setAdapter(viewPagerImageAdapter);
 
         viewPager.setOffscreenPageLimit(2);
@@ -339,16 +347,17 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
     }
 
     public void setupRestaurantCard(A2_RestaurantsActivityCard card){
+
         TextView restaurantName = findViewById(R.id.restaurantName);
         TextView openCloseHour = findViewById(R.id.openCloseHour);
         TextView restaurantCuisine = findViewById(R.id.resCuisine);
         TextView priceRange = findViewById(R.id.dollars);
         TextView totalRatings = findViewById(R.id.totalRatings);
 
+        restaurantCuisine.setText(getIntent().getStringExtra("cuisine"));
         restaurantName.setText(card.getRestaurant_info().getRestaurant_name());
 
         openCloseHour.setText(card.getRestaurant_info().getRestaurant_open() + " - " + card.getRestaurant_info().getRestaurant_close());
-        restaurantCuisine.setText(getIntent().getStringExtra("cuisine"));
 
         A2_RestaurantsActivityCard brief = getIntent().getParcelableExtra("restaurant_brief");
 
@@ -359,11 +368,14 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
             totalRatings.setText("0");
         }
 
-        colorPrice(priceRange, openCloseHour, card);
+        colorPrice(priceRange, card);
 
     }
 
-    public void colorPrice(TextView restaurantPriceDollar, TextView openCloseHour, A2_RestaurantsActivityCard card){
+    public void colorPrice(TextView restaurantPriceDollar, A2_RestaurantsActivityCard card){
+
+        Log.i("test", card.getRestaurant_info().getRestaurant_price());
+
         if(card.getRestaurant_info().getRestaurant_price().equals("cheap")){
 
             Spannable wordtoSpan = new SpannableString(restaurantPriceDollar.getText().toString());
@@ -409,8 +421,6 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
 
         if (card.getRestaurant_info().getRestaurant_location().length() > 100) {
 
-
-
             String [] parsedCoordinates = getIntent().getStringArrayExtra("location");
 
             Bundle bundle = new Bundle();
@@ -450,14 +460,19 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
                 .child(((A2_RestaurantsActivityCard) getIntent().getParcelableExtra("restaurant_brief")).getRestaurant_info().getFirebase_id())
                 .child("restaurantDetails");
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.child("restaurant_telephone").getValue().toString().equals("")) {
-                    ((TextView) findViewById(R.id.callNumber)).setText(dataSnapshot.child("restaurant_telephone").getValue().toString());
-                    mDatabase.removeEventListener(this);
+                if(dataSnapshot.exists()) {
+                    if (!dataSnapshot.child("restaurant_telephone").getValue().toString().equals("")) {
+                        ((TextView) findViewById(R.id.callNumber)).setText(dataSnapshot.child("restaurant_telephone").getValue().toString());
+                        mDatabase.removeEventListener(this);
+                    } else {
+                        Toast.makeText(context, "No restaurant telephone number was registered in the database", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(context, "No restaurant telephone number was registered in the database", Toast.LENGTH_SHORT).show();
+                    ((TextView) findViewById(R.id.callNumber)).setText("");
+                    Toast.makeText(context, "Records deleted.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -476,6 +491,7 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // change to ValueEventListener and update progressBar numbers for REAL-TIME feel
                 if(dataSnapshot.exists()) {
 
                     // DO FIREBASE REVIEWS FOR RESTAURANT DETAILS
@@ -483,7 +499,6 @@ public class A3_RestaurantDetailsActivity extends AppCompatActivity implements N
                 }else{
                     Toast.makeText(context, "No reviews records exist in database", Toast.LENGTH_SHORT).show();
                 }
-                mDatabase.removeEventListener(this);
             }
 
             @Override
